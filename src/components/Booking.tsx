@@ -90,7 +90,12 @@ export default function Booking() {
 
             <div className="mt-12 lg:mt-0 border-t border-white/10 pt-8 flex flex-col font-mono text-[10px] text-warm-400 gap-2 uppercase tracking-wider">
               <span>LAT: 35.6762° N / LNG: 139.6503° E</span>
-              <span>COMMISSIONS@ANGELIQUE-MARI.COM</span>
+              <a 
+                href="mailto:ambrandcreatives@gmail.com" 
+                className="hover:text-amber-300 transition-colors uppercase self-start"
+              >
+                AMBRANDCREATIVES@GMAIL.COM
+              </a>
               <span>+33 1 42 68 53 00</span>
             </div>
           </div>

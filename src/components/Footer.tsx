@@ -34,7 +34,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2 font-mono text-[11px] uppercase tracking-wider text-warm-900">
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="hover:text-warm-500 transition-colors">Instagram</a>
               <a href="https://behance.net" target="_blank" rel="noopener noreferrer" className="hover:text-warm-500 transition-colors">Behance</a>
-              <a href="mailto:commissions@angelique-mari.com" className="hover:text-warm-500 transition-colors">Email</a>
+              <a href="mailto:ambrandcreatives@gmail.com" className="hover:text-warm-500 transition-colors">Email</a>
             </div>
           </div>
 
