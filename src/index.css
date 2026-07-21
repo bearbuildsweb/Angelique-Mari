@@ -1,0 +1,113 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@100;200;300;400;500&family=Syne:wght@400;500;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", Georgia, serif;
+  --font-display: "Syne", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+  
+  --color-warm-50: #FAF9F5;
+  --color-warm-100: #F3F1EA;
+  --color-warm-200: #E7E4DA;
+  --color-warm-300: #D8D4C8;
+  --color-warm-400: #B9B4A3;
+  --color-warm-500: #8E8976;
+  --color-warm-900: #1B1A17;
+  --color-warm-950: #0E0D0C;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: var(--color-warm-50);
+    color: var(--color-warm-950);
+    font-family: var(--font-sans);
+  }
+  
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Custom minimal premium scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-warm-50);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-warm-900);
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-warm-500);
+  }
+
+  ::selection {
+    background-color: var(--color-warm-900);
+    color: var(--color-warm-50);
+  }
+}
+
+/* Editorial subtle film grain overlay */
+.editorial-grain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  content: "";
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Light leak keyframes for subtle anime feel */
+@keyframes ambient-leak-one {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1);
+    opacity: 0.15;
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.1);
+    opacity: 0.25;
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.95);
+    opacity: 0.12;
+  }
+}
+
+@keyframes ambient-leak-two {
+  0%, 100% {
+    transform: translate(0px, 0px) scale(1.1);
+    opacity: 0.12;
+  }
+  50% {
+    transform: translate(-40px, 40px) scale(0.9);
+    opacity: 0.22;
+  }
+}
+
+.light-leak-1 {
+  animation: ambient-leak-one 20s infinite ease-in-out;
+}
+
+.light-leak-2 {
+  animation: ambient-leak-two 15s infinite ease-in-out;
+}
+
+/* Hide default cursor on desktops if we build custom cursor (can opt-in via classes) */
+.custom-cursor-active {
+  cursor: none;
+}
+.custom-cursor-active a, 
+.custom-cursor-active button,
+.custom-cursor-active input,
+.custom-cursor-active textarea,
+.custom-cursor-active select {
+  cursor: none;
+}
