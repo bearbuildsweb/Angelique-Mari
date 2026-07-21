@@ -21,12 +21,12 @@ export default function Testimonials() {
       {/* Testimonials Header */}
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 pb-8 border-b border-warm-900/10">
         <div className="flex flex-col">
-          <span className="font-mono text-xs uppercase tracking-widest text-warm-500 mb-3">/ CLIENT TESTIMONIALS</span>
+          <span className="font-mono text-xs lg:text-sm uppercase tracking-widest text-warm-500 mb-3">/ CLIENT TESTIMONIALS</span>
           <h2 className="text-5xl md:text-7xl font-serif tracking-tighter uppercase font-light leading-none">
             Selected <span className="font-display font-extrabold italic text-warm-900">Voices</span>
           </h2>
         </div>
-        <div className="mt-6 md:mt-0 font-mono text-xs text-warm-500 uppercase tracking-widest">
+        <div className="mt-6 md:mt-0 font-mono text-xs lg:text-sm text-warm-500 uppercase tracking-widest">
           AESTHETIC SYNERGY • {currentIndex + 1} / {TESTIMONIALS.length}
         </div>
       </div>
@@ -58,7 +58,7 @@ export default function Testimonials() {
             </AnimatePresence>
 
             {/* Micro Year Stamp */}
-            <div className="absolute bottom-4 right-4 bg-warm-900 text-warm-50 font-mono text-[8px] uppercase tracking-widest py-1 px-2.5 rounded z-20">
+            <div className="absolute bottom-4 right-4 bg-warm-900 text-warm-50 font-mono text-[8px] lg:text-[10px] uppercase tracking-widest py-1 px-2.5 rounded z-20">
               STAMPED: {currentTestimonial.year}
             </div>
           </div>
@@ -90,7 +90,7 @@ export default function Testimonials() {
                 <span className="font-display font-extrabold text-lg uppercase text-warm-950">
                   {currentTestimonial.author}
                 </span>
-                <span className="font-mono text-xs uppercase tracking-widest text-warm-500 mt-1">
+                <span className="font-mono text-xs lg:text-sm uppercase tracking-widest text-warm-500 mt-1">
                   {currentTestimonial.role} — {currentTestimonial.company}
                 </span>
               </div>
@@ -103,7 +103,7 @@ export default function Testimonials() {
               <button
                 id="testimonial-prev-btn"
                 onClick={prevSlide}
-                className="group flex items-center justify-center font-mono text-xs uppercase tracking-widest text-warm-900 hover:text-warm-500 transition-colors py-2"
+                className="group flex items-center justify-center font-mono text-xs lg:text-sm uppercase tracking-widest text-warm-900 hover:text-warm-500 transition-colors py-2"
               >
                 <span className="mr-2 group-hover:-translate-x-1 transition-transform">[</span>
                 <span>BACK</span>
@@ -113,7 +113,7 @@ export default function Testimonials() {
               <button
                 id="testimonial-next-btn"
                 onClick={nextSlide}
-                className="group flex items-center justify-center font-mono text-xs uppercase tracking-widest text-warm-900 hover:text-warm-500 transition-colors py-2"
+                className="group flex items-center justify-center font-mono text-xs lg:text-sm uppercase tracking-widest text-warm-900 hover:text-warm-500 transition-colors py-2"
               >
                 <span className="mr-2 group-hover:translate-x-1 transition-transform">[</span>
                 <span>NEXT</span>

@@ -82,17 +82,17 @@ export default function Booking() {
                   referrerPolicy="no-referrer"
                   className="w-full h-full object-cover grayscale brightness-90 transition-all duration-700"
                 />
-                <div className="absolute bottom-4 left-4 right-4 z-20 font-mono text-[8px] uppercase tracking-widest bg-warm-950/80 backdrop-blur-sm p-3 border border-white/5 rounded">
+                <div className="absolute bottom-4 left-4 right-4 z-20 font-mono text-[8px] lg:text-[10px] uppercase tracking-widest bg-warm-950/80 backdrop-blur-sm p-3 border border-white/5 rounded">
                   <span>SAMPLE SPACE • CATA.02</span>
                 </div>
               </div>
             </div>
 
-            <div className="mt-12 lg:mt-0 border-t border-white/10 pt-8 flex flex-col font-mono text-[10px] text-warm-400 gap-2 uppercase tracking-wider">
+            <div className="mt-12 lg:mt-0 border-t border-white/10 pt-8 flex flex-col font-mono text-[10px] lg:text-xs text-warm-400 gap-2 uppercase tracking-wider">
               <span>LAT: 35.6762° N / LNG: 139.6503° E</span>
               <a 
                 href="mailto:ambrandcreatives@gmail.com" 
-                className="hover:text-amber-300 transition-colors uppercase self-start"
+                className="hover:text-amber-300 transition-colors uppercase self-start underline"
               >
                 AMBRANDCREATIVES@GMAIL.COM
               </a>
@@ -124,7 +124,7 @@ export default function Booking() {
                     
                     {/* Name */}
                     <div className="flex flex-col">
-                      <label htmlFor="name" className="font-mono text-[10px] uppercase tracking-widest text-warm-400 mb-2">
+                      <label htmlFor="name" className="font-mono text-[10px] lg:text-[11px] lg:tracking-[0.2em] uppercase tracking-widest text-warm-400 mb-2">
                         Full Name *
                       </label>
                       <input
@@ -141,7 +141,7 @@ export default function Booking() {
 
                     {/* Email */}
                     <div className="flex flex-col">
-                      <label htmlFor="email" className="font-mono text-[10px] uppercase tracking-widest text-warm-400 mb-2">
+                      <label htmlFor="email" className="font-mono text-[10px] lg:text-[11px] lg:tracking-[0.2em] uppercase tracking-widest text-warm-400 mb-2">
                         Email Address *
                       </label>
                       <input
@@ -158,7 +158,7 @@ export default function Booking() {
 
                     {/* Phone */}
                     <div className="flex flex-col">
-                      <label htmlFor="phone" className="font-mono text-[10px] uppercase tracking-widest text-warm-400 mb-2">
+                      <label htmlFor="phone" className="font-mono text-[10px] lg:text-[11px] lg:tracking-[0.2em] uppercase tracking-widest text-warm-400 mb-2">
                         Phone Number
                       </label>
                       <input
@@ -174,7 +174,7 @@ export default function Booking() {
 
                     {/* Project Type */}
                     <div className="flex flex-col">
-                      <label htmlFor="projectType" className="font-mono text-[10px] uppercase tracking-widest text-warm-400 mb-2">
+                      <label htmlFor="projectType" className="font-mono text-[10px] lg:text-[11px] lg:tracking-[0.2em] uppercase tracking-widest text-warm-400 mb-2">
                         Project Type
                       </label>
                       <select
@@ -193,7 +193,7 @@ export default function Booking() {
 
                     {/* Preferred Date */}
                     <div className="flex flex-col">
-                      <label htmlFor="preferredDate" className="font-mono text-[10px] uppercase tracking-widest text-warm-400 mb-2">
+                      <label htmlFor="preferredDate" className="font-mono text-[10px] lg:text-[11px] lg:tracking-[0.2em] uppercase tracking-widest text-warm-400 mb-2">
                         Preferred Date
                       </label>
                       <input
@@ -208,7 +208,7 @@ export default function Booking() {
 
                     {/* Instagram/Website */}
                     <div className="flex flex-col">
-                      <label htmlFor="instagram" className="font-mono text-[10px] uppercase tracking-widest text-warm-400 mb-2">
+                      <label htmlFor="instagram" className="font-mono text-[10px] lg:text-[11px] lg:tracking-[0.2em] uppercase tracking-widest text-warm-400 mb-2">
                         Instagram or Website
                       </label>
                       <input
@@ -226,7 +226,7 @@ export default function Booking() {
 
                   {/* Tell me about your vision (Large custom text box) */}
                   <div className="flex flex-col mt-4">
-                    <label htmlFor="vision" className="font-mono text-[10px] uppercase tracking-widest text-warm-400 mb-2">
+                    <label htmlFor="vision" className="font-mono text-[10px] lg:text-[11px] lg:tracking-[0.2em] uppercase tracking-widest text-warm-400 mb-2">
                       Tell me about your vision *
                     </label>
                     <textarea

@@ -86,15 +86,15 @@ export default function Hero({ onBookClick }: HeroProps) {
             <span className="font-display font-black text-xl tracking-tighter text-warm-950 hover:text-amber-700 transition-colors">
               AM
             </span>
-            <span className="font-mono text-[8px] uppercase tracking-widest text-warm-500">
+            <span className="font-mono text-[8px] lg:text-[10px] uppercase tracking-widest text-warm-500">
               brand creative
             </span>
           </div>
           
           {/* Gritty punk ticket badge */}
-          <span className="inline-flex flex-col font-mono text-[9px] leading-tight border border-red-600/30 text-red-600 px-2.5 py-1 rounded uppercase tracking-wider animate-pulse">
+          <span className="inline-flex flex-col font-mono text-[9px] lg:text-[11px] leading-tight border border-red-600/30 text-red-600 px-2.5 lg:px-3 py-1 lg:py-1.5 rounded uppercase tracking-wider animate-pulse">
             <span>FROM THE STUDIO OF</span>
-            <span className="font-semibold text-[11px] text-warm-950">ANGELIQUE-MARI</span>
+            <span className="font-semibold text-[11px] lg:text-xs text-warm-950">ANGELIQUE-MARI</span>
           </span>
         </div>
 
@@ -102,7 +102,7 @@ export default function Hero({ onBookClick }: HeroProps) {
         <div className="flex items-center gap-6">
           <button
             onClick={onBookClick}
-            className="hidden sm:block px-4 py-2 border border-warm-900/20 bg-warm-900/5 hover:bg-warm-900 hover:text-warm-50 font-mono text-[9px] uppercase tracking-widest transition-all duration-300 rounded text-warm-900"
+            className="hidden sm:block px-4 py-2 border border-warm-900/20 bg-warm-900/5 hover:bg-warm-900 hover:text-warm-50 font-mono text-[9px] lg:text-xs uppercase tracking-widest transition-all duration-300 rounded text-warm-900"
           >
             [ Book Experience ]
           </button>
@@ -170,14 +170,14 @@ export default function Hero({ onBookClick }: HeroProps) {
             </nav>
 
             <div className="border-t border-warm-900/10 pt-6 flex flex-col gap-4">
-              <p className="font-mono text-[9px] text-warm-500 uppercase leading-relaxed text-right">
+              <p className="font-mono text-[9px] lg:text-[11px] text-warm-500 uppercase leading-relaxed text-right">
                 FOR THOSE WHO'D RATHER BE REMEMBERED THAN SEEN.
               </p>
-              <div className="flex justify-between items-center font-mono text-[9px] text-warm-500">
+              <div className="flex justify-between items-center font-mono text-[9px] lg:text-[11px] text-warm-500">
                 <span className="h-[1px] w-12 bg-warm-400 block" aria-hidden="true" />
                 <a 
                   href="mailto:ambrandcreatives@gmail.com" 
-                  className="hover:text-amber-700 transition-colors uppercase tracking-wider"
+                  className="hover:text-amber-700 transition-colors uppercase tracking-wider underline"
                 >
                   AMBRANDCREATIVES@GMAIL.COM
                 </a>
@@ -191,7 +191,7 @@ export default function Hero({ onBookClick }: HeroProps) {
       <div className="my-auto w-full flex flex-col items-center justify-center relative z-20 px-6 py-12">
         
         {/* Subtle background punk sticker markers */}
-        <div className="absolute top-12 left-12 hidden xl:flex flex-col font-mono text-[10px] text-warm-600 uppercase tracking-widest gap-2.5 z-30">
+        <div className="absolute top-12 left-12 hidden xl:flex flex-col font-mono text-[10px] lg:text-xs text-warm-600 uppercase tracking-widest gap-2.5 z-30">
           <a href="#portfolio" className="hover:text-amber-700 transition-colors flex items-center gap-2">
             <span className="text-red-600 font-bold">// 001</span>
             <span>SELECTED WORKS</span>
@@ -206,7 +206,7 @@ export default function Hero({ onBookClick }: HeroProps) {
           </button>
         </div>
 
-        <div className="absolute top-12 right-12 hidden xl:flex flex-col items-end font-mono text-[9px] text-warm-600 uppercase tracking-widest gap-2">
+        <div className="absolute top-12 right-12 hidden xl:flex flex-col items-end font-mono text-[9px] lg:text-[11px] text-warm-600 uppercase tracking-widest gap-2">
           <span>Johannesburg / South Africa</span>
           <span className="text-amber-700">EXHIBITING // 0{currentSlide + 1}</span>
         </div>
@@ -251,7 +251,7 @@ export default function Hero({ onBookClick }: HeroProps) {
           </div>
 
           {/* Mini overlay label under crop frame */}
-          <div className="absolute -bottom-8 left-0 right-0 text-center font-mono text-[8px] uppercase tracking-[0.25em] text-warm-600">
+          <div className="absolute -bottom-8 left-0 right-0 text-center font-mono text-[8px] lg:text-[10px] uppercase tracking-[0.25em] text-warm-600">
             [ IMAGE SPEAKS // WORDS FOLLOW ]
           </div>
         </div>
@@ -271,7 +271,7 @@ export default function Hero({ onBookClick }: HeroProps) {
                 {activeSlide.title}
               </h2>
 
-              <p className="font-sans text-xs sm:text-sm text-warm-600 max-w-md leading-relaxed select-none">
+              <p className="font-sans text-xs sm:text-sm lg:text-base text-warm-600 max-w-md leading-relaxed select-none">
                 {activeSlide.tagline}
               </p>
             </motion.div>
@@ -294,7 +294,7 @@ export default function Hero({ onBookClick }: HeroProps) {
 
       {/* 5. Gritty, Informative Ticker Footer */}
       <footer className="relative w-full z-20 px-6 py-6 md:px-12 border-t border-warm-900/10 bg-gradient-to-t from-warm-50/60 to-transparent flex flex-col sm:flex-row justify-between items-center gap-4">
-        <div className="flex items-center gap-6 font-mono text-[9px] text-warm-600 uppercase tracking-widest">
+        <div className="flex items-center gap-6 font-mono text-[9px] lg:text-[11px] text-warm-600 uppercase tracking-widest">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 bg-red-600 rounded-full animate-ping" />
             <span className="text-red-600 font-bold">CURATED WITH INTENTION</span>
@@ -304,7 +304,7 @@ export default function Hero({ onBookClick }: HeroProps) {
 
         <button
           onClick={onBookClick}
-          className="group flex items-center gap-3 font-mono text-[10px] uppercase tracking-widest text-warm-900 hover:text-amber-700 transition-colors"
+          className="group flex items-center gap-3 font-mono text-[10px] lg:text-xs uppercase tracking-widest text-warm-900 hover:text-amber-700 transition-colors"
         >
           <span>LET'S CREATE</span>
           <span className="w-8 h-[1.5px] bg-warm-900 group-hover:bg-amber-700 group-hover:w-16 transition-all duration-300" />

@@ -13,12 +13,12 @@ export default function Services() {
       {/* Editorial Spread Header */}
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end mb-16 md:mb-24 pb-8 border-b border-white/10">
         <div className="flex flex-col">
-          <span className="font-mono text-xs uppercase tracking-widest text-warm-400 mb-3">/ SERVICES SPREAD</span>
+          <span className="font-mono text-xs lg:text-sm uppercase tracking-widest text-warm-400 mb-3">/ SERVICES SPREAD</span>
           <h2 className="text-5xl md:text-7xl font-serif tracking-tighter uppercase font-light leading-none">
             Creative <span className="font-display font-extrabold italic text-amber-300">Directives</span>
           </h2>
         </div>
-        <div className="mt-6 md:mt-0 max-w-sm font-mono text-xs text-warm-300 leading-relaxed uppercase">
+        <div className="mt-6 md:mt-0 max-w-sm font-mono text-xs lg:text-sm text-warm-300 leading-relaxed uppercase">
           [ CATALOGUE INDEX N. 02 ]
           <br />
           We collaborate with luxury labels, independent designers, and contemporary artists who appreciate uncompromising visual curation.
@@ -55,7 +55,7 @@ export default function Services() {
                         <h3 className={`text-2xl md:text-4xl font-serif uppercase tracking-tight transition-colors duration-500 ${isSelected ? 'text-white' : 'text-warm-400 group-hover:text-warm-200'}`}>
                           {service.title}
                         </h3>
-                        <span className={`font-mono text-[10px] uppercase tracking-widest mt-1 transition-colors duration-500 ${isSelected ? 'text-amber-300/80' : 'text-warm-500 group-hover:text-warm-400'}`}>
+                        <span className={`font-mono text-[10px] lg:text-xs uppercase tracking-widest mt-1 transition-colors duration-500 ${isSelected ? 'text-amber-300/80' : 'text-warm-500 group-hover:text-warm-400'}`}>
                           {service.subtitle}
                         </span>
                       </div>
@@ -87,7 +87,7 @@ export default function Services() {
                           {/* Bullet Points */}
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
                             {service.details.map((detail, idx) => (
-                              <div key={idx} className="flex items-center gap-2 font-mono text-[10px] text-warm-400 uppercase tracking-wider">
+                              <div key={idx} className="flex items-center gap-2 font-mono text-[10px] lg:text-xs text-warm-400 uppercase tracking-wider">
                                 <span className="w-1 h-1 rounded-full bg-amber-300" />
                                 <span>{detail}</span>
                               </div>
@@ -103,7 +103,7 @@ export default function Services() {
           </div>
 
           {/* Spread Metadata footer */}
-          <div className="mt-12 hidden lg:flex items-center gap-4 font-mono text-[10px] text-warm-500 uppercase tracking-widest">
+          <div className="mt-12 hidden lg:flex items-center gap-4 font-mono text-[10px] lg:text-xs text-warm-500 uppercase tracking-widest">
             <span>ANGELIQUE-MARI BRANDS INC.</span>
             <span>•</span>
             <span>ALL CAMPAIGNS RESERVED</span>
@@ -139,13 +139,13 @@ export default function Services() {
 
             {/* Service Caption Overlay (Museum Card Style) */}
             <div className="absolute bottom-8 left-8 right-8 z-20 bg-warm-950/80 backdrop-blur-md p-5 border border-white/10 rounded">
-              <span className="font-mono text-[9px] text-amber-300 uppercase tracking-widest block mb-1">
+              <span className="font-mono text-[9px] lg:text-[11px] text-amber-300 uppercase tracking-widest block mb-1">
                 PREVIEW DIRECTIVE • 0{selectedServiceIndex + 1}
               </span>
               <h4 className="text-xl font-serif text-white uppercase tracking-tight leading-none">
                 {currentService.title}
               </h4>
-              <span className="font-mono text-[9px] text-warm-400 uppercase tracking-wider block mt-2">
+              <span className="font-mono text-[9px] lg:text-[11px] text-warm-400 uppercase tracking-wider block mt-2">
                 STUDIO CATALOGUE N. 02
               </span>
             </div>

@@ -12,12 +12,12 @@ export default function Portfolio() {
       {/* Editorial Header */}
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end mb-20 md:mb-32 pb-8 border-b border-warm-900/10">
         <div className="flex flex-col">
-          <span className="font-mono text-xs uppercase tracking-widest text-warm-500 mb-3">/ CURATED PORTFOLIO</span>
+          <span className="font-mono text-xs lg:text-sm uppercase tracking-widest text-warm-500 mb-3">/ CURATED PORTFOLIO</span>
           <h2 className="text-5xl md:text-7xl font-serif tracking-tighter uppercase font-light leading-none">
             Selected <span className="font-display font-extrabold italic text-warm-900">Campaigns</span>
           </h2>
         </div>
-        <div className="mt-6 md:mt-0 max-w-sm font-mono text-xs text-warm-500 leading-relaxed uppercase">
+        <div className="mt-6 md:mt-0 max-w-sm font-mono text-xs lg:text-sm text-warm-500 leading-relaxed uppercase">
           A collection of uncompromised visual directives. Blending editorial couture, high-contrast structural portraits, and ambient underground narratives.
         </div>
       </div>
@@ -32,13 +32,13 @@ export default function Portfolio() {
               <div key={project.id} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative">
                 
                 {/* Museum Index Badge */}
-                <div className="absolute top-0 left-0 font-mono text-[9px] uppercase tracking-widest text-warm-400">
+                <div className="absolute top-0 left-0 font-mono text-[9px] lg:text-[11px] uppercase tracking-widest text-warm-400">
                   {project.museumNumber} • CATA.2026
                 </div>
 
                 {/* Left side: descriptions with deep negative space */}
                 <div className="col-span-1 lg:col-span-5 flex flex-col pt-8 lg:pr-12">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-warm-500 mb-2">
+                  <span className="font-mono text-[10px] lg:text-xs uppercase tracking-widest text-warm-500 mb-2">
                     {project.category}
                   </span>
                   
@@ -50,7 +50,7 @@ export default function Portfolio() {
                     {project.description}
                   </p>
 
-                  <div className="border-t border-warm-900/10 pt-4 flex flex-col font-mono text-[10px] text-warm-400 gap-1 uppercase">
+                  <div className="border-t border-warm-900/10 pt-4 flex flex-col font-mono text-[10px] lg:text-xs text-warm-400 gap-1 uppercase">
                     <span>Location: {project.location}</span>
                     <span>{project.credits}</span>
                     <span>Year: {project.year}</span>
@@ -61,7 +61,7 @@ export default function Portfolio() {
                     <button 
                       id={`p-note-btn-${project.id}`}
                       onClick={() => setActiveProject(activeProject?.id === project.id ? null : project)}
-                      className="font-mono text-[10px] uppercase tracking-wider text-warm-900 underline hover:text-warm-500 transition-colors"
+                      className="font-mono text-[10px] lg:text-xs uppercase tracking-wider text-warm-900 underline hover:text-warm-500 transition-colors"
                     >
                       {activeProject?.id === project.id ? '[ Close Catalog Notes ]' : '[ Open Director Notes ]'}
                     </button>
@@ -95,7 +95,7 @@ export default function Portfolio() {
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover scale-150 grayscale brightness-90 group-hover:grayscale-0 transition-all duration-700"
                     />
-                    <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 text-white text-[8px] font-mono rounded">
+                    <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 text-white text-[8px] lg:text-[10px] font-mono rounded">
                       MACRO 1.5X
                     </div>
                   </motion.div>
@@ -130,7 +130,7 @@ export default function Portfolio() {
 
                 {/* Right: Asymmetrical text offset */}
                 <div className="col-span-1 lg:col-span-4 flex flex-col">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-warm-500 mb-2">
+                  <span className="font-mono text-[10px] lg:text-xs uppercase tracking-widest text-warm-500 mb-2">
                     {project.category}
                   </span>
                   
@@ -142,7 +142,7 @@ export default function Portfolio() {
                     {project.description}
                   </p>
 
-                  <div className="border-t border-warm-900/10 pt-4 flex flex-col font-mono text-[10px] text-warm-400 gap-1 uppercase">
+                  <div className="border-t border-warm-900/10 pt-4 flex flex-col font-mono text-[10px] lg:text-xs text-warm-400 gap-1 uppercase">
                     <span>Location: {project.location}</span>
                     <span>{project.credits}</span>
                     <span>Year: {project.year}</span>
@@ -153,7 +153,7 @@ export default function Portfolio() {
                     <button 
                       id={`p-note-btn-${project.id}`}
                       onClick={() => setActiveProject(activeProject?.id === project.id ? null : project)}
-                      className="font-mono text-[10px] uppercase tracking-wider text-warm-900 underline hover:text-warm-500 transition-colors"
+                      className="font-mono text-[10px] lg:text-xs uppercase tracking-wider text-warm-900 underline hover:text-warm-500 transition-colors"
                     >
                       {activeProject?.id === project.id ? '[ Close Notes ]' : '[ Directives ]'}
                     </button>
@@ -170,7 +170,7 @@ export default function Portfolio() {
                 
                 {/* Left: Asymmetrical text offset */}
                 <div className="col-span-1 lg:col-span-4 order-2 lg:order-1 flex flex-col lg:pl-12">
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-warm-500 mb-2">
+                  <span className="font-mono text-[10px] lg:text-xs uppercase tracking-widest text-warm-500 mb-2">
                     {project.category}
                   </span>
                   
@@ -182,7 +182,7 @@ export default function Portfolio() {
                     {project.description}
                   </p>
 
-                  <div className="border-t border-warm-900/10 pt-4 flex flex-col font-mono text-[10px] text-warm-400 gap-1 uppercase">
+                  <div className="border-t border-warm-900/10 pt-4 flex flex-col font-mono text-[10px] lg:text-xs text-warm-400 gap-1 uppercase">
                     <span>Location: {project.location}</span>
                     <span>{project.credits}</span>
                     <span>Year: {project.year}</span>
@@ -193,7 +193,7 @@ export default function Portfolio() {
                     <button 
                       id={`p-note-btn-${project.id}`}
                       onClick={() => setActiveProject(activeProject?.id === project.id ? null : project)}
-                      className="font-mono text-[10px] uppercase tracking-wider text-warm-900 underline hover:text-warm-500 transition-colors"
+                      className="font-mono text-[10px] lg:text-xs uppercase tracking-wider text-warm-900 underline hover:text-warm-500 transition-colors"
                     >
                       {activeProject?.id === project.id ? '[ Close Notes ]' : '[ Inquire Notes ]'}
                     </button>
@@ -202,7 +202,7 @@ export default function Portfolio() {
 
                 {/* Right: Oversized Image with full-bleed feel */}
                 <div className="col-span-1 lg:col-span-8 order-1 lg:order-2 relative">
-                  <div className="absolute top-4 right-4 font-mono text-[9px] uppercase tracking-widest text-warm-900 z-20 bg-white px-2 py-1">
+                  <div className="absolute top-4 right-4 font-mono text-[9px] lg:text-[11px] uppercase tracking-widest text-warm-900 z-20 bg-white px-2 py-1">
                     {project.museumNumber} / CATA
                   </div>
 
@@ -227,13 +227,13 @@ export default function Portfolio() {
           return (
             <div key={project.id} className="relative w-full overflow-hidden border border-warm-900/10 bg-warm-950 text-warm-50 p-6 md:p-16 rounded-lg shadow-2xl">
               
-              <div className="absolute top-6 left-6 font-mono text-[9px] text-warm-400 uppercase tracking-widest z-20">
+              <div className="absolute top-6 left-6 font-mono text-[9px] lg:text-[11px] text-warm-400 uppercase tracking-widest z-20">
                 {project.museumNumber} • GLOBAL EXHIBITION
               </div>
 
               <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pt-12">
                 <div className="col-span-1 lg:col-span-6">
-                  <span className="font-mono text-[10px] text-amber-300 uppercase tracking-widest mb-2 block">
+                  <span className="font-mono text-[10px] lg:text-xs text-amber-300 uppercase tracking-widest mb-2 block">
                     {project.category}
                   </span>
                   <h3 className="text-4xl md:text-6xl font-serif leading-none uppercase mb-6 tracking-tighter">
@@ -244,13 +244,13 @@ export default function Portfolio() {
                   </p>
                 </div>
 
-                <div className="col-span-1 lg:col-span-6 flex flex-col items-start lg:items-end font-mono text-[10px] text-warm-400 gap-1 uppercase">
+                <div className="col-span-1 lg:col-span-6 flex flex-col items-start lg:items-end font-mono text-[10px] lg:text-xs text-warm-400 gap-1 uppercase">
                   <span>Location: {project.location}</span>
                   <span>{project.credits}</span>
                   <button 
                     id={`p-note-btn-${project.id}`}
                     onClick={() => setActiveProject(activeProject?.id === project.id ? null : project)}
-                    className="font-mono text-[10px] uppercase tracking-wider text-amber-300 underline mt-4 hover:text-white transition-colors"
+                    className="font-mono text-[10px] lg:text-xs uppercase tracking-wider text-amber-300 underline mt-4 hover:text-white transition-colors"
                   >
                     {activeProject?.id === project.id ? '[ Hide Specifications ]' : '[ Read Project Concept Specifications ]'}
                   </button>
@@ -301,7 +301,7 @@ export default function Portfolio() {
                 [ Close ]
               </button>
 
-              <span className="font-mono text-[9px] uppercase tracking-widest text-warm-400">
+              <span className="font-mono text-[9px] lg:text-[11px] uppercase tracking-widest text-warm-400">
                 {activeProject.museumNumber} • Creative Directives • {activeProject.year}
               </span>
               
@@ -327,10 +327,10 @@ export default function Portfolio() {
               </div>
 
               <div className="mt-8 pt-6 border-t border-warm-900/10 flex justify-between items-center">
-                <span className="font-mono text-[10px] text-warm-500">ANGELIQUE-MARI STUDIO</span>
+                <span className="font-mono text-[10px] lg:text-xs text-warm-500">ANGELIQUE-MARI STUDIO</span>
                 <button 
                   onClick={() => setActiveProject(null)}
-                  className="bg-warm-900 text-warm-50 font-mono text-[10px] uppercase tracking-widest px-6 py-2.5 hover:bg-warm-500 transition-colors"
+                  className="bg-warm-900 text-warm-50 font-mono text-[10px] lg:text-xs uppercase tracking-widest px-6 py-2.5 hover:bg-warm-500 transition-colors"
                 >
                   Confirm Entry
                 </button>
