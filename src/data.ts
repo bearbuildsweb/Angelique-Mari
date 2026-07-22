@@ -63,7 +63,7 @@ export const PROJECTS: Project[] = [
     image: imageAfterDark,
     description: "Photographing a renowned DJ performing at an exclusive Johannesburg nightlife venue in Braamfontein. An electric yet refined atmosphere with dramatic lighting, atmospheric haze, an engaged crowd, and a confident performer at the centre.",
     layoutType: 'asymmetric-right',
-    museumNumber: 'EXHIBIT N° 03',
+    museumNumber: 'EXHIBIT N° 04',
     location: 'Braamfontein • Johannesburg',
     credits: 'Sound & Scene: AM Photography • Lighting: Braam Sound Lab',
     medium: 'Low-Light High Dynamic Range • Chiaroscuro Stage Lighting',

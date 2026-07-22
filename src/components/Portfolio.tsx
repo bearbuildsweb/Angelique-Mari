@@ -6,6 +6,14 @@ import { X, Maximize2, ArrowUpRight } from 'lucide-react';
 
 export default function Portfolio() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+    checkDesktop();
+    window.addEventListener('resize', checkDesktop);
+    return () => window.removeEventListener('resize', checkDesktop);
+  }, []);
 
   // Lock body scroll and listen for Escape key when gallery view is open
   useEffect(() => {
@@ -50,12 +58,12 @@ export default function Portfolio() {
           <div className="flex items-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-700 animate-pulse" />
             <span className="font-bold tracking-widest">/ FEATURED WORK</span>
-            <span className="text-warm-400 font-normal">VOL. I</span>
+            <span className="text-warm-400 font-normal">VOL. ONE</span>
           </div>
           <div className="flex items-center gap-4 text-warm-500 font-mono text-[10px] sm:text-xs">
             <span>JOHANNESBURG</span>
             <span className="text-warm-300">•</span>
-            <span>JSOUTH AFRICA</span>
+            <span>SOUTH AFRICA</span>
           </div>
         </div>
 
@@ -66,15 +74,15 @@ export default function Portfolio() {
           </h2>
 
           {/* Center Informational Badge Box */}
-          <div className="border border-warm-900/20 bg-warm-50/80 backdrop-blur-sm p-4 sm:p-5 max-w-md text-center flex flex-col items-center justify-center rounded">
-            <span className="font-serif italic text-sm sm:text-base text-warm-950 font-medium tracking-wide mt-1.5">
-              From the Lens of Angelique-Mari
-            </span>
-            <p className="font-sans text-xs text-warm-700 leading-relaxed font-medium uppercase tracking-wider">
+          <div className="border border-warm-900/25 bg-warm-100/90 backdrop-blur-sm p-4 sm:p-5 max-w-md text-center flex flex-col items-center justify-center rounded-lg shadow-xs">
+            <p className="font-sans text-xs text-neutral-700 leading-relaxed font-semibold uppercase tracking-wider mt-1">
               INSPIRED BY CULTURE, IDENTITY & FASHION.
             </p>
-            <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-amber-800 font-bold mb-1">
+            <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-amber-900 font-extrabold mt-1">
               VISUAL ARCHIVE
+            </span>
+            <span className="font-serif italic text-base sm:text-lg text-neutral-600 font-medium tracking-wide mt-1">
+              <strong className="text-neutral-600 font-semibold not-italic">From the Lens of Angelique-Mari</strong>
             </span>
           </div>
 
@@ -86,10 +94,10 @@ export default function Portfolio() {
       </div>
 
       {/* 2. Asymmetrical Contemporary Gallery Layout */}
-      <div className="max-w-7xl mx-auto space-y-28 md:space-y-44">
+      <div className="max-w-7xl mx-auto space-y-12 lg:space-y-44">
         
         {/* ==================== SPREAD I ==================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
           
           {/* Work 1: Wide Hero (16/9) */}
           {p1 && (
@@ -127,7 +135,7 @@ export default function Portfolio() {
           {/* Work 2: Floating Vertical Portrait (3/4) with Scroll Parallax */}
           {p2 && (
             <motion.div 
-              style={{ y: parallaxY1 }}
+              style={isDesktop ? { y: parallaxY1 } : undefined}
               className="lg:col-span-4 lg:mt-20 group cursor-pointer"
               initial={{ opacity: 0, y: 40, scale: 0.96 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -161,7 +169,7 @@ export default function Portfolio() {
         </div>
 
         {/* ==================== SPREAD II ==================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center pt-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center pt-0 lg:pt-6">
           
           {/* Work 3: Square Sculpture Study (1/1) */}
           {p3 && (
@@ -197,7 +205,7 @@ export default function Portfolio() {
           {/* Work 4: Offset Wide Light Directive (16/10) with Parallax */}
           {p4 && (
             <motion.div 
-              style={{ y: parallaxY2 }}
+              style={isDesktop ? { y: parallaxY2 } : undefined}
               className="lg:col-span-7 lg:-mt-12 group cursor-pointer"
               initial={{ opacity: 0, y: 40, scale: 0.97 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -231,7 +239,7 @@ export default function Portfolio() {
         </div>
 
         {/* ==================== SPREAD III ==================== */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start pt-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start pt-0 lg:pt-6">
           
           {/* Work 6: Panoramic Runway Couture (21/9) */}
           {p6 && (
@@ -269,7 +277,7 @@ export default function Portfolio() {
           {/* Work 5: Portraiture Study (4/5) with Parallax */}
           {p5 && (
             <motion.div 
-              style={{ y: parallaxY3 }}
+              style={isDesktop ? { y: parallaxY3 } : undefined}
               className="lg:col-span-5 lg:-mt-10 group cursor-pointer"
               initial={{ opacity: 0, y: 40, scale: 0.97 }}
               whileInView={{ opacity: 1, y: 0, scale: 1 }}
@@ -308,31 +316,31 @@ export default function Portfolio() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-50 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-900/90 via-[#0a0a09] to-[#040404] backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-8 md:p-10 overflow-hidden select-none"
+            className="fixed inset-0 z-50 bg-[#080808]/98 backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-8 md:p-10 overflow-hidden select-none"
             onClick={() => setActiveProject(null)}
           >
             {/* Gallery Top Navigation Bar */}
-            <div className="w-full flex items-center justify-between font-mono text-[10px] sm:text-xs text-warm-400 uppercase tracking-[0.22em] border-b border-warm-100/10 pb-4 pt-1 z-20">
+            <div className="w-full flex items-center justify-between font-mono text-[11px] sm:text-xs text-white uppercase tracking-[0.22em] bg-neutral-950/90 backdrop-blur-md border border-neutral-800/90 px-4 py-3 sm:px-6 rounded-xl shadow-2xl z-20">
               <div className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-                <span className="font-semibold text-warm-200">/ FEATURED COLLECTION</span>
-                <span className="text-warm-500 hidden sm:inline">• {activeProject.museumNumber}</span>
+                <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse shadow-[0_0_8px_rgba(251,191,36,0.8)]" />
+                <span className="font-bold text-white tracking-widest">/ FEATURED COLLECTION</span>
+                <span className="text-amber-300 font-semibold hidden sm:inline">• {activeProject.museumNumber}</span>
               </div>
 
-              <div className="hidden lg:flex items-center gap-2 text-warm-500 text-[10px]">
-                <span>DETAILS</span>
-                <span>—</span>
-                <span className="text-amber-400 font-medium">{activeProject.title}</span>
+              <div className="hidden lg:flex items-center gap-2 text-neutral-300 text-[11px]">
+                <span className="text-neutral-400 font-medium">DETAILS</span>
+                <span className="text-neutral-600">—</span>
+                <span className="text-amber-300 font-bold tracking-wider">{activeProject.title}</span>
               </div>
 
               {/* Close Exhibition Button */}
               <button 
                 onClick={() => setActiveProject(null)}
-                className="flex items-center gap-2 font-mono text-[10px] sm:text-xs text-warm-300 hover:text-white uppercase tracking-widest px-3 py-1.5 rounded border border-warm-100/15 hover:border-amber-500/50 hover:bg-white/5 transition-all cursor-pointer"
+                className="flex items-center gap-2 font-mono text-[11px] sm:text-xs font-bold text-white uppercase tracking-widest px-3.5 py-1.5 rounded-lg bg-white/10 hover:bg-amber-400 hover:text-neutral-950 border border-white/20 hover:border-amber-400 transition-all cursor-pointer shadow-xs active:scale-95 group"
                 aria-label="Close gallery room"
               >
                 <span>CLOSE [ESC]</span>
-                <X className="w-3.5 h-3.5 text-amber-500" />
+                <X className="w-4 h-4 text-amber-300 group-hover:text-neutral-950" />
               </button>
             </div>
 
