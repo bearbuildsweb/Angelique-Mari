@@ -65,7 +65,7 @@ export default function App() {
           >
             {/* Top Info */}
             <div className="w-full flex justify-between items-start font-mono text-[9px] uppercase tracking-widest text-warm-500">
-              <span>ANGELIQUE-MARI / BRAND CREATIVE</span>
+              <span>ANGELIQUE-MARI / PHOTOGRAPHY</span>
               <span>CURRENT EDITION / 2026</span>
             </div>
 
@@ -81,7 +81,7 @@ export default function App() {
                   Angelique-Mari
                 </h1>
                 <span className="font-display font-black text-xs uppercase tracking-[0.4em] text-amber-300">
-                  BRAND CREATIVES
+                  PHOTOGRAPHY
                 </span>
               </motion.div>
             </div>
@@ -120,20 +120,20 @@ export default function App() {
         {/* Hero Banner Section */}
         <Hero onBookClick={handleBookClick} />
 
-        {/* Selected Portfolio Exhibition 
-        <Portfolio /> */}
+        {/* Selected Portfolio Exhibition */} 
+        <Portfolio /> 
 
         {/* Services Spread 
         <Services /> */}
 
-        {/* Client Testimonials Carousel 
-        <Testimonials /> */}
+        {/* Client Testimonials Carousel */}
+        <Testimonials /> 
 
         {/* Luxury Booking Inquiry Questionnaire 
         <Booking /> */}
 
-        {/* Gigantic Branding Footer 
-        <Footer /> */}
+        {/* Gigantic Branding Footer */}
+        <Footer /> 
       </motion.div>
 
     </div>

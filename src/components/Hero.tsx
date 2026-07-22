@@ -87,7 +87,7 @@ export default function Hero({ onBookClick }: HeroProps) {
               AM
             </span>
             <span className="font-mono text-[8px] lg:text-[10px] uppercase tracking-widest text-warm-500">
-              brand creative
+              photography
             </span>
           </div>
           
@@ -190,25 +190,26 @@ export default function Hero({ onBookClick }: HeroProps) {
       {/* 4. Centerpiece: Sharp focused rectangle overlay (Just like the tattoo studio eye crop) */}
       <div className="my-auto w-full flex flex-col items-center justify-center relative z-20 px-6 py-12">
         
-        {/* Subtle background punk sticker markers */}
-        <div className="absolute top-12 left-12 hidden xl:flex flex-col font-mono text-[10px] lg:text-xs text-warm-600 uppercase tracking-widest gap-2.5 z-30">
-          <a href="#portfolio" className="hover:text-amber-700 transition-colors flex items-center gap-2">
-            <span className="text-red-600 font-bold">// 001</span>
-            <span>SELECTED WORKS</span>
+        {/* Left and Right side links and text on Desktop view only */}
+        <div className="absolute top-12 left-8 lg:left-12 xl:left-20 hidden xl:flex flex-col font-mono text-xs text-warm-700 uppercase tracking-widest gap-4 z-30">
+          <a href="#portfolio" className="hover:text-amber-700 transition-colors flex items-center gap-2 group">
+            <span className="text-red-600 font-bold group-hover:translate-x-1 transition-transform">// 001</span>
+            <span>FEATURED WORKS</span>
           </a>
-          <a href="#testimonials" className="hover:text-amber-700 transition-colors flex items-center gap-2">
-            <span className="text-red-600 font-bold">// 002</span>
+          <a href="#testimonials" className="hover:text-amber-700 transition-colors flex items-center gap-2 group">
+            <span className="text-red-600 font-bold group-hover:translate-x-1 transition-transform">// 002</span>
             <span>CLIENT VOICES</span>
           </a>
-          <button onClick={onBookClick} className="hover:text-amber-700 transition-colors flex items-center gap-2 text-left cursor-pointer focus:outline-none">
-            <span className="text-red-600 font-bold">// 003</span>
+          <button onClick={onBookClick} className="hover:text-amber-700 transition-colors flex items-center gap-2 text-left cursor-pointer focus:outline-none group">
+            <span className="text-red-600 font-bold group-hover:translate-x-1 transition-transform">// 003</span>
             <span>BOOK SESSION</span>
           </button>
         </div>
 
-        <div className="absolute top-12 right-12 hidden xl:flex flex-col items-end font-mono text-[9px] lg:text-[11px] text-warm-600 uppercase tracking-widest gap-2">
-          <span>Johannesburg / South Africa</span>
-          <span className="text-amber-700">EXHIBITING // 0{currentSlide + 1}</span>
+        <div className="absolute top-12 right-8 lg:right-12 xl:right-20 hidden xl:flex flex-col items-end font-mono text-xs text-warm-700 uppercase tracking-widest gap-2.5 z-30 text-right">
+          <span className="text-warm-950 font-semibold">ANGELIQUE-MARI</span>
+          <span className="text-warm-500 text-[10px] lg:text-xs">Johannesburg / South Africa</span>
+          <span className="text-amber-700 font-bold">EXHIBITING // 0{currentSlide + 1}</span>
         </div>
 
         {/* Centerpiece Container with crosshairs and crop lines */}

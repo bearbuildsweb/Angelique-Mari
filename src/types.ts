@@ -9,6 +9,8 @@ export interface Project {
   museumNumber: string;
   location?: string;
   credits?: string;
+  aspectRatio?: string;
+  medium?: string;
 }
 
 export interface Service {
@@ -29,4 +31,5 @@ export interface Testimonial {
   company: string;
   image: string;
   year: string;
+  rating?: number;
 }

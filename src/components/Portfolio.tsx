@@ -1,341 +1,394 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { useState, useEffect } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Project } from '../types';
 import { PROJECTS } from '../data';
+import { X, Maximize2, ArrowUpRight } from 'lucide-react';
 
 export default function Portfolio() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
 
+  // Lock body scroll and listen for Escape key when gallery view is open
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveProject(null);
+    };
+
+    if (activeProject) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', handleKeyDown);
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [activeProject]);
+
+  // Parallax scroll controls for natural editorial depth
+  const { scrollYProgress } = useScroll();
+  const parallaxY1 = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const parallaxY2 = useTransform(scrollYProgress, [0, 1], [0, 45]);
+  const parallaxY3 = useTransform(scrollYProgress, [0, 1], [0, -35]);
+
+  const p1 = PROJECTS[0]; // Atelier Miss Archive (16/9)
+  const p2 = PROJECTS[1]; // Sartorial Brutalism (3/4)
+  const p3 = PROJECTS[2]; // Silent Geometry (1/1)
+  const p4 = PROJECTS[3]; // Serpent Bloom (16/10)
+  const p5 = PROJECTS[4]; // Monochrome Poetics (4/5)
+  const p6 = PROJECTS[5]; // Nocturne Couture (21/9)
+
   return (
     <section id="portfolio" className="relative w-full bg-warm-100 text-warm-950 py-24 md:py-36 px-6 md:px-12 z-10 border-t border-warm-900/10">
       
-      {/* Editorial Header */}
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-end mb-20 md:mb-32 pb-8 border-b border-warm-900/10">
-        <div className="flex flex-col">
-          <span className="font-mono text-xs lg:text-sm uppercase tracking-widest text-warm-500 mb-3">/ CURATED PORTFOLIO</span>
-          <h2 className="text-5xl md:text-7xl font-serif tracking-tighter uppercase font-light leading-none">
-            Selected <span className="font-display font-extrabold italic text-warm-900">Campaigns</span>
+      {/* 1. Contemporary Exhibition Header (Inspired by ERT IOX Museum Mood Board) */}
+      <div className="max-w-7xl mx-auto flex flex-col mb-24 md:mb-32">
+        
+        {/* Top Minimalist Eyebrow Bar */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 w-full font-mono text-[10px] sm:text-xs uppercase tracking-[0.25em] text-warm-900 pb-4 border-b border-warm-900/15">
+          <div className="flex items-center gap-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-700 animate-pulse" />
+            <span className="font-bold tracking-widest">/ FEATURED WORK</span>
+            <span className="text-warm-400 font-normal">VOL. I</span>
+          </div>
+          <div className="flex items-center gap-4 text-warm-500 font-mono text-[10px] sm:text-xs">
+            <span>JOHANNESBURG</span>
+            <span className="text-warm-300">•</span>
+            <span>JSOUTH AFRICA</span>
+          </div>
+        </div>
+
+        {/* Oversized Gallery Split Title Layout (Matching 'ERT IOX' Reference) */}
+        <div className="pt-8 pb-6 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 border-b border-warm-900/10">
+          <h2 className="text-6xl sm:text-8xl lg:text-9xl font-black font-sans tracking-tighter uppercase text-warm-950 leading-none select-none">
+            FEAT
+          </h2>
+
+          {/* Center Informational Badge Box */}
+          <div className="border border-warm-900/20 bg-warm-50/80 backdrop-blur-sm p-4 sm:p-5 max-w-md text-center flex flex-col items-center justify-center rounded">
+            <span className="font-serif italic text-sm sm:text-base text-warm-950 font-medium tracking-wide mt-1.5">
+              From the Lens of Angelique-Mari
+            </span>
+            <p className="font-sans text-xs text-warm-700 leading-relaxed font-medium uppercase tracking-wider">
+              INSPIRED BY CULTURE, IDENTITY & FASHION.
+            </p>
+            <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-amber-800 font-bold mb-1">
+              VISUAL ARCHIVE
+            </span>
+          </div>
+
+          <h2 className="text-6xl sm:text-8xl lg:text-9xl font-black font-sans tracking-tighter uppercase text-warm-950 leading-none select-none">
+            URED
           </h2>
         </div>
-        <div className="mt-6 md:mt-0 max-w-sm font-mono text-xs lg:text-sm text-warm-500 leading-relaxed uppercase">
-          A collection of uncompromised visual directives. Blending editorial couture, high-contrast structural portraits, and ambient underground narratives.
-        </div>
+
       </div>
 
-      {/* Main Exhibition Catalog Items */}
-      <div className="max-w-7xl mx-auto space-y-36 md:space-y-56">
-        {PROJECTS.map((project, index) => {
+      {/* 2. Asymmetrical Contemporary Gallery Layout */}
+      <div className="max-w-7xl mx-auto space-y-28 md:space-y-44">
+        
+        {/* ==================== SPREAD I ==================== */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start">
           
-          {/* RENDER BASED ON CUSTOM EDITORIAL LAYOUT TYPE */}
-          if (project.layoutType === 'overlapping') {
-            return (
-              <div key={project.id} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative">
-                
-                {/* Museum Index Badge */}
-                <div className="absolute top-0 left-0 font-mono text-[9px] lg:text-[11px] uppercase tracking-widest text-warm-400">
-                  {project.museumNumber} • CATA.2026
-                </div>
-
-                {/* Left side: descriptions with deep negative space */}
-                <div className="col-span-1 lg:col-span-5 flex flex-col pt-8 lg:pr-12">
-                  <span className="font-mono text-[10px] lg:text-xs uppercase tracking-widest text-warm-500 mb-2">
-                    {project.category}
-                  </span>
-                  
-                  <h3 className="text-4xl md:text-5xl font-serif text-warm-900 leading-none uppercase tracking-tight mb-6">
-                    {project.title}
-                  </h3>
-                  
-                  <p className="font-sans text-sm text-warm-500 leading-relaxed mb-8">
-                    {project.description}
-                  </p>
-
-                  <div className="border-t border-warm-900/10 pt-4 flex flex-col font-mono text-[10px] lg:text-xs text-warm-400 gap-1 uppercase">
-                    <span>Location: {project.location}</span>
-                    <span>{project.credits}</span>
-                    <span>Year: {project.year}</span>
-                  </div>
-
-                  {/* Interactive Note Button */}
-                  <div className="mt-8">
-                    <button 
-                      id={`p-note-btn-${project.id}`}
-                      onClick={() => setActiveProject(activeProject?.id === project.id ? null : project)}
-                      className="font-mono text-[10px] lg:text-xs uppercase tracking-wider text-warm-900 underline hover:text-warm-500 transition-colors"
-                    >
-                      {activeProject?.id === project.id ? '[ Close Catalog Notes ]' : '[ Open Director Notes ]'}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Right side: overlapping layered images */}
-                <div className="col-span-1 lg:col-span-7 relative flex justify-center items-center">
-                  <div className="relative w-full max-w-[500px] aspect-[4/5] bg-warm-200 overflow-hidden group">
-                    <div className="absolute inset-0 bg-warm-900/5 group-hover:bg-transparent transition-all duration-700 z-10" />
-                    <motion.img
-                      src={project.image}
-                      alt={project.title}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-102 transition-all duration-1000 ease-[0.16,1,0.3,1]"
-                      whileInView={{ scale: [1.05, 1] }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1.5 }}
-                    />
-                  </div>
-                  
-                  {/* Overlapping small detail photo */}
-                  <motion.div 
-                    className="absolute -bottom-10 -left-6 md:-left-12 w-1/2 max-w-[240px] aspect-[3/4] bg-warm-300 shadow-2xl overflow-hidden border border-warm-100/30 hidden sm:block z-20 group"
-                    whileHover={{ scale: 1.05, y: -5 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    <img
-                      src={project.image}
-                      alt={`${project.title} detail`}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover scale-150 grayscale brightness-90 group-hover:grayscale-0 transition-all duration-700"
-                    />
-                    <div className="absolute top-2 right-2 bg-black/60 backdrop-blur-md px-2 py-1 text-white text-[8px] lg:text-[10px] font-mono rounded">
-                      MACRO 1.5X
-                    </div>
-                  </motion.div>
-                </div>
-              </div>
-            );
-          }
-
-          if (project.layoutType === 'asymmetric-left') {
-            return (
-              <div key={project.id} className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                
-                {/* Left: Oversized Image with full-bleed feel */}
-                <div className="col-span-1 lg:col-span-8 relative">
-                  <div className="absolute top-4 left-4 font-mono text-[9px] uppercase tracking-widest text-warm-50 z-20 bg-warm-900 px-2 py-1">
-                    {project.museumNumber} / COLL
-                  </div>
-
-                  <div className="w-full aspect-[4/3] md:aspect-[16/10] bg-warm-200 overflow-hidden group relative">
-                    <div className="absolute inset-0 bg-gradient-to-t from-warm-950/20 to-transparent z-10" />
-                    <motion.img
-                      src={project.image}
-                      alt={project.title}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 ease-[0.16,1,0.3,1]"
-                      whileInView={{ scale: [1.08, 1] }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1.8 }}
-                    />
-                  </div>
-                </div>
-
-                {/* Right: Asymmetrical text offset */}
-                <div className="col-span-1 lg:col-span-4 flex flex-col">
-                  <span className="font-mono text-[10px] lg:text-xs uppercase tracking-widest text-warm-500 mb-2">
-                    {project.category}
-                  </span>
-                  
-                  <h3 className="text-4xl font-serif text-warm-900 leading-none uppercase mb-6">
-                    {project.title}
-                  </h3>
-                  
-                  <p className="font-sans text-sm text-warm-500 leading-relaxed mb-6">
-                    {project.description}
-                  </p>
-
-                  <div className="border-t border-warm-900/10 pt-4 flex flex-col font-mono text-[10px] lg:text-xs text-warm-400 gap-1 uppercase">
-                    <span>Location: {project.location}</span>
-                    <span>{project.credits}</span>
-                    <span>Year: {project.year}</span>
-                  </div>
-
-                  {/* Interactive Button */}
-                  <div className="mt-6">
-                    <button 
-                      id={`p-note-btn-${project.id}`}
-                      onClick={() => setActiveProject(activeProject?.id === project.id ? null : project)}
-                      className="font-mono text-[10px] lg:text-xs uppercase tracking-wider text-warm-900 underline hover:text-warm-500 transition-colors"
-                    >
-                      {activeProject?.id === project.id ? '[ Close Notes ]' : '[ Directives ]'}
-                    </button>
-                  </div>
-                </div>
-
-              </div>
-            );
-          }
-
-          if (project.layoutType === 'asymmetric-right') {
-            return (
-              <div key={project.id} className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-                
-                {/* Left: Asymmetrical text offset */}
-                <div className="col-span-1 lg:col-span-4 order-2 lg:order-1 flex flex-col lg:pl-12">
-                  <span className="font-mono text-[10px] lg:text-xs uppercase tracking-widest text-warm-500 mb-2">
-                    {project.category}
-                  </span>
-                  
-                  <h3 className="text-4xl font-serif text-warm-900 leading-none uppercase mb-6">
-                    {project.title}
-                  </h3>
-                  
-                  <p className="font-sans text-sm text-warm-500 leading-relaxed mb-6">
-                    {project.description}
-                  </p>
-
-                  <div className="border-t border-warm-900/10 pt-4 flex flex-col font-mono text-[10px] lg:text-xs text-warm-400 gap-1 uppercase">
-                    <span>Location: {project.location}</span>
-                    <span>{project.credits}</span>
-                    <span>Year: {project.year}</span>
-                  </div>
-
-                  {/* Interactive Button */}
-                  <div className="mt-6">
-                    <button 
-                      id={`p-note-btn-${project.id}`}
-                      onClick={() => setActiveProject(activeProject?.id === project.id ? null : project)}
-                      className="font-mono text-[10px] lg:text-xs uppercase tracking-wider text-warm-900 underline hover:text-warm-500 transition-colors"
-                    >
-                      {activeProject?.id === project.id ? '[ Close Notes ]' : '[ Inquire Notes ]'}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Right: Oversized Image with full-bleed feel */}
-                <div className="col-span-1 lg:col-span-8 order-1 lg:order-2 relative">
-                  <div className="absolute top-4 right-4 font-mono text-[9px] lg:text-[11px] uppercase tracking-widest text-warm-900 z-20 bg-white px-2 py-1">
-                    {project.museumNumber} / CATA
-                  </div>
-
-                  <div className="w-full aspect-[4/5] md:aspect-[16/11] bg-warm-200 overflow-hidden group relative">
-                    <motion.img
-                      src={project.image}
-                      alt={project.title}
-                      referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover grayscale brightness-95 group-hover:grayscale-0 transition-all duration-1000 ease-[0.16,1,0.3,1]"
-                      whileInView={{ scale: [1.05, 1] }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 1.5 }}
-                    />
-                  </div>
-                </div>
-
-              </div>
-            );
-          }
-
-          {/* Full bleed artwork banner style */}
-          return (
-            <div key={project.id} className="relative w-full overflow-hidden border border-warm-900/10 bg-warm-950 text-warm-50 p-6 md:p-16 rounded-lg shadow-2xl">
-              
-              <div className="absolute top-6 left-6 font-mono text-[9px] lg:text-[11px] text-warm-400 uppercase tracking-widest z-20">
-                {project.museumNumber} • GLOBAL EXHIBITION
-              </div>
-
-              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end pt-12">
-                <div className="col-span-1 lg:col-span-6">
-                  <span className="font-mono text-[10px] lg:text-xs text-amber-300 uppercase tracking-widest mb-2 block">
-                    {project.category}
-                  </span>
-                  <h3 className="text-4xl md:text-6xl font-serif leading-none uppercase mb-6 tracking-tighter">
-                    {project.title}
-                  </h3>
-                  <p className="font-sans text-sm text-warm-300 max-w-lg leading-relaxed">
-                    {project.description}
-                  </p>
-                </div>
-
-                <div className="col-span-1 lg:col-span-6 flex flex-col items-start lg:items-end font-mono text-[10px] lg:text-xs text-warm-400 gap-1 uppercase">
-                  <span>Location: {project.location}</span>
-                  <span>{project.credits}</span>
-                  <button 
-                    id={`p-note-btn-${project.id}`}
-                    onClick={() => setActiveProject(activeProject?.id === project.id ? null : project)}
-                    className="font-mono text-[10px] lg:text-xs uppercase tracking-wider text-amber-300 underline mt-4 hover:text-white transition-colors"
-                  >
-                    {activeProject?.id === project.id ? '[ Hide Specifications ]' : '[ Read Project Concept Specifications ]'}
-                  </button>
-                </div>
-              </div>
-
-              {/* Parallax full-bleed background inside a contained aspect box */}
-              <div className="mt-12 w-full aspect-[16/9] bg-warm-900 overflow-hidden relative rounded">
-                <div className="absolute inset-0 bg-black/40 z-10" />
-                <motion.img
-                  src={project.image}
-                  alt={project.title}
+          {/* Work 1: Wide Hero (16/9) */}
+          {p1 && (
+            <motion.div 
+              className="lg:col-span-8 group cursor-pointer"
+              initial={{ opacity: 0, y: 35, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+              onClick={() => setActiveProject(p1)}
+            >
+              <div className="relative w-full aspect-[16/9] bg-warm-200 overflow-hidden rounded border border-warm-900/10 shadow-lg">
+                <motion.img 
+                  src={p1.image} 
+                  alt={p1.title} 
                   referrerPolicy="no-referrer"
-                  className="w-full h-full object-cover grayscale brightness-75 hover:grayscale-0 transition-all duration-1000 ease-[0.16,1,0.3,1]"
-                  whileInView={{ scale: [1.1, 1], y: [-20, 0] }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 2 }}
+                  className="w-full h-full object-cover grayscale brightness-95 group-hover:grayscale-0 group-hover:scale-[1.03] group-hover:brightness-105 transition-all duration-700 ease-out"
+                />
+                <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-white text-[9px] font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1.5">
+                  <Maximize2 className="w-3 h-3" />
+                  <span>INSPECT</span>
+                </div>
+              </div>
+              
+              {/* Minimalist Museum Caption */}
+              <div className="mt-3.5 flex justify-between items-baseline font-mono text-[11px] sm:text-xs text-warm-900 uppercase tracking-[0.15em]">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-amber-800">{p1.title}</span>
+                </div>
+                <span className="text-warm-500 font-normal">{p1.museumNumber} • {p1.year}</span>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Work 2: Floating Vertical Portrait (3/4) with Scroll Parallax */}
+          {p2 && (
+            <motion.div 
+              style={{ y: parallaxY1 }}
+              className="lg:col-span-4 lg:mt-20 group cursor-pointer"
+              initial={{ opacity: 0, y: 40, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 1.1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              onClick={() => setActiveProject(p2)}
+            >
+              <div className="relative w-full aspect-[3/4] bg-warm-200 overflow-hidden rounded border border-warm-900/10 shadow-xl">
+                <motion.img 
+                  src={p2.image} 
+                  alt={p2.title} 
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:scale-[1.03] group-hover:brightness-105 transition-all duration-700 ease-out"
+                />
+                <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-white text-[9px] font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1.5">
+                  <Maximize2 className="w-3 h-3" />
+                  <span>VIEW</span>
+                </div>
+              </div>
+
+              {/* Minimalist Museum Caption */}
+              <div className="mt-3.5 flex justify-between items-baseline font-mono text-[11px] sm:text-xs text-warm-900 uppercase tracking-[0.15em]">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-amber-800">{p2.title}</span>
+                </div>
+                <span className="text-warm-500 font-normal">{p2.museumNumber}</span>
+              </div>
+            </motion.div>
+          )}
+
+        </div>
+
+        {/* ==================== SPREAD II ==================== */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center pt-6">
+          
+          {/* Work 3: Square Sculpture Study (1/1) */}
+          {p3 && (
+            <motion.div 
+              className="lg:col-span-5 group cursor-pointer"
+              initial={{ opacity: 0, y: 35, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+              onClick={() => setActiveProject(p3)}
+            >
+              <div className="relative w-full aspect-[1/1] bg-warm-200 overflow-hidden rounded border border-warm-900/10 shadow-lg p-2 bg-white/60">
+                <div className="relative w-full h-full overflow-hidden rounded">
+                  <motion.img 
+                    src={p3.image} 
+                    alt={p3.title} 
+                    referrerPolicy="no-referrer"
+                    className="w-full h-full object-cover grayscale brightness-95 group-hover:grayscale-0 group-hover:scale-[1.03] group-hover:brightness-105 transition-all duration-700 ease-out"
+                  />
+                </div>
+              </div>
+
+              {/* Minimalist Museum Caption */}
+              <div className="mt-3.5 flex justify-between items-baseline font-mono text-[11px] sm:text-xs text-warm-900 uppercase tracking-[0.15em]">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-amber-800">{p3.title}</span>
+                </div>
+                <span className="text-warm-500 font-normal">{p3.museumNumber} • {p3.location}</span>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Work 4: Offset Wide Light Directive (16/10) with Parallax */}
+          {p4 && (
+            <motion.div 
+              style={{ y: parallaxY2 }}
+              className="lg:col-span-7 lg:-mt-12 group cursor-pointer"
+              initial={{ opacity: 0, y: 40, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              onClick={() => setActiveProject(p4)}
+            >
+              <div className="relative w-full aspect-[16/10] bg-warm-200 overflow-hidden rounded border border-warm-900/10 shadow-xl">
+                <motion.img 
+                  src={p4.image} 
+                  alt={p4.title} 
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:scale-[1.03] group-hover:brightness-105 transition-all duration-700 ease-out"
+                />
+                <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-white text-[9px] font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1.5">
+                  <Maximize2 className="w-3 h-3" />
+                  <span>INSPECT</span>
+                </div>
+              </div>
+
+              {/* Minimalist Museum Caption */}
+              <div className="mt-3.5 flex justify-between items-baseline font-mono text-[11px] sm:text-xs text-warm-900 uppercase tracking-[0.15em]">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-amber-800">{p4.title}</span>
+                </div>
+                <span className="text-warm-500 font-normal">{p4.museumNumber}</span>
+              </div>
+            </motion.div>
+          )}
+
+        </div>
+
+        {/* ==================== SPREAD III ==================== */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-start pt-6">
+          
+          {/* Work 6: Panoramic Runway Couture (21/9) */}
+          {p6 && (
+            <motion.div 
+              className="lg:col-span-7 group cursor-pointer"
+              initial={{ opacity: 0, y: 35, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+              onClick={() => setActiveProject(p6)}
+            >
+              <div className="relative w-full aspect-[16/9] lg:aspect-[21/9] bg-warm-200 overflow-hidden rounded border border-warm-900/10 shadow-xl">
+                <motion.img 
+                  src={p6.image} 
+                  alt={p6.title} 
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:scale-[1.03] group-hover:brightness-105 transition-all duration-700 ease-out"
+                />
+                <div className="absolute top-4 right-4 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded text-white text-[9px] font-mono uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center gap-1.5">
+                  <Maximize2 className="w-3 h-3" />
+                  <span>INSPECT</span>
+                </div>
+              </div>
+
+              {/* Minimalist Museum Caption */}
+              <div className="mt-3.5 flex justify-between items-baseline font-mono text-[11px] sm:text-xs text-warm-900 uppercase tracking-[0.15em]">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-amber-800">{p6.title}</span>
+                </div>
+                <span className="text-warm-500 font-normal">{p6.museumNumber} • {p6.location}</span>
+              </div>
+            </motion.div>
+          )}
+
+          {/* Work 5: Portraiture Study (4/5) with Parallax */}
+          {p5 && (
+            <motion.div 
+              style={{ y: parallaxY3 }}
+              className="lg:col-span-5 lg:-mt-10 group cursor-pointer"
+              initial={{ opacity: 0, y: 40, scale: 0.97 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 1.1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              onClick={() => setActiveProject(p5)}
+            >
+              <div className="relative w-full aspect-[4/5] bg-warm-200 overflow-hidden rounded border border-warm-900/10 shadow-lg">
+                <motion.img 
+                  src={p5.image} 
+                  alt={p5.title} 
+                  referrerPolicy="no-referrer"
+                  className="w-full h-full object-cover grayscale brightness-95 group-hover:grayscale-0 group-hover:scale-[1.03] group-hover:brightness-105 transition-all duration-700 ease-out"
                 />
               </div>
-            </div>
-          );
-        })}
+
+              {/* Minimalist Museum Caption */}
+              <div className="mt-3.5 flex justify-between items-baseline font-mono text-[11px] sm:text-xs text-warm-900 uppercase tracking-[0.15em]">
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-amber-800">{p5.title}</span>
+                </div>
+                <span className="text-warm-500 font-normal">{p5.museumNumber} • {p5.year}</span>
+              </div>
+            </motion.div>
+          )}
+
+        </div>
+
       </div>
 
-      {/* Dynamic Drawer / Modal overlay for Director Notes (Cinema catalogue detail) */}
+      {/* 3. Contemporary Gallery Exhibition Room View */}
       <AnimatePresence>
         {activeProject && (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-warm-950/90 z-50 flex items-center justify-center p-6 backdrop-blur-md"
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-50 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-900/90 via-[#0a0a09] to-[#040404] backdrop-blur-2xl flex flex-col justify-between p-4 sm:p-8 md:p-10 overflow-hidden select-none"
             onClick={() => setActiveProject(null)}
           >
-            <motion.div 
-              initial={{ scale: 0.95, y: 20 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 20 }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="bg-warm-50 text-warm-950 w-full max-w-2xl border border-warm-900 p-8 md:p-12 shadow-2xl rounded relative"
-              onClick={(e) => e.stopPropagation()}
-            >
-              {/* Close x */}
+            {/* Gallery Top Navigation Bar */}
+            <div className="w-full flex items-center justify-between font-mono text-[10px] sm:text-xs text-warm-400 uppercase tracking-[0.22em] border-b border-warm-100/10 pb-4 pt-1 z-20">
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                <span className="font-semibold text-warm-200">/ FEATURED COLLECTION</span>
+                <span className="text-warm-500 hidden sm:inline">• {activeProject.museumNumber}</span>
+              </div>
+
+              <div className="hidden lg:flex items-center gap-2 text-warm-500 text-[10px]">
+                <span>DETAILS</span>
+                <span>—</span>
+                <span className="text-amber-400 font-medium">{activeProject.title}</span>
+              </div>
+
+              {/* Close Exhibition Button */}
               <button 
                 onClick={() => setActiveProject(null)}
-                className="absolute top-6 right-6 font-mono text-xs uppercase text-warm-500 hover:text-warm-950 transition-colors"
+                className="flex items-center gap-2 font-mono text-[10px] sm:text-xs text-warm-300 hover:text-white uppercase tracking-widest px-3 py-1.5 rounded border border-warm-100/15 hover:border-amber-500/50 hover:bg-white/5 transition-all cursor-pointer"
+                aria-label="Close gallery room"
               >
-                [ Close ]
+                <span>CLOSE [ESC]</span>
+                <X className="w-3.5 h-3.5 text-amber-500" />
               </button>
+            </div>
 
-              <span className="font-mono text-[9px] lg:text-[11px] uppercase tracking-widest text-warm-400">
-                {activeProject.museumNumber} • Creative Directives • {activeProject.year}
-              </span>
-              
-              <h4 className="text-3xl font-serif uppercase tracking-tight text-warm-900 mt-2 mb-6">
-                {activeProject.title} / Concept notes
-              </h4>
+            {/* Central Focal Work & Curatorial Frame */}
+            <div className="flex-1 w-full my-auto flex flex-col items-center justify-center p-2 sm:p-6 md:p-8 relative z-10">
+              <motion.div 
+                initial={{ scale: 0.93, opacity: 0, y: 15 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.93, opacity: 0, y: 15 }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="relative max-w-full max-h-full flex flex-col items-center group"
+                onClick={(e) => e.stopPropagation()}
+              >
+                {/* Museum Matting & Framing Container */}
+                <div className="relative p-3 sm:p-6 md:p-8 bg-[#121211]/90 border border-neutral-800/80 rounded shadow-[0_30px_90px_rgba(0,0,0,0.95)] max-w-full max-h-[72vh] md:max-h-[76vh] flex flex-col items-center justify-center">
+                  
+                  {/* Curatorial Corner Registration Marks & Crop Guides */}
+                  <div className="absolute top-2 left-2 w-3 h-3 border-t border-l border-amber-500/40" />
+                  <div className="absolute top-2 right-2 w-3 h-3 border-t border-r border-amber-500/40" />
+                  <div className="absolute bottom-2 left-2 w-3 h-3 border-b border-l border-amber-500/40" />
+                  <div className="absolute bottom-2 right-2 w-3 h-3 border-b border-r border-amber-500/40" />
 
-              <div className="space-y-6 text-sm font-sans text-warm-800 leading-relaxed">
-                <p>
-                  <strong>Creative Director Vision Statement:</strong>
-                  <br />
-                  "The composition seeks to dissect negative space as an active protagonist. Instead of merely containing the subject, the empty room shapes the garments. We deliberately minimized key lighting and relied on secondary structural rays to evoke a feeling similar to an empty high-fashion art vault."
-                </p>
-                <p>
-                  <strong>Composition Parameters:</strong>
-                  <br />
-                  - Camera: Hasselblad H6D-100c medium format.
-                  <br />
-                  - Film Archetype: Custom desaturated monochrome with organic grain multipliers.
-                  <br />
-                  - Lighting: Single linear high-angle beam, zero ambient bounce.
-                </p>
-              </div>
+                  {/* Micro Registration Header */}
+                  <div className="w-full flex justify-between items-center font-mono text-[8px] sm:text-[9px] text-neutral-500 uppercase tracking-widest pb-2 mb-2 border-b border-neutral-800/60">
+                    <span className="flex items-center gap-1.5">
+                      <span className="text-amber-500/80">+</span>
+                      <span>ARCHIVAL SPEC: {activeProject.museumNumber}</span>
+                    </span>
+                    <span className="hidden sm:inline text-neutral-600">REG. 2026 // AM-STUDIO</span>
+                  </div>
 
-              <div className="mt-8 pt-6 border-t border-warm-900/10 flex justify-between items-center">
-                <span className="font-mono text-[10px] lg:text-xs text-warm-500">ANGELIQUE-MARI STUDIO</span>
-                <button 
-                  onClick={() => setActiveProject(null)}
-                  className="bg-warm-900 text-warm-50 font-mono text-[10px] lg:text-xs uppercase tracking-widest px-6 py-2.5 hover:bg-warm-500 transition-colors"
-                >
-                  Confirm Entry
-                </button>
-              </div>
-            </motion.div>
+                  {/* Primary Artwork Image */}
+                  <div className="relative overflow-hidden rounded-sm border border-neutral-800/80 bg-black flex items-center justify-center">
+                    <img 
+                      src={activeProject.image} 
+                      alt={activeProject.title} 
+                      referrerPolicy="no-referrer"
+                      className="max-h-[58vh] sm:max-h-[62vh] md:max-h-[66vh] w-auto max-w-[85vw] md:max-w-[75vw] object-contain shadow-2xl transition-transform duration-700 ease-out hover:scale-[1.015]"
+                    />
+                  </div>
+
+                  {/* Micro Calibration Bar at Footer of Frame */}
+                  <div className="w-full flex justify-between items-center pt-3 mt-2 border-t border-neutral-800/60 font-mono text-[8px] sm:text-[9px] text-neutral-500 uppercase tracking-widest">
+                    <div className="flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 bg-neutral-900 border border-neutral-700" />
+                      <span className="w-1.5 h-1.5 bg-neutral-700" />
+                      <span className="w-1.5 h-1.5 bg-amber-700" />
+                      <span className="w-1.5 h-1.5 bg-neutral-300" />
+                    </div>
+                    <span>{activeProject.aspectRatio || '16/9'} • ORIGINAL ASPECT</span>
+                  </div>
+
+                </div>
+
+              </motion.div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -343,3 +396,4 @@ export default function Portfolio() {
     </section>
   );
 }
+
