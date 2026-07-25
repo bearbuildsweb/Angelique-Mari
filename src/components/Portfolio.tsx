@@ -58,7 +58,7 @@ export default function Portfolio() {
           <div className="flex items-center gap-3">
             <span className="w-1.5 h-1.5 rounded-full bg-amber-700 animate-pulse" />
             <span className="font-bold tracking-widest">/ FEATURED WORK</span>
-            <span className="text-warm-400 font-normal">VOL. ONE</span>
+            <span className="text-warm-400 font-normal"> . //</span>
           </div>
           <div className="flex items-center gap-4 text-warm-500 font-mono text-[10px] sm:text-xs">
             <span>JOHANNESBURG</span>
