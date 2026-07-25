@@ -129,9 +129,9 @@ export default function App() {
         {/* Client Testimonials Carousel */}
         <Testimonials /> 
 
-        {/* Luxury Booking Inquiry Questionnaire 
-        <Booking /> */}
-
+        {/* Luxury Booking Inquiry Questionnaire */}
+        <Booking /> 
+        
         {/* Gigantic Branding Footer */}
         <Footer /> 
       </motion.div>

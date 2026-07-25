@@ -104,7 +104,7 @@ export default function Hero({ onBookClick }: HeroProps) {
             onClick={onBookClick}
             className="hidden sm:block px-4 py-2 border border-warm-900/20 bg-warm-900/5 hover:bg-warm-900 hover:text-warm-50 font-mono text-[9px] lg:text-xs uppercase tracking-widest transition-all duration-300 rounded text-warm-900"
           >
-            [ Book Experience ]
+            [ LET'S CREATE ]
           </button>
 
           {/* Hamburger Menu Trigger */}

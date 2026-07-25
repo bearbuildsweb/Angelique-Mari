@@ -76,13 +76,10 @@ export default function Portfolio() {
           {/* Center Informational Badge Box */}
           <div className="border border-warm-900/25 bg-warm-100/90 backdrop-blur-sm p-4 sm:p-5 max-w-md text-center flex flex-col items-center justify-center rounded-lg shadow-xs">
             <p className="font-sans text-xs text-neutral-700 leading-relaxed font-semibold uppercase tracking-wider mt-1">
-              INSPIRED BY CULTURE, IDENTITY & FASHION.
+              CULTURE, IDENTITY & FASHION.
             </p>
             <span className="font-mono text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-amber-900 font-extrabold mt-1">
-              VISUAL ARCHIVE
-            </span>
-            <span className="font-serif italic text-base sm:text-lg text-neutral-600 font-medium tracking-wide mt-1">
-              <strong className="text-neutral-600 font-semibold not-italic">From the Lens of Angelique-Mari</strong>
+              From the Lens of Angelique-Mari
             </span>
           </div>
 
