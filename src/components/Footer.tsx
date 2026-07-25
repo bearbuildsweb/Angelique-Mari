@@ -16,19 +16,19 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto flex flex-col justify-between">
         
         {/* Giant display text exactly styled like Tattoo Studio */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 md:gap-12 w-full pb-10 md:pb-16 pt-2 border-b border-warm-900/10 select-none overflow-hidden">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8 w-full pb-10 md:pb-16 pt-2 border-b border-warm-900/10 select-none">
           {/* Left copyright with serif elegant font */}
-          <div className="font-serif italic text-lg md:text-[2vw] text-warm-500 leading-none whitespace-nowrap self-center md:self-end md:mb-6">
+          <div className="font-serif italic text-lg md:text-[2vw] text-warm-500 leading-none whitespace-nowrap shrink-0 self-center md:self-end md:mb-6">
             © {currentYear}
           </div>
 
           {/* Center Giant Text - Extra Bold, geometric and tight spacing */}
-          <h2 className="text-[7.5vw] font-sans font-black tracking-tighter text-warm-900 leading-none uppercase text-center flex-1 px-4 select-none">
+          <h2 className="text-[6.5vw] xl:text-[6.8vw] font-sans font-black tracking-tighter text-warm-900 leading-none uppercase text-center flex-1 min-w-0 px-2 select-none">
             AM photography
           </h2>
 
           {/* Right graphic copyright */}
-          <div className="font-serif text-3xl md:text-[4vw] font-light text-warm-400 leading-none select-none self-center md:self-end md:mb-6">
+          <div className="font-serif text-3xl md:text-[3.5vw] font-light text-warm-400 leading-none select-none shrink-0 self-center md:self-end md:mb-6 pr-1">
             ©
           </div>
         </div>
