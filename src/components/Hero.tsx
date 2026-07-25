@@ -300,7 +300,7 @@ export default function Hero({ onBookClick }: HeroProps) {
             <span className="w-2 h-2 bg-red-600 rounded-full animate-ping" />
             <span className="text-red-600 font-bold">CURATED WITH INTENTION</span>
           </div>
-          <span>/ VISUAL CONVICTION</span>
+          <span>//</span>
         </div>
 
         <button
