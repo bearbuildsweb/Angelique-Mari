@@ -390,10 +390,6 @@ export default function Booking() {
                         <span className="font-serif italic font-light text-[#FF6800]">AVAILABILITY</span>
                       </h3>
 
-                      <p className="font-sans text-xs text-neutral-300 leading-relaxed space-y-3 mb-6">
-                        To maintain museum-grade photography standards and focused personal creative direction, session appointments are reserved strictly for <strong className="text-[#FF6800]">Saturdays and Sundays</strong>.
-                      </p>
-
                       <div className="space-y-3 pt-4 border-t border-white/10 font-sans text-xs text-neutral-400">
                         <div className="flex items-center gap-3">
                           <span className="w-3 h-3 rounded-full bg-[#FF6800] border border-white" />
