@@ -1,87 +1,211 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ArrowUpRight, Check } from 'lucide-react';
+import { ArrowUpRight, Check, Calendar as CalendarIcon, ChevronLeft, ChevronRight, User, Tag, Sparkles } from 'lucide-react';
+import Logo from './Logo';
 
-import imageFashionCampaign from '../assets/images/fashion_campaign_1784538048818.jpg';
-import imageStreetCouture from '../assets/images/street_couture_maboneng_1784717507856.jpg';
-import imageHeroModel from '../assets/images/hero_model_1784538034499.jpg';
-import imageUndergroundGallery from '../assets/images/underground_gallery_1784538063523.jpg';
+import imageJoburgWedding from '../assets/images/joburg_wedding_editorial_1785698386628.jpg';
+import imageJoburgMaternity from '../assets/images/joburg_maternity_editorial_1785698401776.jpg';
+import imageJoburgCakeSmash from '../assets/images/joburg_cakesmash_studio_1785698420504.jpg';
+import imageJoburgBirthday from '../assets/images/joburg_birthday_nightlife_1785698434145.jpg';
+import imageJoburgLifestyle from '../assets/images/joburg_lifestyle_maboneng_1785698449438.jpg';
+import imageJoburgFamily from '../assets/images/joburg_family_contemporary_1785698464551.jpg';
 
-const PROJECT_CATEGORIES = [
+export interface SessionCategory {
+  id: string;
+  title: string;
+  subtitle: string;
+  code: string;
+  description: string;
+  image: string;
+}
+
+export const SESSION_CATEGORIES: SessionCategory[] = [
   {
-    id: 'CAMPAIGNS',
-    label: '01.',
-    fullTitle: 'CAMPAIGNS',
-    helperText: 'CAMPAIGNS — Brand activations & commercial campaigns',
-    image: imageFashionCampaign,
-    tag: 'BRAND & COMMERCIAL',
-    exhibitNo: 'EXHIBIT N° 01',
-    note: 'Brand activations & commercial campaigns'
+    id: 'wedding',
+    title: 'Wedding',
+    subtitle: 'Urban Luxury & Architectural Union',
+    code: 'EXHIBIT N° 01',
+    description: 'Documentary-style wedding photography in Rosebank & Sandton luxury venues. Architectural compositions and modern minimalist styling.',
+    image: imageJoburgWedding,
   },
   {
-    id: 'EDITORIAL',
-    label: '02.',
-    fullTitle: 'EDITORIAL',
-    helperText: 'EDITORIAL — Fashion, portraits & magazines',
-    image: imageStreetCouture,
-    tag: 'FASHION & MAGS',
-    exhibitNo: 'EXHIBIT N° 02',
-    note: 'Fashion, portraits & magazines'
+    id: 'baby-shower',
+    title: 'Baby Shower',
+    subtitle: 'Maternity & New Life Loft Editorial',
+    code: 'EXHIBIT N° 02',
+    description: 'Refined lifestyle imagery in sunlit studio lofts. Natural emotion, muted earth tones, and minimal decor.',
+    image: imageJoburgMaternity,
   },
   {
-    id: 'CONTENT',
-    label: '03.',
-    fullTitle: 'CONTENT',
-    helperText: 'CONTENT — Social media & digital content',
-    image: imageHeroModel,
-    tag: 'SOCIAL & DIGITAL',
-    exhibitNo: 'EXHIBIT N° 03',
-    note: 'Social media & digital content'
+    id: 'cake-smash',
+    title: 'Cake Smash',
+    subtitle: 'Artistic Milestone Studio Portraiture',
+    code: 'EXHIBIT N° 03',
+    description: 'Modern studio photography with organic compositions and clean lighting. Authentic expressions without novelty clutter.',
+    image: imageJoburgCakeSmash,
   },
   {
-    id: 'LIVE',
-    label: '04.',
-    fullTitle: 'LIVE',
-    helperText: 'LIVE — Events, DJs & entertainment',
-    image: imageUndergroundGallery,
-    tag: 'EVENTS & DJS',
-    exhibitNo: 'EXHIBIT N° 04',
-    note: 'Events, DJs & entertainment'
+    id: 'birthday',
+    title: 'Birthday',
+    subtitle: 'Fashion-Forward Braamfontein Nocturne',
+    code: 'EXHIBIT N° 04',
+    description: 'High-octane portraiture set in contemporary rooftops and underground spaces. Creative lighting and confident presence.',
+    image: imageJoburgBirthday,
+  },
+  {
+    id: 'lifestyle',
+    title: 'Lifestyle',
+    subtitle: 'High-Street Maboneng Streetwear',
+    code: 'EXHIBIT N° 05',
+    description: 'Editorial portraits amidst Johannesburg streets and industrial textures. Blending luxury tailoring with street culture.',
+    image: imageJoburgLifestyle,
+  },
+  {
+    id: 'family-session',
+    title: 'Family Session',
+    subtitle: 'Contemporary Rosebank Storytelling',
+    code: 'EXHIBIT N° 06',
+    description: 'Modern family portraiture captured in natural light and architectural surroundings with minimal, warm styling.',
+    image: imageJoburgFamily,
   },
 ];
 
+const MONTH_NAMES = [
+  'JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
+  'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'
+];
+
+const WEEKDAY_NAMES = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
+
+interface DayItem {
+  dateNumber: number;
+  fullDateStr: string;
+  displayDateStr: string;
+  dayOfWeekName: string;
+  isWeekend: boolean;
+  isAvailable: boolean;
+  isPast: boolean;
+}
+
 export default function Booking() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    projectType: 'CAMPAIGNS',
-    preferredDate: '',
-    instagram: '',
-    vision: '',
-  });
+  // Calendar Month State (Defaults to current date or August 2026)
+  const today = new Date();
+  const initialYear = today.getFullYear() < 2026 ? 2026 : today.getFullYear();
+  const initialMonth = today.getFullYear() < 2026 ? 7 : today.getMonth(); // 7 = August
+
+  const [currentYear, setCurrentYear] = useState<number>(initialYear);
+  const [currentMonth, setCurrentMonth] = useState<number>(initialMonth);
+
+  // Progressive Form State
+  const [selectedDate, setSelectedDate] = useState<DayItem | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<SessionCategory | null>(null);
+  
+  const [visitorName, setVisitorName] = useState('');
+  const [visitorEmail, setVisitorEmail] = useState('');
+  const [visitorPhone, setVisitorPhone] = useState('');
+  const [sessionNotes, setSessionNotes] = useState('');
+
+  // Active Progressive Step (1: Date, 2: Category, 3: Visitor Details)
+  const [activeStep, setActiveStep] = useState<1 | 2 | 3>(1);
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
-  const activeCategory = PROJECT_CATEGORIES.find(c => c.id === formData.projectType) || PROJECT_CATEGORIES[0];
+  // Generate Calendar Days for currentYear & currentMonth
+  const generateDays = (): (DayItem | null)[] => {
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const lastDay = new Date(currentYear, currentMonth + 1, 0);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    // Get starting day of week (MON = 0, TUE = 1, ..., SUN = 6)
+    let startingDay = firstDay.getDay() - 1;
+    if (startingDay < 0) startingDay = 6;
+
+    const daysInMonth = lastDay.getDate();
+    const days: (DayItem | null)[] = [];
+
+    // Empty padding cells for preceding month
+    for (let i = 0; i < startingDay; i++) {
+      days.push(null);
+    }
+
+    const checkDate = new Date();
+    checkDate.setHours(0, 0, 0, 0);
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const dateObj = new Date(currentYear, currentMonth, d);
+      const dayOfWeek = dateObj.getDay(); // 0 = Sun, 6 = Sat
+      const isWeekend = dayOfWeek === 0 || dayOfWeek === 6;
+      const isPast = dateObj < checkDate;
+
+      const dayName = WEEKDAY_NAMES[dayOfWeek === 0 ? 6 : dayOfWeek - 1];
+      const monthStr = MONTH_NAMES[currentMonth].slice(0, 3);
+
+      days.push({
+        dateNumber: d,
+        fullDateStr: `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`,
+        displayDateStr: `${d} ${monthStr} ${currentYear}`,
+        dayOfWeekName: dayOfWeek === 0 ? 'SUNDAY' : dayOfWeek === 6 ? 'SATURDAY' : dayName,
+        isWeekend,
+        isAvailable: isWeekend && !isPast,
+        isPast,
+      });
+    }
+
+    return days;
   };
 
-  const selectCategory = (typeId: string) => {
-    setFormData((prev) => ({ ...prev, projectType: typeId }));
+  const calendarDays = generateDays();
+
+  const handlePrevMonth = () => {
+    if (currentMonth === 0) {
+      setCurrentMonth(11);
+      setCurrentYear((prev) => prev - 1);
+    } else {
+      setCurrentMonth((prev) => prev - 1);
+    }
+  };
+
+  const handleNextMonth = () => {
+    if (currentMonth === 11) {
+      setCurrentMonth(0);
+      setCurrentYear((prev) => prev + 1);
+    } else {
+      setCurrentMonth((prev) => prev + 1);
+    }
+  };
+
+  const handleDateSelect = (day: DayItem) => {
+    if (!day.isAvailable) return;
+    setSelectedDate(day);
+    setErrorMessage('');
+    // Auto-advance to Step 2 smoothly
+    setActiveStep(2);
+  };
+
+  const handleCategorySelect = (category: SessionCategory) => {
+    setSelectedCategory(category);
+    setErrorMessage('');
+    // Auto-advance to Step 3 smoothly
+    setActiveStep(3);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
 
-    if (!formData.name.trim() || !formData.email.trim() || !formData.preferredDate.trim() || !formData.vision.trim()) {
-      setErrorMessage('REQUIRED: NAME, EMAIL, TIMELINE & CONCEPT BRIEF');
+    if (!selectedDate) {
+      setErrorMessage('PLEASE SELECT AN AVAILABLE WEEKEND DATE IN STEP 1');
+      setActiveStep(1);
+      return;
+    }
+    if (!selectedCategory) {
+      setErrorMessage('PLEASE SELECT A SESSION CATEGORY IN STEP 2');
+      setActiveStep(2);
+      return;
+    }
+    if (!visitorName.trim()) {
+      setErrorMessage('PLEASE PROVIDE YOUR NAME TO PROCEED');
       return;
     }
 
@@ -90,400 +214,701 @@ export default function Booking() {
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 1400);
+    }, 1200);
+  };
+
+  const handleReset = () => {
+    setIsSubmitted(false);
+    setSelectedDate(null);
+    setSelectedCategory(null);
+    setVisitorName('');
+    setVisitorEmail('');
+    setVisitorPhone('');
+    setSessionNotes('');
+    setActiveStep(1);
   };
 
   return (
-    <section id="booking" className="relative w-full bg-neutral-950 text-neutral-100 py-20 md:py-32 px-4 sm:px-6 md:px-12 z-10 border-t border-neutral-800">
+    <section id="booking" className="relative w-full bg-[#000000] text-[#FF6800] py-20 md:py-32 px-4 sm:px-6 md:px-12 z-10 border-t border-[#FF6800]/20">
       
-      {/* Background High-Street Punk Grid & Stencil Elements */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
+      {/* Subtle Museum Grid Overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#FF680008_1px,transparent_1px),linear-gradient(to_bottom,#FF680008_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         
-        {/* Minimal Museum Header */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 pb-6 border-b border-neutral-800 gap-4">
+        {/* Gallery Header */}
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 pb-6 border-b border-[#FF6800]/20 gap-6">
           <div>
-            <div className="flex items-center gap-3 mb-2 font-mono text-[10px] sm:text-xs tracking-[0.25em] text-amber-500 uppercase font-semibold">
-              <span className="w-2 h-2 rounded-full bg-amber-500 animate-pulse" />
-              <span>[ BOOKING ]</span>
-              <span className="text-neutral-600">•</span>
-              <span className="text-neutral-400 font-normal">BEGIN</span>
+            <div className="flex items-center gap-3 mb-3 font-sans text-xs tracking-[0.3em] text-[#FF6800] uppercase font-bold">
+              <span className="w-2 h-2 rounded-full bg-[#FF6800] animate-pulse" />
+              <span>// BESPOKE PRIVATE CONSULTATION</span>
             </div>
-            <h2 className="text-4xl sm:text-6xl md:text-7xl font-sans tracking-tighter uppercase font-black text-neutral-50 leading-none">
-              LET'S <span className="font-serif italic font-light text-neutral-400">CREATE</span>
+            <h2 className="text-4xl sm:text-6xl md:text-7xl font-serif tracking-tight uppercase font-extrabold text-white leading-none">
+              PRIVATE <span className="font-serif italic font-light text-[#FF6800]">RESERVATION</span>
             </h2>
           </div>
-          
-          <div className="font-mono text-[10px] sm:text-xs text-neutral-500 uppercase tracking-[0.2em] flex items-center gap-4">
-            <span className="border border-neutral-800 px-3 py-1 bg-neutral-900/80">JOHANNESBURG • SA</span>
-            <span className="hidden sm:inline text-neutral-700">|</span>
-            <span>NEW BOOKING</span>
+
+          <div className="flex items-center gap-4 text-xs font-sans tracking-[0.2em] uppercase text-[#FF6800]">
+            <span className="border border-[#FF6800]/40 px-3.5 py-1.5 bg-[#000000] text-white font-bold">
+              JOHANNESBURG • SA
+            </span>
+            <span className="text-[#FF6800]/40">•</span>
+            <span className="text-[#FF6800] font-bold">WEEKEND SESSIONS ONLY</span>
           </div>
         </div>
 
-        {/* Category Image Selector Bar (High-Street Punk Lookbook Strip) */}
-        <div className="mb-12">
-          <div className="flex items-center justify-between mb-3 font-mono text-[10px] text-neutral-400 uppercase tracking-widest">
-            <span>// SELECT PROJECT TYPE</span>
-            <span>[ {activeCategory.exhibitNo} ]</span>
-          </div>
+        {/* Progressive Step Controller Indicator Bar */}
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-10">
+          
+          {/* Step 1 Indicator */}
+          <button
+            type="button"
+            onClick={() => setActiveStep(1)}
+            className={`group text-left p-3.5 sm:p-5 border transition-all duration-300 relative ${
+              activeStep === 1
+                ? 'border-white bg-[#000000] text-[#FF6800] ring-1 ring-[#FF6800]'
+                : selectedDate
+                ? 'border-[#FF6800]/40 bg-[#000000]/60 text-white hover:border-[#FF6800]'
+                : 'border-white/20 bg-[#000000]/30 text-white/50 hover:border-white/50'
+            }`}
+          >
+            <div className="flex justify-between items-center mb-1">
+              <span className="font-sans text-[10px] tracking-[0.2em] uppercase font-bold text-[#FF6800]">
+                01. SESSION DATE
+              </span>
+              {selectedDate && (
+                <span className="w-2 h-2 rounded-full bg-[#FF6800]" />
+              )}
+            </div>
+            <div className="font-serif text-sm sm:text-base text-white font-bold truncate">
+              {selectedDate ? selectedDate.displayDateStr : 'Select Weekend Date'}
+            </div>
+            {activeStep === 1 && (
+              <motion.div layoutId="stepIndicator" className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF6800]" />
+            )}
+          </button>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-            {PROJECT_CATEGORIES.map((cat) => {
-              const isSelected = formData.projectType === cat.id;
-              return (
-                <button
-                  key={cat.id}
-                  type="button"
-                  onClick={() => selectCategory(cat.id)}
-                  className={`group relative aspect-[16/10] sm:aspect-[16/9] overflow-hidden text-left border transition-all duration-300 ${
-                    isSelected 
-                      ? 'border-amber-500 ring-1 ring-amber-500/50 shadow-lg shadow-amber-500/10 scale-[1.02]' 
-                      : 'border-neutral-800 hover:border-neutral-600 opacity-70 hover:opacity-100'
-                  }`}
-                >
-                  <img
-                    src={cat.image}
-                    alt={cat.fullTitle}
-                    referrerPolicy="no-referrer"
-                    className={`w-full h-full object-cover transition-all duration-700 ${
-                      isSelected ? 'grayscale-0 contrast-110 scale-105' : 'grayscale contrast-120 group-hover:scale-105'
-                    }`}
-                  />
-                  
-                  {/* Punk Tape Tag */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-2 sm:p-3 flex flex-col justify-between">
-                    <div className="flex justify-between items-start">
-                      <span className={`font-mono text-[9px] uppercase tracking-wider px-1.5 py-0.5 font-bold ${
-                        isSelected ? 'bg-amber-500 text-black' : 'bg-neutral-900/90 text-neutral-300'
-                      }`}>
-                        {cat.fullTitle}
-                      </span>
-                      {isSelected && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping" />
-                      )}
-                    </div>
+          {/* Step 2 Indicator */}
+          <button
+            type="button"
+            onClick={() => selectedDate && setActiveStep(2)}
+            disabled={!selectedDate}
+            className={`group text-left p-3.5 sm:p-5 border transition-all duration-300 relative ${
+              !selectedDate ? 'cursor-not-allowed opacity-40 border-white/10 bg-[#000000]' :
+              activeStep === 2
+                ? 'border-white bg-[#000000] text-[#FF6800] ring-1 ring-[#FF6800]'
+                : selectedCategory
+                ? 'border-[#FF6800]/40 bg-[#000000]/60 text-white hover:border-[#FF6800]'
+                : 'border-white/20 bg-[#000000]/30 text-white/50 hover:border-white/50'
+            }`}
+          >
+            <div className="flex justify-between items-center mb-1">
+              <span className="font-sans text-[10px] tracking-[0.2em] uppercase font-bold text-[#FF6800]">
+                02. CATEGORY
+              </span>
+              {selectedCategory && (
+                <span className="w-2 h-2 rounded-full bg-[#FF6800]" />
+              )}
+            </div>
+            <div className="font-serif text-sm sm:text-base text-white font-bold truncate">
+              {selectedCategory ? selectedCategory.title : 'Choose Experience'}
+            </div>
+            {activeStep === 2 && (
+              <motion.div layoutId="stepIndicator" className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF6800]" />
+            )}
+          </button>
 
-                    <div>
-                      <span className="font-mono text-[9px] text-neutral-400 block tracking-widest">{cat.label}</span>
-                      <span className="font-sans font-extrabold text-xs sm:text-sm text-white tracking-tight uppercase block leading-tight">
-                        {cat.tag}
-                      </span>
-                    </div>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
+          {/* Step 3 Indicator */}
+          <button
+            type="button"
+            onClick={() => selectedDate && selectedCategory && setActiveStep(3)}
+            disabled={!selectedDate || !selectedCategory}
+            className={`group text-left p-3.5 sm:p-5 border transition-all duration-300 relative ${
+              (!selectedDate || !selectedCategory) ? 'cursor-not-allowed opacity-40 border-white/10 bg-[#000000]' :
+              activeStep === 3
+                ? 'border-white bg-[#000000] text-[#FF6800] ring-1 ring-[#FF6800]'
+                : visitorName
+                ? 'border-[#FF6800]/40 bg-[#000000]/60 text-white hover:border-[#FF6800]'
+                : 'border-white/20 bg-[#000000]/30 text-white/50 hover:border-white/50'
+            }`}
+          >
+            <div className="flex justify-between items-center mb-1">
+              <span className="font-sans text-[10px] tracking-[0.2em] uppercase font-bold text-[#FF6800]">
+                03. VISITOR DETAILS
+              </span>
+              {visitorName && (
+                <span className="w-2 h-2 rounded-full bg-[#FF6800]" />
+              )}
+            </div>
+            <div className="font-serif text-sm sm:text-base text-white font-bold truncate">
+              {visitorName ? visitorName : 'Your Information'}
+            </div>
+            {activeStep === 3 && (
+              <motion.div layoutId="stepIndicator" className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF6800]" />
+            )}
+          </button>
+
         </div>
 
-        {/* Main Content Layout: Left Image-Heavy Museum Exhibit + Right Minimal Form */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-x-12 lg:gap-y-6 items-start">
-          
-          {/* 1. Dynamic Featured Exhibit Image Card (Mobile: 1st, Desktop: Top Left) */}
-          <div className="col-span-1 lg:col-span-5 order-1">
-            <div className="relative border border-neutral-800 bg-neutral-900 overflow-hidden shadow-2xl group">
+        {/* Global Error Banner if needed */}
+        {errorMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-8 p-4 bg-red-950/90 border border-red-500 text-red-200 font-sans text-xs uppercase tracking-widest flex items-center justify-between font-bold"
+          >
+            <span>{errorMessage}</span>
+            <button onClick={() => setErrorMessage('')} className="text-white hover:text-red-400">✕</button>
+          </motion.div>
+        )}
+
+        {/* MAIN PROGRESSIVE VIEW CONTAINER */}
+        <AnimatePresence mode="wait">
+          {!isSubmitted ? (
+            <div key="form-container">
               
-              {/* Museum Corner Crosshairs */}
-              <span className="absolute top-2 left-2 text-[10px] font-mono text-neutral-500 z-20 pointer-events-none">+</span>
-              <span className="absolute top-2 right-2 text-[10px] font-mono text-neutral-500 z-20 pointer-events-none">+</span>
-              <span className="absolute bottom-2 left-2 text-[10px] font-mono text-neutral-500 z-20 pointer-events-none">+</span>
-              <span className="absolute bottom-2 right-2 text-[10px] font-mono text-neutral-500 z-20 pointer-events-none">+</span>
-
-              <div className="relative aspect-[3/4] w-full overflow-hidden">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={activeCategory.id}
-                    src={activeCategory.image}
-                    alt={activeCategory.fullTitle}
-                    referrerPolicy="no-referrer"
-                    initial={{ opacity: 0, scale: 1.05 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.4 }}
-                    className="w-full h-full object-cover grayscale contrast-120 hover:grayscale-0 transition-all duration-700"
-                  />
-                </AnimatePresence>
-
-                {/* Stencil Tape & Museum Label Overlay */}
-                <div className="absolute top-4 left-4 z-20 bg-black/90 border border-neutral-700 px-2.5 py-1 text-[9px] font-mono text-amber-400 uppercase tracking-widest flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 bg-amber-400 rounded-full" />
-                  <span>{activeCategory.exhibitNo}</span>
-                </div>
-
-                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black via-black/80 to-transparent p-5 z-20">
-                  <span className="font-mono text-[9px] text-amber-500 uppercase tracking-widest block mb-1">
-                    [ VISUAL CONCEPT REFERENCE ]
-                  </span>
-                  <h3 className="font-sans font-black text-xl text-white uppercase tracking-tight">
-                    {activeCategory.fullTitle}
-                  </h3>
-                  <p className="font-mono text-[10px] text-neutral-400 uppercase tracking-wider mt-1">
-                    {activeCategory.note}
-                  </p>
-                </div>
-              </div>
-
-              {/* Museum Archive Plaque Sub-strip */}
-              <div className="p-4 bg-neutral-950 border-t border-neutral-800 flex items-center justify-between font-mono text-[10px] text-neutral-400 uppercase tracking-widest">
-                <span>AM PHOTOGRAPHY</span>
-                <span className="text-neutral-600">//</span>
-                <span>CURRENTLY BOOKING</span>
-              </div>
-            </div>
-          </div>
-
-          {/* 2. RIGHT: Minimalist High-Street Museum Questionnaire (Mobile: 2nd, Desktop: Right Column) */}
-          <div className="col-span-1 lg:col-span-7 lg:col-start-6 lg:row-span-2 order-2 border border-neutral-800 bg-neutral-900/60 p-6 sm:p-8 md:p-10 relative">
-            
-            {/* Museum Plaque Badge */}
-            <div className="flex items-center justify-between mb-8 pb-4 border-b border-neutral-800">
-              <span className="font-mono text-[10px] text-amber-500 uppercase tracking-[0.2em] font-semibold">
-                // DETAILS
-              </span>
-              <span className="font-mono text-[10px] text-neutral-500 uppercase tracking-widest">
-                [ REQUIRED FIELDS * ]
-              </span>
-            </div>
-
-            <AnimatePresence mode="wait">
-              {!isSubmitted ? (
-                <motion.form
-                  id="booking-form"
-                  onSubmit={handleSubmit}
-                  initial={{ opacity: 0, y: 10 }}
+              {/* STEP 1: ELEGANT INTEGRATED AVAILABILITY CALENDAR */}
+              {activeStep === 1 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
+                  exit={{ opacity: 0, y: -15 }}
                   transition={{ duration: 0.3 }}
-                  className="space-y-6"
+                  className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
                 >
-                  {errorMessage && (
-                    <div className="p-3 bg-red-950/60 border border-red-500/50 text-red-300 font-mono text-[10px] uppercase tracking-wider flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-red-500 rounded-full animate-ping" />
-                      <span>{errorMessage}</span>
-                    </div>
-                  )}
+                  
+                  {/* Left Column: Editorial Guidance & Museum Statement */}
+                  <div className="col-span-1 lg:col-span-5 border border-white/20 bg-[#000000] p-6 sm:p-8 flex flex-col justify-between h-full">
+                    <div>
+                      <div className="font-sans text-[10px] text-[#FF6800] uppercase tracking-[0.25em] font-bold mb-2 flex items-center gap-2">
+                        <CalendarIcon className="w-3.5 h-3.5 stroke-[2]" />
+                        <span>SELECTABLE WEEKEND DATES</span>
+                      </div>
 
-                  {/* Form Fields: Minimalist Micro-Labels */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                    
-                    {/* 01. NAME */}
-                    <div className="flex flex-col">
-                      <label htmlFor="name" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-1.5">
-                        01. FULL NAME *
-                      </label>
-                      <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="NAME"
-                        className="w-full border border-neutral-800 bg-neutral-950/90 rounded-none px-3.5 py-2.5 text-neutral-100 placeholder-neutral-600 focus:outline-none focus:border-amber-500 text-xs font-mono transition-colors duration-200"
-                      />
-                    </div>
+                      <h3 className="font-serif text-3xl sm:text-4xl text-white font-black uppercase tracking-tight mb-4">
+                        CURATED <br />
+                        <span className="font-serif italic font-light text-[#FF6800]">AVAILABILITY</span>
+                      </h3>
 
-                    {/* 02. EMAIL */}
-                    <div className="flex flex-col">
-                      <label htmlFor="email" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-1.5">
-                        02. EMAIL ADDRESS *
-                      </label>
-                      <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        required
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="EMAIL@DOMAIN.COM"
-                        className="w-full border border-neutral-800 bg-neutral-950/90 rounded-none px-3.5 py-2.5 text-neutral-100 placeholder-neutral-600 focus:outline-none focus:border-amber-500 text-xs font-mono transition-colors duration-200"
-                      />
+                      <p className="font-sans text-xs text-neutral-300 leading-relaxed space-y-3 mb-6">
+                        To maintain museum-grade photography standards and focused personal creative direction, session appointments are reserved strictly for <strong className="text-[#FF6800]">Saturdays and Sundays</strong>.
+                      </p>
+
+                      <div className="space-y-3 pt-4 border-t border-white/10 font-sans text-xs text-neutral-400">
+                        <div className="flex items-center gap-3">
+                          <span className="w-3 h-3 rounded-full bg-[#FF6800] border border-white" />
+                          <span className="text-white font-bold">Orange Highlighted</span>
+                          <span>— Selectable Weekend Slot</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="w-3 h-3 rounded-full bg-neutral-800 border border-neutral-700 opacity-40" />
+                          <span className="text-neutral-500 line-through">Muted Weekday</span>
+                          <span>— Fully Reserved / Unavailable</span>
+                        </div>
+                      </div>
                     </div>
 
-                    {/* 03. PHONE */}
-                    <div className="flex flex-col">
-                      <label htmlFor="phone" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-1.5">
-                        03. PHONE NUMBER
-                      </label>
-                      <input
-                        type="tel"
-                        id="phone"
-                        name="phone"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        placeholder="+27 82 123 4567"
-                        className="w-full border border-neutral-800 bg-neutral-950/90 rounded-none px-3.5 py-2.5 text-neutral-100 placeholder-neutral-600 focus:outline-none focus:border-amber-500 text-xs font-mono transition-colors duration-200"
-                      />
-                    </div>
-
-                    {/* 04. PROJECT TYPE */}
-                    <div className="flex flex-col col-span-1 sm:col-span-2">
-                      <label htmlFor="projectType" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-1.5">
-                        04. PROJECT TYPE *
-                      </label>
-                      <select
-                        id="projectType"
-                        name="projectType"
-                        value={formData.projectType}
-                        onChange={handleChange}
-                        className="w-full border border-neutral-800 bg-neutral-950/90 rounded-none px-3.5 py-2.5 text-neutral-100 focus:outline-none focus:border-amber-500 text-xs font-mono transition-colors duration-200 uppercase cursor-pointer"
-                      >
-                        {PROJECT_CATEGORIES.map(c => (
-                          <option key={c.id} value={c.id} className="bg-neutral-950 text-neutral-200">
-                            {c.helperText}
-                          </option>
-                        ))}
-                      </select>
-                      <span className="font-mono text-[10px] text-amber-500 uppercase tracking-wider mt-1.5">
-                        {activeCategory.helperText}
+                    <div className="mt-8 pt-6 border-t border-white/10 flex items-center justify-between">
+                      <Logo variant="orange" size="sm" />
+                      <span className="font-sans text-[10px] text-white/60 tracking-widest uppercase">
+                        ANGELIQUE-MARI
                       </span>
                     </div>
+                  </div>
 
-                    {/* 05. PREFERRED DATE */}
-                    <div className="flex flex-col">
-                      <label htmlFor="preferredDate" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-1.5">
-                        05. TIMELINE / DATE *
-                      </label>
-                      <input
-                        type="date"
-                        id="preferredDate"
-                        name="preferredDate"
-                        required
-                        value={formData.preferredDate}
-                        onChange={handleChange}
-                        className="w-full border border-neutral-800 bg-neutral-950/90 rounded-none px-3.5 py-2.5 text-neutral-100 focus:outline-none focus:border-amber-500 text-xs font-mono transition-colors duration-200"
-                      />
+                  {/* Right Column: Custom Calendar Component */}
+                  <div className="col-span-1 lg:col-span-7 border border-[#FF6800]/30 bg-[#000000] p-6 sm:p-8 relative shadow-2xl">
+                    
+                    {/* Month Nav Header */}
+                    <div className="flex items-center justify-between mb-8 pb-4 border-b border-[#FF6800]/20">
+                      <button
+                        type="button"
+                        onClick={handlePrevMonth}
+                        className="p-2 border border-[#FF6800]/30 text-[#FF6800] hover:text-white hover:border-white transition-all flex items-center gap-1.5 font-sans text-xs font-bold uppercase tracking-widest"
+                        aria-label="Previous Month"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                        <span className="hidden sm:inline">PREV</span>
+                      </button>
+
+                      <div className="text-center">
+                        <span className="font-serif text-2xl sm:text-3xl font-extrabold text-white uppercase tracking-wider block">
+                          {MONTH_NAMES[currentMonth]}
+                        </span>
+                        <span className="font-sans text-[10px] text-[#FF6800] uppercase tracking-[0.3em] font-bold">
+                          {currentYear} • PRIVATE CALENDAR
+                        </span>
+                      </div>
+
+                      <button
+                        type="button"
+                        onClick={handleNextMonth}
+                        className="p-2 border border-[#FF6800]/30 text-[#FF6800] hover:text-white hover:border-white transition-all flex items-center gap-1.5 font-sans text-xs font-bold uppercase tracking-widest"
+                        aria-label="Next Month"
+                      >
+                        <span className="hidden sm:inline">NEXT</span>
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
                     </div>
 
-                    {/* 06. INSTAGRAM / SITE */}
-                    <div className="flex flex-col">
-                      <label htmlFor="instagram" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-1.5">
-                        06. INSTAGRAM / SITE
-                      </label>
-                      <input
-                        type="text"
-                        id="instagram"
-                        name="instagram"
-                        value={formData.instagram}
-                        onChange={handleChange}
-                        placeholder="@HANDLE / WEBSITE"
-                        className="w-full border border-neutral-800 bg-neutral-950/90 rounded-none px-3.5 py-2.5 text-neutral-100 placeholder-neutral-600 focus:outline-none focus:border-amber-500 text-xs font-mono transition-colors duration-200"
-                      />
+                    {/* Weekday Labels Grid */}
+                    <div className="grid grid-cols-7 gap-1 sm:gap-2 mb-3 text-center">
+                      {WEEKDAY_NAMES.map((w, idx) => {
+                        const isWeekendHeader = idx === 5 || idx === 6;
+                        return (
+                          <div
+                            key={w}
+                            className={`font-sans text-[10px] sm:text-xs tracking-widest uppercase py-1 font-bold ${
+                              isWeekendHeader ? 'text-[#FF6800]' : 'text-neutral-600'
+                            }`}
+                          >
+                            {w}
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    {/* Calendar Days Grid */}
+                    <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
+                      {calendarDays.map((day, idx) => {
+                        if (!day) {
+                          return <div key={`empty-${idx}`} className="aspect-square bg-transparent" />;
+                        }
+
+                        const isSelected = selectedDate?.fullDateStr === day.fullDateStr;
+
+                        if (!day.isAvailable) {
+                          return (
+                            <div
+                              key={day.fullDateStr}
+                              className="aspect-square border border-neutral-900 bg-neutral-950/40 p-1 sm:p-2 flex flex-col justify-between items-center opacity-30 cursor-not-allowed select-none"
+                              aria-disabled="true"
+                            >
+                              <span className="font-sans text-xs sm:text-sm text-neutral-600 line-through">
+                                {day.dateNumber}
+                              </span>
+                              <span className="font-sans text-[8px] text-neutral-700 tracking-tighter uppercase hidden sm:inline">
+                                OFF
+                              </span>
+                            </div>
+                          );
+                        }
+
+                        return (
+                          <button
+                            key={day.fullDateStr}
+                            type="button"
+                            onClick={() => handleDateSelect(day)}
+                            className={`group aspect-square p-1 sm:p-2 flex flex-col justify-between items-center transition-all duration-300 relative cursor-pointer ${
+                              isSelected
+                                ? 'border-2 border-white bg-[#FF6800] text-black font-black scale-105 shadow-[0_0_20px_rgba(255,104,0,0.6)] z-10'
+                                : 'border border-[#FF6800]/40 bg-[#000000] text-[#FF6800] hover:border-white hover:bg-[#FF6800]/10 hover:scale-[1.03]'
+                            }`}
+                          >
+                            <span className={`font-sans text-xs sm:text-base font-bold ${isSelected ? 'text-black' : 'text-[#FF6800]'}`}>
+                              {day.dateNumber}
+                            </span>
+
+                            <div className="flex items-center gap-1">
+                              <span className={`w-1.5 h-1.5 rounded-full ${isSelected ? 'bg-black' : 'bg-[#FF6800] animate-pulse'}`} />
+                              <span className={`font-sans text-[8px] uppercase tracking-tighter hidden sm:inline font-bold ${isSelected ? 'text-black' : 'text-white'}`}>
+                                OPEN
+                              </span>
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Bottom Action Row */}
+                    <div className="mt-8 pt-4 border-t border-[#FF6800]/20 flex flex-col sm:flex-row justify-between items-center gap-4">
+                      <div className="font-sans text-xs text-[#FF6800]">
+                        {selectedDate ? (
+                          <span className="text-white font-bold">
+                            SELECTED: <span className="text-[#FF6800]">{selectedDate.dayOfWeekName}, {selectedDate.displayDateStr}</span>
+                          </span>
+                        ) : (
+                          <span className="text-neutral-400">Please click a highlighted weekend date to proceed</span>
+                        )}
+                      </div>
+
+                      <button
+                        type="button"
+                        disabled={!selectedDate}
+                        onClick={() => setActiveStep(2)}
+                        className={`px-6 py-3 font-sans text-xs uppercase tracking-widest font-bold flex items-center gap-2 transition-all ${
+                          selectedDate
+                            ? 'bg-[#FF6800] text-black border border-[#FF6800] hover:bg-white hover:text-black cursor-pointer'
+                            : 'bg-neutral-900 text-neutral-600 border border-neutral-800 cursor-not-allowed'
+                        }`}
+                      >
+                        <span>CONTINUE TO CATEGORY</span>
+                        <ArrowUpRight className="w-4 h-4" />
+                      </button>
                     </div>
 
                   </div>
 
-                  {/* 07. CONCEPT BRIEF */}
-                  <div className="flex flex-col pt-2">
-                    <label htmlFor="vision" className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-400 mb-1.5">
-                      07. CONCEPT BRIEF *
-                    </label>
-                    <textarea
-                      id="vision"
-                      name="vision"
-                      rows={4}
-                      required
-                      value={formData.vision}
-                      onChange={handleChange}
-                      placeholder="Tell me about your vision, preferred location, and the kind of images you're looking for..."
-                      className="w-full border border-neutral-800 bg-neutral-950/90 rounded-none p-3.5 text-neutral-100 placeholder-neutral-600 focus:outline-none focus:border-amber-500 text-xs font-mono transition-colors duration-200 resize-none"
-                    />
+                </motion.div>
+              )}
+
+              {/* STEP 2: REFINED SESSION CATEGORY SELECTOR */}
+              {activeStep === 2 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.3 }}
+                  className="space-y-8"
+                >
+                  
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end pb-4 border-b border-[#FF6800]/20 gap-2">
+                    <div>
+                      <span className="font-sans text-[10px] text-[#FF6800] uppercase tracking-[0.25em] font-bold block mb-1">
+                        STEP 02 OF 03 // SELECT EXPERIENCE
+                      </span>
+                      <h3 className="font-serif text-3xl sm:text-5xl font-black uppercase text-white">
+                        SESSION <span className="font-serif italic font-light text-[#FF6800]">CATEGORY</span>
+                      </h3>
+                    </div>
+                    
+                    <span className="font-sans text-xs text-neutral-400">
+                      Chosen Date: <strong className="text-white font-bold">{selectedDate?.displayDateStr}</strong>
+                    </span>
                   </div>
 
-                  {/* Submission Row */}
-                  <div className="pt-4 border-t border-neutral-800 flex justify-end">
+                  {/* Editorial Category Grid */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-6">
+                    {SESSION_CATEGORIES.map((cat) => {
+                      const isSelected = selectedCategory?.id === cat.id;
+
+                      return (
+                        <button
+                          key={cat.id}
+                          type="button"
+                          onClick={() => handleCategorySelect(cat)}
+                          className={`group text-left p-3 sm:p-5 bg-[#000000] border transition-all duration-300 relative flex flex-col justify-between cursor-pointer ${
+                            isSelected
+                              ? 'border-2 border-white ring-2 ring-[#FF6800] bg-neutral-950 scale-[1.01] sm:scale-[1.02] shadow-[0_10px_30px_rgba(255,104,0,0.25)]'
+                              : 'border-white/20 hover:border-[#FF6800] hover:bg-neutral-950/80'
+                          }`}
+                        >
+                          {/* Image Frame with White Matting (#FFFFFF) */}
+                          <div className="relative aspect-[21/9] sm:aspect-[16/10] w-full overflow-hidden bg-white p-0.5 sm:p-1 mb-2.5 sm:mb-4 border border-white">
+                            <div className="relative w-full h-full overflow-hidden bg-black">
+                              <img
+                                src={cat.image}
+                                alt={cat.title}
+                                referrerPolicy="no-referrer"
+                                className={`w-full h-full object-cover transition-all duration-700 ${
+                                  isSelected ? 'scale-105 contrast-110 grayscale-0' : 'grayscale contrast-120 group-hover:scale-105 group-hover:grayscale-0'
+                                }`}
+                              />
+                              
+                              <div className="absolute top-1.5 left-1.5 sm:top-2 sm:left-2 bg-black/90 px-1.5 sm:px-2 py-0.5 border border-[#FF6800]/40 font-sans text-[8px] sm:text-[9px] text-[#FF6800] uppercase tracking-widest font-bold">
+                                {cat.code}
+                              </div>
+
+                              {isSelected && (
+                                <div className="absolute top-1.5 right-1.5 sm:top-2 sm:right-2 bg-[#FF6800] text-black p-0.5 sm:p-1">
+                                  <Check className="w-3 sm:w-3.5 h-3 sm:h-3.5 stroke-[3]" />
+                                </div>
+                              )}
+                            </div>
+                          </div>
+
+                          {/* Category Title & Subtitle */}
+                          <div>
+                            <div className="flex items-center justify-between">
+                              <h4 className={`font-serif text-lg sm:text-2xl font-bold uppercase tracking-tight transition-colors ${
+                                isSelected ? 'text-white' : 'text-white group-hover:text-[#FF6800]'
+                              }`}>
+                                {cat.title}
+                              </h4>
+                              {isSelected && (
+                                <span className="font-sans text-[9px] sm:text-[10px] bg-[#FF6800] text-black px-1.5 sm:px-2 py-0.5 font-bold uppercase tracking-wider">
+                                  SELECTED
+                                </span>
+                              )}
+                            </div>
+
+                            <div className="font-sans text-[10px] text-[#FF6800] uppercase tracking-widest font-bold hidden sm:block mt-1">
+                              {cat.subtitle}
+                            </div>
+                          </div>
+
+                          {/* Bottom Indicator */}
+                          <div className="mt-2.5 pt-2 sm:mt-4 sm:pt-3 border-t border-white/10 flex justify-between items-center font-sans text-[9px] sm:text-[10px] text-neutral-500 uppercase tracking-widest">
+                            <span className="group-hover:text-[#FF6800] transition-colors">
+                              <span className="sm:hidden">[ TAP TO SELECT ]</span>
+                              <span className="hidden sm:inline">[ CLICK TO SELECT ]</span>
+                            </span>
+                            <ArrowUpRight className={`w-3 sm:w-3.5 h-3 sm:h-3.5 transition-transform ${isSelected ? 'text-[#FF6800] translate-x-0.5 -translate-y-0.5' : 'group-hover:text-white'}`} />
+                          </div>
+                        </button>
+                      );
+                    })}
+                  </div>
+
+                  {/* Navigation Buttons */}
+                  <div className="pt-6 border-t border-[#FF6800]/20 flex justify-between items-center">
                     <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="relative border border-amber-500 bg-amber-500 text-neutral-950 px-6 py-3 font-mono text-xs uppercase tracking-widest font-bold hover:bg-neutral-950 hover:text-amber-400 transition-all duration-300 flex items-center justify-center gap-2 w-full sm:w-auto"
+                      type="button"
+                      onClick={() => setActiveStep(1)}
+                      className="px-6 py-3 border border-white/30 text-white font-sans text-xs uppercase tracking-widest font-bold hover:border-white hover:bg-white hover:text-black transition-all"
                     >
-                      <span>{isSubmitting ? 'SENDING...' : 'SEND'}</span>
-                      <ArrowUpRight className="w-4 h-4 stroke-[2]" />
+                      ← BACK TO DATE
+                    </button>
+
+                    <button
+                      type="button"
+                      disabled={!selectedCategory}
+                      onClick={() => setActiveStep(3)}
+                      className={`px-6 py-3 font-sans text-xs uppercase tracking-widest font-bold flex items-center gap-2 transition-all ${
+                        selectedCategory
+                          ? 'bg-[#FF6800] text-black border border-[#FF6800] hover:bg-white hover:text-black cursor-pointer'
+                          : 'bg-neutral-900 text-neutral-600 border border-neutral-800 cursor-not-allowed'
+                      }`}
+                    >
+                      <span>CONTINUE TO VISITOR DETAILS</span>
+                      <ArrowUpRight className="w-4 h-4" />
                     </button>
                   </div>
 
-                </motion.form>
-              ) : (
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.98 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.4 }}
-                  className="flex flex-col items-center justify-center text-center py-12 px-4 border border-amber-500/30 bg-neutral-950"
-                >
-                  <div className="w-12 h-12 border border-amber-500 bg-amber-500/10 flex items-center justify-center mb-6 text-amber-400">
-                    <Check className="w-6 h-6" />
-                  </div>
-
-                  <span className="font-mono text-[10px] text-amber-500 uppercase tracking-[0.25em] mb-2 font-semibold">
-                    // BRIEF RECEIVED
-                  </span>
-
-                  <h3 className="font-sans text-3xl sm:text-4xl font-black uppercase text-white mb-6">
-                    THANK YOU
-                  </h3>
-
-                  <div className="font-mono text-xs text-neutral-300 max-w-md leading-relaxed space-y-3 mb-6">
-                    <p className="text-white font-bold">{formData.name ? `${formData.name},` : 'Eric Thomas,'}</p>
-                    <p>
-                      Your{' '}
-                      <span className="text-amber-400 font-bold">
-                        {formData.projectType
-                          ? formData.projectType.charAt(0).toUpperCase() + formData.projectType.slice(1).toLowerCase()
-                          : 'Campaigns'}
-                      </span>{' '}
-                      brief has been received.
-                    </p>
-                    <p className="text-neutral-400">It'll be reviewed shortly.</p>
-                  </div>
-
-                  <div className="w-full max-w-xs border-t border-neutral-800 pt-4 font-mono text-[10px] text-neutral-500 uppercase tracking-widest">
-                    REF N° 24840 • ARCHIVE 2026
-                  </div>
-
-                  <button
-                    onClick={() => {
-                      setIsSubmitted(false);
-                      setFormData({
-                        name: '',
-                        email: '',
-                        phone: '',
-                        projectType: 'CAMPAIGNS',
-                        preferredDate: '',
-                        instagram: '',
-                        vision: '',
-                      });
-                      window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }}
-                    className="mt-6 font-mono text-[10px] uppercase tracking-widest text-amber-500 hover:underline cursor-pointer"
-                  >
-                    [ DONE ]
-                  </button>
                 </motion.div>
               )}
-            </AnimatePresence>
 
-          </div>
+              {/* STEP 3: VISITOR DETAILS & CONCEPT BRIEF */}
+              {activeStep === 3 && (
+                <motion.div
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -15 }}
+                  transition={{ duration: 0.3 }}
+                  className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
+                >
+                  
+                  {/* Summary Preview Box */}
+                  <div className="col-span-1 lg:col-span-4 border border-[#FF6800]/40 bg-[#000000] p-6 sm:p-8 flex flex-col justify-between">
+                    <div>
+                      <div className="font-sans text-[10px] text-[#FF6800] uppercase tracking-[0.25em] font-bold mb-4 pb-2 border-b border-[#FF6800]/20">
+                        // RESERVATION SUMMARY
+                      </div>
 
-          {/* 3. Direct Minimal Coordinates (Mobile/Tablet: 3rd [below form], Desktop: Left Column) */}
-          <div className="col-span-1 lg:col-span-5 lg:col-start-1 order-3 border border-neutral-800 bg-neutral-900/50 p-4 font-mono text-[10px] text-neutral-400 flex flex-col gap-1.5 uppercase tracking-wider">
-            <div className="flex justify-between text-neutral-500">
-              <span>DIRECT CONTACT</span>
-              <span>BASED IN JOHANNESBURG</span>
+                      {/* Date Badge */}
+                      <div className="mb-6">
+                        <span className="font-sans text-[9px] text-neutral-400 uppercase tracking-widest block mb-1">
+                          SELECTED DATE
+                        </span>
+                        <div className="font-serif text-2xl text-white font-bold uppercase">
+                          {selectedDate?.displayDateStr}
+                        </div>
+                        <span className="font-sans text-[10px] text-[#FF6800] uppercase tracking-widest font-bold">
+                          {selectedDate?.dayOfWeekName}
+                        </span>
+                      </div>
+
+                      {/* Category Badge */}
+                      <div className="mb-6">
+                        <span className="font-sans text-[9px] text-neutral-400 uppercase tracking-widest block mb-1">
+                          EXPERIENCE CATEGORY
+                        </span>
+                        <div className="font-serif text-2xl text-white font-bold uppercase">
+                          {selectedCategory?.title}
+                        </div>
+                        <span className="font-sans text-[10px] text-[#FF6800] uppercase tracking-widest font-bold">
+                          {selectedCategory?.subtitle}
+                        </span>
+                      </div>
+
+                      <div className="p-3 border border-white/20 bg-neutral-950 font-sans text-xs text-neutral-300 space-y-2">
+                        <p className="font-bold text-white">ANGELIQUE-MARI PERSONAL GUARANTEE</p>
+                        <p className="text-[11px] leading-relaxed text-neutral-400">
+                          Direct personal consultation for session styling, location curation, and lighting concept.
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="mt-8 pt-4 border-t border-white/10 text-right">
+                      <span className="font-sans text-[10px] text-neutral-500 uppercase tracking-widest">
+                        REF N° AM-2026-VIEWING
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Form Input Fields */}
+                  <div className="col-span-1 lg:col-span-8 border border-[#FF6800]/30 bg-[#000000] p-6 sm:p-10 shadow-2xl">
+                    <form onSubmit={handleSubmit} className="space-y-8">
+                      
+                      <div className="pb-4 border-b border-[#FF6800]/20 flex justify-between items-end">
+                        <div>
+                          <span className="font-sans text-[10px] text-[#FF6800] uppercase tracking-[0.25em] font-bold block mb-1">
+                            STEP 03 OF 03 // VISITOR INFORMATION
+                          </span>
+                          <h3 className="font-serif text-3xl sm:text-4xl font-black uppercase text-white">
+                            YOUR <span className="font-serif italic font-light text-[#FF6800]">DETAILS</span>
+                          </h3>
+                        </div>
+                        <span className="font-sans text-[10px] text-white/60 uppercase tracking-widest font-bold">
+                          [ * REQUIRED ]
+                        </span>
+                      </div>
+
+                      <div className="space-y-6">
+                        
+                        {/* 01. Visitor Full Name */}
+                        <div className="flex flex-col">
+                          <label htmlFor="visitorName" className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#FF6800] mb-2 font-bold">
+                            01. VISITOR FULL NAME *
+                          </label>
+                          <input
+                            type="text"
+                            id="visitorName"
+                            required
+                            value={visitorName}
+                            onChange={(e) => setVisitorName(e.target.value)}
+                            placeholder="Your name"
+                            className="w-full bg-transparent border-b border-[#FF6800]/40 focus:border-[#FF6800] text-white placeholder-[#FF6800]/40 font-sans text-base py-2.5 focus:outline-none focus:ring-0 transition-colors duration-200"
+                          />
+                        </div>
+
+                        {/* 02. Email Address */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                          <div className="flex flex-col">
+                            <label htmlFor="visitorEmail" className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#FF6800] mb-2 font-bold">
+                              02. EMAIL ADDRESS *
+                            </label>
+                            <input
+                              type="email"
+                              id="visitorEmail"
+                              required
+                              value={visitorEmail}
+                              onChange={(e) => setVisitorEmail(e.target.value)}
+                              placeholder="Your email address"
+                              className="w-full bg-transparent border-b border-[#FF6800]/40 focus:border-[#FF6800] text-white placeholder-[#FF6800]/40 font-sans text-base py-2.5 focus:outline-none focus:ring-0 transition-colors duration-200"
+                            />
+                          </div>
+
+                          {/* 03. Phone / Instagram Handle */}
+                          <div className="flex flex-col">
+                            <label htmlFor="visitorPhone" className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#FF6800] mb-2 font-bold">
+                              03. INSTAGRAM / PHONE
+                            </label>
+                            <input
+                              type="text"
+                              id="visitorPhone"
+                              value={visitorPhone}
+                              onChange={(e) => setVisitorPhone(e.target.value)}
+                              placeholder="@handle or phone number"
+                              className="w-full bg-transparent border-b border-[#FF6800]/40 focus:border-[#FF6800] text-white placeholder-[#FF6800]/40 font-sans text-base py-2.5 focus:outline-none focus:ring-0 transition-colors duration-200"
+                            />
+                          </div>
+                        </div>
+
+                        {/* 04. Concept Brief / Session Vision */}
+                        <div className="flex flex-col pt-2">
+                          <label htmlFor="sessionNotes" className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#FF6800] mb-2 font-bold">
+                            04. SESSION VISION & CONCEPT BRIEF
+                          </label>
+                          <textarea
+                            id="sessionNotes"
+                            rows={3}
+                            value={sessionNotes}
+                            onChange={(e) => setSessionNotes(e.target.value)}
+                            placeholder="Describe your session vision, preferred location, or special notes..."
+                            className="w-full bg-transparent border-b border-[#FF6800]/40 focus:border-[#FF6800] text-white placeholder-[#FF6800]/40 font-sans text-sm py-2.5 focus:outline-none focus:ring-0 transition-colors duration-200 resize-none"
+                          />
+                        </div>
+
+                      </div>
+
+                      {/* Submission Actions */}
+                      <div className="pt-6 border-t border-[#FF6800]/20 flex flex-col sm:flex-row justify-between items-center gap-4">
+                        <button
+                          type="button"
+                          onClick={() => setActiveStep(2)}
+                          className="px-6 py-3 border border-white/30 text-white font-sans text-xs uppercase tracking-widest font-bold hover:border-white hover:bg-white hover:text-black transition-all w-full sm:w-auto"
+                        >
+                          ← BACK TO CATEGORY
+                        </button>
+
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className="w-full sm:w-auto border border-[#FF6800] bg-[#FF6800] text-black px-8 py-3.5 font-sans text-xs uppercase tracking-widest font-extrabold hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(255,104,0,0.4)]"
+                        >
+                          <span>{isSubmitting ? 'CONFIRMING RESERVATION...' : 'REQUEST RESERVATION'}</span>
+                          <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
+                        </button>
+                      </div>
+
+                    </form>
+                  </div>
+
+                </motion.div>
+              )}
+
             </div>
-            <a 
-              href="mailto:ambrandcreatives@gmail.com" 
-              className="text-neutral-200 hover:text-amber-400 transition-colors font-semibold underline underline-offset-4"
+          ) : (
+            /* BESPOKE GALLERY RESERVATION CONFIRMATION CARD */
+            <motion.div
+              key="confirmation"
+              initial={{ opacity: 0, scale: 0.96 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.4 }}
+              className="max-w-3xl mx-auto border-2 border-white bg-[#000000] p-8 sm:p-12 text-center relative shadow-2xl"
             >
-              AMBRANDCREATIVES@GMAIL.COM
-            </a>
-          </div>
+              {/* Corner crosshairs */}
+              <span className="absolute top-3 left-3 text-xs font-sans text-[#FF6800]">+</span>
+              <span className="absolute top-3 right-3 text-xs font-sans text-[#FF6800]">+</span>
+              <span className="absolute bottom-3 left-3 text-xs font-sans text-[#FF6800]">+</span>
+              <span className="absolute bottom-3 right-3 text-xs font-sans text-[#FF6800]">+</span>
 
-        </div>
+              <div className="w-16 h-16 border border-[#FF6800] bg-[#FF6800]/10 flex items-center justify-center mx-auto mb-6 text-[#FF6800]">
+                <Check className="w-8 h-8 stroke-[3]" />
+              </div>
+
+              <span className="font-sans text-xs text-[#FF6800] uppercase tracking-[0.3em] font-bold block mb-2">
+                // PRIVATE GALLERY RESERVATION CONFIRMED
+              </span>
+
+              <h3 className="font-serif text-3xl sm:text-5xl font-black uppercase text-white mb-6">
+                RESERVATION <span className="font-serif italic font-light text-[#FF6800]">RECEIVED</span>
+              </h3>
+
+              <div className="p-6 border border-white/20 bg-neutral-950 max-w-xl mx-auto text-left space-y-4 mb-8">
+                <div className="flex justify-between items-center pb-3 border-b border-white/10 font-sans text-xs">
+                  <span className="text-neutral-400">VISITOR:</span>
+                  <span className="text-white font-bold">{visitorName || 'Valued Client'}</span>
+                </div>
+
+                <div className="flex justify-between items-center pb-3 border-b border-white/10 font-sans text-xs">
+                  <span className="text-neutral-400">RESERVED DATE:</span>
+                  <span className="text-[#FF6800] font-bold">{selectedDate?.dayOfWeekName}, {selectedDate?.displayDateStr}</span>
+                </div>
+
+                <div className="flex justify-between items-center pb-3 border-b border-white/10 font-sans text-xs">
+                  <span className="text-neutral-400">CATEGORY:</span>
+                  <span className="text-white font-bold">{selectedCategory?.title} ({selectedCategory?.subtitle})</span>
+                </div>
+
+                <p className="font-sans text-xs text-neutral-300 leading-relaxed pt-2">
+                  Thank you, <strong className="text-white">{visitorName}</strong>. Your private viewing request has been directly recorded into Angelique-Mari's master studio ledger. You will receive a direct personal response within 24 hours to finalize details.
+                </p>
+              </div>
+
+              <button
+                type="button"
+                onClick={handleReset}
+                className="border border-[#FF6800] bg-[#FF6800] text-black px-8 py-3.5 font-sans text-xs uppercase tracking-widest font-extrabold hover:bg-white hover:text-black transition-all cursor-pointer"
+              >
+                [ RESERVE ANOTHER SESSION ]
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
       </div>
     </section>
   );
 }
-

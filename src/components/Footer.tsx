@@ -1,4 +1,5 @@
 import { Instagram, Mail } from "lucide-react";
+import Logo from "./Logo";
 
 function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
   return (
@@ -12,23 +13,23 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative w-full bg-warm-50 text-warm-950 py-16 md:py-20 px-6 md:px-12 z-10 border-t border-warm-900/10">
+    <footer className="relative w-full bg-black text-[#FF6800] py-16 md:py-24 px-6 md:px-12 z-10 border-t border-[#FF6800]/20">
       <div className="max-w-7xl mx-auto flex flex-col justify-between">
         
-        {/* Giant display text exactly styled like Tattoo Studio */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-8 w-full pb-10 md:pb-16 pt-2 border-b border-warm-900/10 select-none">
+        {/* Editorial Official Logo Centerpiece Header */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 w-full pb-12 md:pb-16 pt-2 border-b border-[#FF6800]/20 select-none">
           {/* Left copyright with serif elegant font */}
-          <div className="font-serif italic text-lg md:text-[2vw] text-warm-500 leading-none whitespace-nowrap shrink-0 self-center md:self-end md:mb-6">
+          <div className="font-serif italic text-base md:text-lg text-[#FF6800]/70 leading-none whitespace-nowrap shrink-0 self-center md:self-end md:mb-4">
             © {currentYear}
           </div>
 
-          {/* Center Giant Text - Extra Bold, geometric and tight spacing */}
-          <h2 className="text-[6.5vw] xl:text-[6.8vw] font-sans font-black tracking-tighter text-warm-900 leading-none uppercase text-center flex-1 min-w-0 px-2 select-none">
-            AM photography
-          </h2>
+          {/* Center Official Logo Presentation */}
+          <div className="flex-1 flex justify-center py-4">
+            <Logo variant="white" size="xl" className="max-w-[280px] sm:max-w-[360px] md:max-w-[440px] hover:text-[#FF6800] transition-colors duration-500 cursor-pointer" />
+          </div>
 
           {/* Right graphic copyright */}
-          <div className="font-serif text-3xl md:text-[3.5vw] font-light text-warm-400 leading-none select-none shrink-0 self-center md:self-end md:mb-6 pr-1">
+          <div className="font-serif text-2xl md:text-3xl font-light text-[#FF6800]/50 leading-none select-none shrink-0 self-center md:self-end md:mb-4 pr-1">
             ©
           </div>
         </div>
@@ -37,25 +38,25 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-10 md:pt-14 pb-2 w-full">
           {/* Left Email - Styled elegantly with serif typography & Mail icon */}
           <div className="flex-1 flex justify-center md:justify-start items-center gap-3">
-            <Mail className="w-4 h-4 stroke-[1.5] text-amber-700" />
+            <Mail className="w-4 h-4 stroke-[1.5] text-[#FF6800]" />
             <a 
               href="mailto:ambrandcreatives@gmail.com" 
-              className="font-serif italic lowercase text-sm md:text-base lg:text-lg text-warm-900 hover:text-amber-700 transition-colors underline decoration-warm-300 hover:decoration-amber-700 underline-offset-4 tracking-wide"
+              className="font-serif italic lowercase text-sm md:text-base lg:text-lg text-[#FF6800] hover:text-white transition-colors underline decoration-[#FF6800]/40 hover:decoration-white underline-offset-4 tracking-wide"
             >
               ambrandcreatives@gmail.com
             </a>
           </div>
 
           {/* Plus separator (Hidden on mobile) */}
-          <span className="hidden md:inline font-light text-warm-300 text-xl font-sans" aria-hidden="true">+</span>
+          <span className="hidden md:inline font-light text-[#FF6800]/40 text-xl font-sans" aria-hidden="true">+</span>
 
           {/* Social Icons: Instagram and WhatsApp */}
-          <div className="flex justify-center md:justify-end items-center gap-5 flex-1 text-warm-500">
+          <div className="flex justify-center md:justify-end items-center gap-5 flex-1 text-[#FF6800]">
             <a 
               href="https://www.instagram.com/iambrandthecreative?igsh=OGcwa3Z1M2lndno1" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="hover:text-amber-700 transition-colors p-1" 
+              className="hover:text-white transition-colors p-1" 
               aria-label="Instagram"
               title="Instagram"
             >
@@ -65,7 +66,7 @@ export default function Footer() {
               href="https://wa.me/27686313538" 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="hover:text-amber-700 transition-colors p-1" 
+              className="hover:text-white transition-colors p-1" 
               aria-label="WhatsApp"
               title="WhatsApp: 0686313538"
             >
