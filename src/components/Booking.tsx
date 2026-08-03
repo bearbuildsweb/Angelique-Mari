@@ -23,7 +23,7 @@ export const SESSION_CATEGORIES: SessionCategory[] = [
   {
     id: 'wedding',
     title: 'Wedding',
-    subtitle: 'Urban Luxury & Architectural Union',
+    subtitle: 'LOVE, UNFILTERED',
     code: 'SESSION N° 01',
     description: 'Documentary-style wedding photography in Rosebank & Sandton luxury venues.',
     image: imageJoburgWedding,
@@ -31,7 +31,7 @@ export const SESSION_CATEGORIES: SessionCategory[] = [
   {
     id: 'baby-shower',
     title: 'Baby Shower',
-    subtitle: 'Maternity & New Life Loft Editorial',
+    subtitle: 'GROWING MOMENTS',
     code: 'SESSION N° 02',
     description: 'Refined lifestyle imagery in sunlit studio lofts.',
     image: imageJoburgMaternity,
@@ -39,7 +39,7 @@ export const SESSION_CATEGORIES: SessionCategory[] = [
   {
     id: 'cake-smash',
     title: 'Cake Smash',
-    subtitle: 'Artistic Milestone Studio Portraiture',
+    subtitle: 'SMALL CHAOS',
     code: 'SESSION N° 03',
     description: 'Modern studio photography with organic compositions and clean lighting.',
     image: imageJoburgCakeSmash,
@@ -47,7 +47,7 @@ export const SESSION_CATEGORIES: SessionCategory[] = [
   {
     id: 'birthday',
     title: 'Birthday',
-    subtitle: 'Fashion-Forward Braamfontein Nocturne',
+    subtitle: 'BORN TO SHINE',
     code: 'SESSION N° 04',
     description: 'High-octane portraiture set in contemporary rooftops and underground spaces.',
     image: imageJoburgBirthday,
@@ -55,7 +55,7 @@ export const SESSION_CATEGORIES: SessionCategory[] = [
   {
     id: 'lifestyle',
     title: 'Lifestyle',
-    subtitle: 'High-Street Maboneng Streetwear',
+    subtitle: 'IN MOTION',
     code: 'SESSION N° 05',
     description: 'Editorial portraits amidst Johannesburg streets and industrial textures.',
     image: imageJoburgLifestyle,
@@ -63,7 +63,7 @@ export const SESSION_CATEGORIES: SessionCategory[] = [
   {
     id: 'family-session',
     title: 'Family Session',
-    subtitle: 'Contemporary Rosebank Storytelling',
+    subtitle: 'REAL CONNECTION',
     code: 'SESSION N° 06',
     description: 'Modern family portraiture captured in natural light and architectural surroundings.',
     image: imageJoburgFamily,
@@ -722,19 +722,10 @@ export default function Booking() {
                           {selectedCategory?.subtitle}
                         </span>
                       </div>
-
-                      <div className="p-3 border border-white/20 bg-neutral-950 font-sans text-xs text-neutral-300 space-y-2">
-                        <p className="font-bold text-white">ANGELIQUE-MARI STUDIO</p>
-                        <p className="text-[11px] leading-relaxed text-neutral-400">
-                          Personal consultation for session styling, location, and concept direction.
-                        </p>
-                      </div>
                     </div>
 
-                    <div className="mt-8 pt-4 border-t border-white/10 text-right">
-                      <span className="font-sans text-[10px] text-neutral-500 uppercase tracking-widest">
-                        REF N° AM-2026-BOOKING
-                      </span>
+                    <div className="mt-8 pt-4 border-t border-white/10 flex justify-end items-center">
+                      <span className="w-2 h-2 rounded-full bg-neutral-600 inline-block" />
                     </div>
                   </div>
 
