@@ -24,48 +24,48 @@ export const SESSION_CATEGORIES: SessionCategory[] = [
     id: 'wedding',
     title: 'Wedding',
     subtitle: 'Urban Luxury & Architectural Union',
-    code: 'EXHIBIT N° 01',
-    description: 'Documentary-style wedding photography in Rosebank & Sandton luxury venues. Architectural compositions and modern minimalist styling.',
+    code: 'SESSION N° 01',
+    description: 'Documentary-style wedding photography in Rosebank & Sandton luxury venues.',
     image: imageJoburgWedding,
   },
   {
     id: 'baby-shower',
     title: 'Baby Shower',
     subtitle: 'Maternity & New Life Loft Editorial',
-    code: 'EXHIBIT N° 02',
-    description: 'Refined lifestyle imagery in sunlit studio lofts. Natural emotion, muted earth tones, and minimal decor.',
+    code: 'SESSION N° 02',
+    description: 'Refined lifestyle imagery in sunlit studio lofts.',
     image: imageJoburgMaternity,
   },
   {
     id: 'cake-smash',
     title: 'Cake Smash',
     subtitle: 'Artistic Milestone Studio Portraiture',
-    code: 'EXHIBIT N° 03',
-    description: 'Modern studio photography with organic compositions and clean lighting. Authentic expressions without novelty clutter.',
+    code: 'SESSION N° 03',
+    description: 'Modern studio photography with organic compositions and clean lighting.',
     image: imageJoburgCakeSmash,
   },
   {
     id: 'birthday',
     title: 'Birthday',
     subtitle: 'Fashion-Forward Braamfontein Nocturne',
-    code: 'EXHIBIT N° 04',
-    description: 'High-octane portraiture set in contemporary rooftops and underground spaces. Creative lighting and confident presence.',
+    code: 'SESSION N° 04',
+    description: 'High-octane portraiture set in contemporary rooftops and underground spaces.',
     image: imageJoburgBirthday,
   },
   {
     id: 'lifestyle',
     title: 'Lifestyle',
     subtitle: 'High-Street Maboneng Streetwear',
-    code: 'EXHIBIT N° 05',
-    description: 'Editorial portraits amidst Johannesburg streets and industrial textures. Blending luxury tailoring with street culture.',
+    code: 'SESSION N° 05',
+    description: 'Editorial portraits amidst Johannesburg streets and industrial textures.',
     image: imageJoburgLifestyle,
   },
   {
     id: 'family-session',
     title: 'Family Session',
     subtitle: 'Contemporary Rosebank Storytelling',
-    code: 'EXHIBIT N° 06',
-    description: 'Modern family portraiture captured in natural light and architectural surroundings with minimal, warm styling.',
+    code: 'SESSION N° 06',
+    description: 'Modern family portraiture captured in natural light and architectural surroundings.',
     image: imageJoburgFamily,
   },
 ];
@@ -195,17 +195,17 @@ export default function Booking() {
     setErrorMessage('');
 
     if (!selectedDate) {
-      setErrorMessage('PLEASE SELECT AN AVAILABLE WEEKEND DATE IN STEP 1');
+      setErrorMessage('PLEASE SELECT AN AVAILABLE DATE IN STEP 1');
       setActiveStep(1);
       return;
     }
     if (!selectedCategory) {
-      setErrorMessage('PLEASE SELECT A SESSION CATEGORY IN STEP 2');
+      setErrorMessage('PLEASE SELECT A SESSION TYPE IN STEP 2');
       setActiveStep(2);
       return;
     }
     if (!visitorName.trim()) {
-      setErrorMessage('PLEASE PROVIDE YOUR NAME TO PROCEED');
+      setErrorMessage('PLEASE ENTER YOUR NAME TO CONTINUE');
       return;
     }
 
@@ -231,20 +231,20 @@ export default function Booking() {
   return (
     <section id="booking" className="relative w-full bg-[#000000] text-[#FF6800] py-20 md:py-32 px-4 sm:px-6 md:px-12 z-10 border-t border-[#FF6800]/20">
       
-      {/* Subtle Museum Grid Overlay */}
+      {/* Subtle Grid Overlay */}
       <div className="absolute inset-0 bg-[linear-gradient(to_right,#FF680008_1px,transparent_1px),linear-gradient(to_bottom,#FF680008_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
         
-        {/* Gallery Header */}
+        {/* Header */}
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 pb-6 border-b border-[#FF6800]/20 gap-6">
           <div>
             <div className="flex items-center gap-3 mb-3 font-sans text-xs tracking-[0.3em] text-[#FF6800] uppercase font-bold">
               <span className="w-2 h-2 rounded-full bg-[#FF6800] animate-pulse" />
-              <span>// BESPOKE PRIVATE CONSULTATION</span>
+              <span>// START</span>
             </div>
             <h2 className="text-4xl sm:text-6xl md:text-7xl font-serif tracking-tight uppercase font-extrabold text-white leading-none">
-              PRIVATE <span className="font-serif italic font-light text-[#FF6800]">RESERVATION</span>
+              BOOK A <span className="font-serif italic font-light text-[#FF6800]">SESSION</span>
             </h2>
           </div>
 
@@ -258,30 +258,32 @@ export default function Booking() {
         </div>
 
         {/* Progressive Step Controller Indicator Bar */}
-        <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-10">
+        <div className="flex flex-row w-full gap-2 sm:grid sm:grid-cols-3 sm:gap-4 mb-10">
           
           {/* Step 1 Indicator */}
           <button
             type="button"
             onClick={() => setActiveStep(1)}
-            className={`group text-left p-3.5 sm:p-5 border transition-all duration-300 relative ${
+            className={`group text-left p-2.5 sm:p-5 border transition-all duration-300 relative ${
               activeStep === 1
-                ? 'border-white bg-[#000000] text-[#FF6800] ring-1 ring-[#FF6800]'
+                ? 'flex-[1.8] sm:flex-1 border-white bg-[#000000] text-[#FF6800] ring-1 ring-[#FF6800]'
                 : selectedDate
-                ? 'border-[#FF6800]/40 bg-[#000000]/60 text-white hover:border-[#FF6800]'
-                : 'border-white/20 bg-[#000000]/30 text-white/50 hover:border-white/50'
+                ? 'flex-1 border-[#FF6800]/40 bg-[#000000]/60 text-white hover:border-[#FF6800]'
+                : 'flex-1 border-white/20 bg-[#000000]/30 text-white/50 hover:border-white/50'
             }`}
           >
-            <div className="flex justify-between items-center mb-1">
-              <span className="font-sans text-[10px] tracking-[0.2em] uppercase font-bold text-[#FF6800]">
-                01. SESSION DATE
+            <div className="flex justify-between items-center mb-0.5 sm:mb-1">
+              <span className="font-sans text-[9px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase font-bold text-[#FF6800] whitespace-nowrap">
+                01. DATE
               </span>
               {selectedDate && (
-                <span className="w-2 h-2 rounded-full bg-[#FF6800]" />
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FF6800]" />
               )}
             </div>
-            <div className="font-serif text-sm sm:text-base text-white font-bold truncate">
-              {selectedDate ? selectedDate.displayDateStr : 'Select Weekend Date'}
+            <div className={`font-serif text-xs sm:text-base text-white font-bold ${
+              activeStep === 1 ? 'whitespace-nowrap sm:truncate' : 'truncate'
+            }`}>
+              {selectedDate ? selectedDate.displayDateStr : 'Choose a weekend'}
             </div>
             {activeStep === 1 && (
               <motion.div layoutId="stepIndicator" className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF6800]" />
@@ -293,25 +295,27 @@ export default function Booking() {
             type="button"
             onClick={() => selectedDate && setActiveStep(2)}
             disabled={!selectedDate}
-            className={`group text-left p-3.5 sm:p-5 border transition-all duration-300 relative ${
-              !selectedDate ? 'cursor-not-allowed opacity-40 border-white/10 bg-[#000000]' :
+            className={`group text-left p-2.5 sm:p-5 border transition-all duration-300 relative ${
+              !selectedDate ? 'flex-1 cursor-not-allowed opacity-40 border-white/10 bg-[#000000]' :
               activeStep === 2
-                ? 'border-white bg-[#000000] text-[#FF6800] ring-1 ring-[#FF6800]'
+                ? 'flex-[1.8] sm:flex-1 border-white bg-[#000000] text-[#FF6800] ring-1 ring-[#FF6800]'
                 : selectedCategory
-                ? 'border-[#FF6800]/40 bg-[#000000]/60 text-white hover:border-[#FF6800]'
-                : 'border-white/20 bg-[#000000]/30 text-white/50 hover:border-white/50'
+                ? 'flex-1 border-[#FF6800]/40 bg-[#000000]/60 text-white hover:border-[#FF6800]'
+                : 'flex-1 border-white/20 bg-[#000000]/30 text-white/50 hover:border-white/50'
             }`}
           >
-            <div className="flex justify-between items-center mb-1">
-              <span className="font-sans text-[10px] tracking-[0.2em] uppercase font-bold text-[#FF6800]">
-                02. CATEGORY
+            <div className="flex justify-between items-center mb-0.5 sm:mb-1">
+              <span className="font-sans text-[9px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase font-bold text-[#FF6800] whitespace-nowrap">
+                02. SHOOT
               </span>
               {selectedCategory && (
-                <span className="w-2 h-2 rounded-full bg-[#FF6800]" />
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FF6800]" />
               )}
             </div>
-            <div className="font-serif text-sm sm:text-base text-white font-bold truncate">
-              {selectedCategory ? selectedCategory.title : 'Choose Experience'}
+            <div className={`font-serif text-xs sm:text-base text-white font-bold ${
+              activeStep === 2 ? 'whitespace-nowrap sm:truncate' : 'truncate'
+            }`}>
+              {selectedCategory ? selectedCategory.title : 'Choose a session'}
             </div>
             {activeStep === 2 && (
               <motion.div layoutId="stepIndicator" className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF6800]" />
@@ -323,25 +327,27 @@ export default function Booking() {
             type="button"
             onClick={() => selectedDate && selectedCategory && setActiveStep(3)}
             disabled={!selectedDate || !selectedCategory}
-            className={`group text-left p-3.5 sm:p-5 border transition-all duration-300 relative ${
-              (!selectedDate || !selectedCategory) ? 'cursor-not-allowed opacity-40 border-white/10 bg-[#000000]' :
+            className={`group text-left p-2.5 sm:p-5 border transition-all duration-300 relative ${
+              (!selectedDate || !selectedCategory) ? 'flex-1 cursor-not-allowed opacity-40 border-white/10 bg-[#000000]' :
               activeStep === 3
-                ? 'border-white bg-[#000000] text-[#FF6800] ring-1 ring-[#FF6800]'
+                ? 'flex-[1.8] sm:flex-1 border-white bg-[#000000] text-[#FF6800] ring-1 ring-[#FF6800]'
                 : visitorName
-                ? 'border-[#FF6800]/40 bg-[#000000]/60 text-white hover:border-[#FF6800]'
-                : 'border-white/20 bg-[#000000]/30 text-white/50 hover:border-white/50'
+                ? 'flex-1 border-[#FF6800]/40 bg-[#000000]/60 text-white hover:border-[#FF6800]'
+                : 'flex-1 border-white/20 bg-[#000000]/30 text-white/50 hover:border-white/50'
             }`}
           >
-            <div className="flex justify-between items-center mb-1">
-              <span className="font-sans text-[10px] tracking-[0.2em] uppercase font-bold text-[#FF6800]">
-                03. VISITOR DETAILS
+            <div className="flex justify-between items-center mb-0.5 sm:mb-1">
+              <span className="font-sans text-[9px] sm:text-[10px] tracking-[0.15em] sm:tracking-[0.2em] uppercase font-bold text-[#FF6800] whitespace-nowrap">
+                03. DETAILS
               </span>
               {visitorName && (
-                <span className="w-2 h-2 rounded-full bg-[#FF6800]" />
+                <span className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-[#FF6800]" />
               )}
             </div>
-            <div className="font-serif text-sm sm:text-base text-white font-bold truncate">
-              {visitorName ? visitorName : 'Your Information'}
+            <div className={`font-serif text-xs sm:text-base text-white font-bold ${
+              activeStep === 3 ? 'whitespace-nowrap sm:truncate' : 'truncate'
+            }`}>
+              {visitorName ? visitorName : 'Your details'}
             </div>
             {activeStep === 3 && (
               <motion.div layoutId="stepIndicator" className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#FF6800]" />
@@ -377,29 +383,29 @@ export default function Booking() {
                   className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start"
                 >
                   
-                  {/* Left Column: Editorial Guidance & Museum Statement */}
-                  <div className="col-span-1 lg:col-span-5 border border-white/20 bg-[#000000] p-6 sm:p-8 flex flex-col justify-between h-full">
+                  {/* Left Column: Studio Guidance */}
+                  <div className="hidden lg:flex col-span-1 lg:col-span-5 border border-white/20 bg-[#000000] p-6 sm:p-8 flex-col justify-between h-full">
                     <div>
                       <div className="font-sans text-[10px] text-[#FF6800] uppercase tracking-[0.25em] font-bold mb-2 flex items-center gap-2">
                         <CalendarIcon className="w-3.5 h-3.5 stroke-[2]" />
-                        <span>SELECTABLE WEEKEND DATES</span>
+                        <span>AVAILABLE DATES</span>
                       </div>
 
                       <h3 className="font-serif text-3xl sm:text-4xl text-white font-black uppercase tracking-tight mb-4">
-                        CURATED <br />
-                        <span className="font-serif italic font-light text-[#FF6800]">AVAILABILITY</span>
+                        AVAILABLE <br />
+                        <span className="font-serif italic font-light text-[#FF6800]">DATES</span>
                       </h3>
 
                       <div className="space-y-3 pt-4 border-t border-white/10 font-sans text-xs text-neutral-400">
                         <div className="flex items-center gap-3">
                           <span className="w-3 h-3 rounded-full bg-[#FF6800] border border-white" />
                           <span className="text-white font-bold">Orange Highlighted</span>
-                          <span>— Selectable Weekend Slot</span>
+                          <span>— Available</span>
                         </div>
                         <div className="flex items-center gap-3">
                           <span className="w-3 h-3 rounded-full bg-neutral-800 border border-neutral-700 opacity-40" />
                           <span className="text-neutral-500 line-through">Muted Weekday</span>
-                          <span>— Fully Reserved / Unavailable</span>
+                          <span>— Unavailable</span>
                         </div>
                       </div>
                     </div>
@@ -432,7 +438,7 @@ export default function Booking() {
                           {MONTH_NAMES[currentMonth]}
                         </span>
                         <span className="font-sans text-[10px] text-[#FF6800] uppercase tracking-[0.3em] font-bold">
-                          {currentYear} • PRIVATE CALENDAR
+                          {currentYear} • BOOKING CALENDAR
                         </span>
                       </div>
 
@@ -524,7 +530,7 @@ export default function Booking() {
                             SELECTED: <span className="text-[#FF6800]">{selectedDate.dayOfWeekName}, {selectedDate.displayDateStr}</span>
                           </span>
                         ) : (
-                          <span className="text-neutral-400">Please click a highlighted weekend date to proceed</span>
+                          <span className="text-neutral-400">Choose a date to continue.</span>
                         )}
                       </div>
 
@@ -538,7 +544,7 @@ export default function Booking() {
                             : 'bg-neutral-900 text-neutral-600 border border-neutral-800 cursor-not-allowed'
                         }`}
                       >
-                        <span>CONTINUE TO CATEGORY</span>
+                        <span>CONTINUE →</span>
                         <ArrowUpRight className="w-4 h-4" />
                       </button>
                     </div>
@@ -561,10 +567,10 @@ export default function Booking() {
                   <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end pb-4 border-b border-[#FF6800]/20 gap-2">
                     <div>
                       <span className="font-sans text-[10px] text-[#FF6800] uppercase tracking-[0.25em] font-bold block mb-1">
-                        STEP 02 OF 03 // SELECT EXPERIENCE
+                        STEP 02 OF 03 // CHOOSE A SESSION
                       </span>
                       <h3 className="font-serif text-3xl sm:text-5xl font-black uppercase text-white">
-                        SESSION <span className="font-serif italic font-light text-[#FF6800]">CATEGORY</span>
+                        CHOOSE A <span className="font-serif italic font-light text-[#FF6800]">SESSION</span>
                       </h3>
                     </div>
                     
@@ -653,7 +659,7 @@ export default function Booking() {
                       onClick={() => setActiveStep(1)}
                       className="px-6 py-3 border border-white/30 text-white font-sans text-xs uppercase tracking-widest font-bold hover:border-white hover:bg-white hover:text-black transition-all"
                     >
-                      ← BACK TO DATE
+                      ← BACK
                     </button>
 
                     <button
@@ -666,7 +672,7 @@ export default function Booking() {
                           : 'bg-neutral-900 text-neutral-600 border border-neutral-800 cursor-not-allowed'
                       }`}
                     >
-                      <span>CONTINUE TO VISITOR DETAILS</span>
+                      <span>CONTINUE →</span>
                       <ArrowUpRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -674,7 +680,7 @@ export default function Booking() {
                 </motion.div>
               )}
 
-              {/* STEP 3: VISITOR DETAILS & CONCEPT BRIEF */}
+              {/* STEP 3: DETAILS & CONCEPT BRIEF */}
               {activeStep === 3 && (
                 <motion.div
                   initial={{ opacity: 0, y: 15 }}
@@ -688,7 +694,7 @@ export default function Booking() {
                   <div className="col-span-1 lg:col-span-4 border border-[#FF6800]/40 bg-[#000000] p-6 sm:p-8 flex flex-col justify-between">
                     <div>
                       <div className="font-sans text-[10px] text-[#FF6800] uppercase tracking-[0.25em] font-bold mb-4 pb-2 border-b border-[#FF6800]/20">
-                        // RESERVATION SUMMARY
+                        // BOOKING SUMMARY
                       </div>
 
                       {/* Date Badge */}
@@ -707,7 +713,7 @@ export default function Booking() {
                       {/* Category Badge */}
                       <div className="mb-6">
                         <span className="font-sans text-[9px] text-neutral-400 uppercase tracking-widest block mb-1">
-                          EXPERIENCE CATEGORY
+                          SHOOT CATEGORY
                         </span>
                         <div className="font-serif text-2xl text-white font-bold uppercase">
                           {selectedCategory?.title}
@@ -718,16 +724,16 @@ export default function Booking() {
                       </div>
 
                       <div className="p-3 border border-white/20 bg-neutral-950 font-sans text-xs text-neutral-300 space-y-2">
-                        <p className="font-bold text-white">ANGELIQUE-MARI PERSONAL GUARANTEE</p>
+                        <p className="font-bold text-white">ANGELIQUE-MARI STUDIO</p>
                         <p className="text-[11px] leading-relaxed text-neutral-400">
-                          Direct personal consultation for session styling, location curation, and lighting concept.
+                          Personal consultation for session styling, location, and concept direction.
                         </p>
                       </div>
                     </div>
 
                     <div className="mt-8 pt-4 border-t border-white/10 text-right">
                       <span className="font-sans text-[10px] text-neutral-500 uppercase tracking-widest">
-                        REF N° AM-2026-VIEWING
+                        REF N° AM-2026-BOOKING
                       </span>
                     </div>
                   </div>
@@ -739,7 +745,7 @@ export default function Booking() {
                       <div className="pb-4 border-b border-[#FF6800]/20 flex justify-between items-end">
                         <div>
                           <span className="font-sans text-[10px] text-[#FF6800] uppercase tracking-[0.25em] font-bold block mb-1">
-                            STEP 03 OF 03 // VISITOR INFORMATION
+                            STEP 03 OF 03 // YOUR DETAILS
                           </span>
                           <h3 className="font-serif text-3xl sm:text-4xl font-black uppercase text-white">
                             YOUR <span className="font-serif italic font-light text-[#FF6800]">DETAILS</span>
@@ -752,10 +758,10 @@ export default function Booking() {
 
                       <div className="space-y-6">
                         
-                        {/* 01. Visitor Full Name */}
+                        {/* 01. Full Name */}
                         <div className="flex flex-col">
                           <label htmlFor="visitorName" className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#FF6800] mb-2 font-bold">
-                            01. VISITOR FULL NAME *
+                            01. FULL NAME *
                           </label>
                           <input
                             type="text"
@@ -801,17 +807,17 @@ export default function Booking() {
                           </div>
                         </div>
 
-                        {/* 04. Concept Brief / Session Vision */}
+                        {/* 04. Notes & Vision */}
                         <div className="flex flex-col pt-2">
                           <label htmlFor="sessionNotes" className="font-sans text-[11px] uppercase tracking-[0.2em] text-[#FF6800] mb-2 font-bold">
-                            04. SESSION VISION & CONCEPT BRIEF
+                            04. NOTES & VISION
                           </label>
                           <textarea
                             id="sessionNotes"
                             rows={3}
                             value={sessionNotes}
                             onChange={(e) => setSessionNotes(e.target.value)}
-                            placeholder="Describe your session vision, preferred location, or special notes..."
+                            placeholder="Tell me about your session vision, location ideas, or notes..."
                             className="w-full bg-transparent border-b border-[#FF6800]/40 focus:border-[#FF6800] text-white placeholder-[#FF6800]/40 font-sans text-sm py-2.5 focus:outline-none focus:ring-0 transition-colors duration-200 resize-none"
                           />
                         </div>
@@ -825,7 +831,7 @@ export default function Booking() {
                           onClick={() => setActiveStep(2)}
                           className="px-6 py-3 border border-white/30 text-white font-sans text-xs uppercase tracking-widest font-bold hover:border-white hover:bg-white hover:text-black transition-all w-full sm:w-auto"
                         >
-                          ← BACK TO CATEGORY
+                          ← BACK
                         </button>
 
                         <button
@@ -833,7 +839,7 @@ export default function Booking() {
                           disabled={isSubmitting}
                           className="w-full sm:w-auto border border-[#FF6800] bg-[#FF6800] text-black px-8 py-3.5 font-sans text-xs uppercase tracking-widest font-extrabold hover:bg-white hover:text-black transition-all duration-300 flex items-center justify-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(255,104,0,0.4)]"
                         >
-                          <span>{isSubmitting ? 'CONFIRMING RESERVATION...' : 'REQUEST RESERVATION'}</span>
+                          <span>{isSubmitting ? 'SENDING BOOKING...' : 'BOOK SESSION'}</span>
                           <ArrowUpRight className="w-4 h-4 stroke-[2.5]" />
                         </button>
                       </div>
@@ -846,7 +852,7 @@ export default function Booking() {
 
             </div>
           ) : (
-            /* BESPOKE GALLERY RESERVATION CONFIRMATION CARD */
+            /* CONFIRMATION CARD */
             <motion.div
               key="confirmation"
               initial={{ opacity: 0, scale: 0.96 }}
@@ -865,31 +871,31 @@ export default function Booking() {
               </div>
 
               <span className="font-sans text-xs text-[#FF6800] uppercase tracking-[0.3em] font-bold block mb-2">
-                // PRIVATE GALLERY RESERVATION CONFIRMED
+                // BOOKING CONFIRMED
               </span>
 
               <h3 className="font-serif text-3xl sm:text-5xl font-black uppercase text-white mb-6">
-                RESERVATION <span className="font-serif italic font-light text-[#FF6800]">RECEIVED</span>
+                BOOKING <span className="font-serif italic font-light text-[#FF6800]">RECEIVED</span>
               </h3>
 
               <div className="p-6 border border-white/20 bg-neutral-950 max-w-xl mx-auto text-left space-y-4 mb-8">
                 <div className="flex justify-between items-center pb-3 border-b border-white/10 font-sans text-xs">
-                  <span className="text-neutral-400">VISITOR:</span>
-                  <span className="text-white font-bold">{visitorName || 'Valued Client'}</span>
+                  <span className="text-neutral-400">NAME:</span>
+                  <span className="text-white font-bold">{visitorName || 'Client'}</span>
                 </div>
 
                 <div className="flex justify-between items-center pb-3 border-b border-white/10 font-sans text-xs">
-                  <span className="text-neutral-400">RESERVED DATE:</span>
+                  <span className="text-neutral-400">DATE:</span>
                   <span className="text-[#FF6800] font-bold">{selectedDate?.dayOfWeekName}, {selectedDate?.displayDateStr}</span>
                 </div>
 
                 <div className="flex justify-between items-center pb-3 border-b border-white/10 font-sans text-xs">
-                  <span className="text-neutral-400">CATEGORY:</span>
-                  <span className="text-white font-bold">{selectedCategory?.title} ({selectedCategory?.subtitle})</span>
+                  <span className="text-neutral-400">SESSION:</span>
+                  <span className="text-white font-bold">{selectedCategory?.title}</span>
                 </div>
 
                 <p className="font-sans text-xs text-neutral-300 leading-relaxed pt-2">
-                  Thank you, <strong className="text-white">{visitorName}</strong>. Your private viewing request has been directly recorded into Angelique-Mari's master studio ledger. You will receive a direct personal response within 24 hours to finalize details.
+                  Thank you, <strong className="text-white">{visitorName}</strong>. Your session request has been received. You will receive a direct response within 24 hours to confirm details.
                 </p>
               </div>
 
@@ -898,7 +904,7 @@ export default function Booking() {
                 onClick={handleReset}
                 className="border border-[#FF6800] bg-[#FF6800] text-black px-8 py-3.5 font-sans text-xs uppercase tracking-widest font-extrabold hover:bg-white hover:text-black transition-all cursor-pointer"
               >
-                [ RESERVE ANOTHER SESSION ]
+                [ BOOK ANOTHER SESSION ]
               </button>
             </motion.div>
           )}
