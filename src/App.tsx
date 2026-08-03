@@ -55,11 +55,11 @@ export default function App() {
         {/* Services Spread 
         <Services /> */}
 
-        {/* Client Testimonials Carousel */}
-        <Testimonials /> 
-
         {/* Luxury Booking Inquiry Questionnaire */}
         <Booking /> 
+
+        {/* Client Testimonials Carousel */}
+        <Testimonials /> 
         
         {/* Gigantic Branding Footer */}
         <Footer /> 
