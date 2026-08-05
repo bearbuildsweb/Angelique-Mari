@@ -268,7 +268,10 @@ export default function Booking() {
 
     try {
       const supabaseUrl = (import.meta as any).env?.VITE_SUPABASE_URL || 'https://kjwbwfizbbfzfvvlltea.supabase.co';
-      const supabaseAnonKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || (import.meta as any).env?.VITE_SUPABASE_PUBLISHABLE_KEY || '';
+      const supabaseAnonKey =
+        (import.meta as any).env?.VITE_SUPABASE_ANON_KEY ||
+        (import.meta as any).env?.VITE_SUPABASE_PUBLISHABLE_KEY ||
+        'anon';
 
       const edgeFunctionUrl =
         (import.meta as any).env?.VITE_SUPABASE_FUNCTION_URL ||
@@ -277,12 +280,9 @@ export default function Booking() {
 
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${supabaseAnonKey}`,
+        'apikey': supabaseAnonKey,
       };
-
-      if (supabaseAnonKey) {
-        headers['Authorization'] = `Bearer ${supabaseAnonKey}`;
-        headers['apikey'] = supabaseAnonKey;
-      }
 
       console.log('[Booking Form] Invoking edge function at:', edgeFunctionUrl);
 
