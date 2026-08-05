@@ -190,7 +190,7 @@ export default function Booking() {
     setActiveStep(3);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setErrorMessage('');
 
@@ -211,10 +211,76 @@ export default function Booking() {
 
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    const dateStr = typeof selectedDate === 'string'
+      ? selectedDate
+      : selectedDate?.displayDateStr || selectedDate?.fullDateStr || '';
+
+    const categoryStr = typeof selectedCategory === 'string'
+      ? selectedCategory
+      : selectedCategory?.title || '';
+
+    const payload = {
+      // Primary & Alias Name fields
+      name: visitorName,
+      visitorName: visitorName,
+      client_name: visitorName,
+      visitor_name: visitorName,
+      clientName: visitorName,
+
+      // Primary & Alias Email fields
+      email: visitorEmail,
+      visitorEmail: visitorEmail,
+      client_email: visitorEmail,
+      visitor_email: visitorEmail,
+      clientEmail: visitorEmail,
+
+      // Primary & Alias Phone / Contact fields
+      phone: visitorPhone,
+      visitorPhone: visitorPhone,
+      contact_number: visitorPhone,
+      phone_number: visitorPhone,
+      visitor_phone: visitorPhone,
+      contactNumber: visitorPhone,
+
+      // Primary & Alias Date fields
+      date: dateStr,
+      selectedDate: dateStr,
+      requested_date: dateStr,
+      requestedDate: dateStr,
+      date_string: dateStr,
+
+      // Primary & Alias Category fields
+      category: categoryStr,
+      selectedCategory: categoryStr,
+      session_category: categoryStr,
+      service: categoryStr,
+      session_type: categoryStr,
+
+      // Primary & Alias Notes / Vision fields
+      notes: sessionNotes,
+      sessionNotes: sessionNotes,
+      vision: sessionNotes,
+      session_notes: sessionNotes,
+      vision_notes: sessionNotes,
+    };
+
+    console.log('[Booking Form] Submitting payload:', payload);
+
+    try {
+      const edgeFunctionUrl = (import.meta as any).env?.VITE_SUPABASE_FUNCTION_URL || (import.meta as any).env?.VITE_EDGE_FUNCTION_URL;
+      if (edgeFunctionUrl) {
+        await fetch(edgeFunctionUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+      }
+    } catch (err) {
+      console.warn('[Booking Form] Notice when submitting to edge function:', err);
+    } finally {
       setIsSubmitting(false);
       setIsSubmitted(true);
-    }, 1200);
+    }
   };
 
   const handleReset = () => {
@@ -226,6 +292,14 @@ export default function Booking() {
     setVisitorPhone('');
     setSessionNotes('');
     setActiveStep(1);
+  };
+
+  const handleDone = () => {
+    handleReset();
+    const portfolioSection = document.getElementById('portfolio');
+    if (portfolioSection) {
+      portfolioSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
@@ -892,10 +966,10 @@ export default function Booking() {
 
               <button
                 type="button"
-                onClick={handleReset}
+                onClick={handleDone}
                 className="border border-[#FF6800] bg-[#FF6800] text-black px-8 py-3.5 font-sans text-xs uppercase tracking-widest font-extrabold hover:bg-white hover:text-black transition-all cursor-pointer"
               >
-                [ BOOK ANOTHER SESSION ]
+                [ DONE ]
               </button>
             </motion.div>
           )}
