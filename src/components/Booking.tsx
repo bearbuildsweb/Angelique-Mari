@@ -268,10 +268,13 @@ export default function Booking() {
 
     try {
       const supabaseUrl = (import.meta as any).env?.VITE_SUPABASE_URL || 'https://kjwbwfizbbfzfvvlltea.supabase.co';
-      const supabaseAnonKey =
+      const rawAnonKey =
         (import.meta as any).env?.VITE_SUPABASE_ANON_KEY ||
+        (import.meta as any).env?.VITE_SUPABASE_ANO ||
         (import.meta as any).env?.VITE_SUPABASE_PUBLISHABLE_KEY ||
-        'anon';
+        '';
+
+      const cleanKey = (rawAnonKey || '').replace(/^["']|["']$/g, '').trim();
 
       const edgeFunctionUrl =
         (import.meta as any).env?.VITE_SUPABASE_FUNCTION_URL ||
@@ -280,9 +283,13 @@ export default function Booking() {
 
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${supabaseAnonKey}`,
-        'apikey': supabaseAnonKey,
       };
+
+      // Always pass apikey & Authorization bearer header if a key is configured
+      if (cleanKey) {
+        headers['Authorization'] = `Bearer ${cleanKey}`;
+        headers['apikey'] = cleanKey;
+      }
 
       console.log('[Booking Form] Invoking edge function at:', edgeFunctionUrl);
 
@@ -296,7 +303,10 @@ export default function Booking() {
       console.log('[Booking Form] Edge function response:', res.status, responseData);
 
       if (!res.ok) {
-        const errorText = responseData?.error || responseData?.message || `Server returned status ${res.status}`;
+        let errorText = responseData?.error || responseData?.message || `Server returned status ${res.status}`;
+        if (typeof errorText === 'string' && (errorText.toLowerCase().includes('jwt') || errorText.toLowerCase().includes('authorization'))) {
+          errorText = `${errorText}. Please set VITE_SUPABASE_ANON_KEY in Environment Settings or deploy the Edge Function with --no-verify-jwt.`;
+        }
         console.error('[Booking Form] Error response from send-email:', errorText);
         setErrorMessage(`Submitting inquiry failed: ${errorText}`);
         return;
