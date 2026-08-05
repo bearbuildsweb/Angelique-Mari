@@ -267,19 +267,47 @@ export default function Booking() {
     console.log('[Booking Form] Submitting payload:', payload);
 
     try {
-      const edgeFunctionUrl = (import.meta as any).env?.VITE_SUPABASE_FUNCTION_URL || (import.meta as any).env?.VITE_EDGE_FUNCTION_URL;
-      if (edgeFunctionUrl) {
-        await fetch(edgeFunctionUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload),
-        });
+      const supabaseUrl = (import.meta as any).env?.VITE_SUPABASE_URL || 'https://kjwbwfizbbfzfvvlltea.supabase.co';
+      const supabaseAnonKey = (import.meta as any).env?.VITE_SUPABASE_ANON_KEY || (import.meta as any).env?.VITE_SUPABASE_PUBLISHABLE_KEY || '';
+
+      const edgeFunctionUrl =
+        (import.meta as any).env?.VITE_SUPABASE_FUNCTION_URL ||
+        (import.meta as any).env?.VITE_EDGE_FUNCTION_URL ||
+        `${supabaseUrl.replace(/\/$/, '')}/functions/v1/send-email`;
+
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+      };
+
+      if (supabaseAnonKey) {
+        headers['Authorization'] = `Bearer ${supabaseAnonKey}`;
+        headers['apikey'] = supabaseAnonKey;
       }
-    } catch (err) {
-      console.warn('[Booking Form] Notice when submitting to edge function:', err);
+
+      console.log('[Booking Form] Invoking edge function at:', edgeFunctionUrl);
+
+      const res = await fetch(edgeFunctionUrl, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(payload),
+      });
+
+      const responseData = await res.json().catch(() => ({}));
+      console.log('[Booking Form] Edge function response:', res.status, responseData);
+
+      if (!res.ok) {
+        const errorText = responseData?.error || responseData?.message || `Server returned status ${res.status}`;
+        console.error('[Booking Form] Error response from send-email:', errorText);
+        setErrorMessage(`Submitting inquiry failed: ${errorText}`);
+        return;
+      }
+
+      setIsSubmitted(true);
+    } catch (err: any) {
+      console.error('[Booking Form] Error submitting to edge function:', err);
+      setErrorMessage(`Network error submitting form: ${err.message || 'Please check your connection and try again.'}`);
     } finally {
       setIsSubmitting(false);
-      setIsSubmitted(true);
     }
   };
 
