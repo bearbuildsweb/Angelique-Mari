@@ -1,126 +1,122 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'motion/react';
-import Logo from './Logo';
+import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
+import logoPreloader from '../assets/images/logo-preloader-1.png';
 
 interface PreloaderProps {
   onComplete: () => void;
 }
 
-const TYPESET_STEPS = [
-  "A",
-  "AN",
-  "ANG",
-  "ANGEL",
-  "ANGELIQUE",
-  "ANGELIQUE-MARI"
-];
-
 export default function Preloader({ onComplete }: PreloaderProps) {
-  const [typesetIndex, setTypesetIndex] = useState(0);
-  const [isTypesetComplete, setIsTypesetComplete] = useState(false);
+  const [isOpening, setIsOpening] = useState(false);
 
   useEffect(() => {
-    // Typesetting flash sequence (45ms per step)
-    let step = 0;
-    const interval = setInterval(() => {
-      step++;
-      if (step < TYPESET_STEPS.length) {
-        setTypesetIndex(step);
-      } else {
-        clearInterval(interval);
-        setIsTypesetComplete(true);
-      }
-    }, 45);
+    // 1. Hold closed magazine spread with AM logo centered (~1.2s)
+    const openTimer = setTimeout(() => {
+      setIsOpening(true);
+    }, 1200);
 
-    // Total exhibition opening sequence duration (~1.8s)
-    const timer = setTimeout(() => {
+    // 2. Complete sequence after 3D page fold reveal completes (~2.2s total)
+    const completeTimer = setTimeout(() => {
       onComplete();
-    }, 1850);
+    }, 2200);
 
     return () => {
-      clearInterval(interval);
-      clearTimeout(timer);
+      clearTimeout(openTimer);
+      clearTimeout(completeTimer);
     };
   }, [onComplete]);
 
   return (
-    <motion.div
-      key="preloader"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
-      className="fixed inset-0 bg-black text-[#FF6800] z-[9999] flex flex-col justify-between p-6 sm:p-10 md:p-16 select-none pointer-events-auto"
-    >
-      {/* Top Exhibition Catalogue Header with Low-Opacity White Line */}
-      <div className="w-full flex flex-col gap-4">
-        <div className="flex justify-between items-center text-[10px] sm:text-xs font-sans uppercase tracking-[0.3em] text-[#FF6800]">
-          <div className="flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#FF6800]" />
-            <span>EXHIBITION CATALOGUE</span>
-          </div>
-          <span className="text-white/40 tracking-[0.2em]">N° 001 / 2026</span>
-        </div>
-        <div className="w-full h-[1px] bg-white/10" />
-      </div>
-
-      {/* Center Exhibition Frame: Typesetting & Official Orange Brand Mark */}
-      <div className="flex flex-col items-center justify-center my-auto py-8 text-center max-w-4xl mx-auto w-full">
-        {/* Editorial Eyebrow */}
-        <motion.span
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.05 }}
-          className="text-xs sm:text-sm font-sans tracking-[0.4em] uppercase text-[#FF6800] mb-4 font-bold"
-        >
-          FROM THE LENS OF
-        </motion.span>
-
-        {/* Typeset Display & Official Logo Reveal */}
-        <div className="min-h-[120px] sm:min-h-[160px] flex flex-col items-center justify-center overflow-hidden">
-          {!isTypesetComplete ? (
-            <motion.h1
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="font-serif text-3xl sm:text-5xl md:text-6xl font-light uppercase tracking-[0.25em] text-[#FF6800] leading-none"
-            >
-              {TYPESET_STEPS[typesetIndex]}
-            </motion.h1>
-          ) : (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.98 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              className="py-2"
-            >
-              <Logo variant="orange" size="xl" ariaLabel="Angelique-Mari Photography Official Logo" />
-            </motion.div>
-          )}
-        </div>
-
-        {/* Minimal Editorial Catalogue Statement */}
+    <AnimatePresence>
+      <motion.div
+        key="preloader-magazine"
+        initial={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        className="fixed inset-0 z-[9999] pointer-events-auto select-none overflow-hidden bg-transparent [perspective:1400px]"
+      >
+        {/* LEFT MAGAZINE PANEL / PAGE */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: isTypesetComplete ? 1 : 0, y: isTypesetComplete ? 0 : 10 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: 'easeOut' }}
-          className="mt-6 flex flex-col items-center gap-3"
+          initial={{ rotateY: 0, x: 0 }}
+          animate={
+            isOpening
+              ? { rotateY: -102, opacity: 0 }
+              : { rotateY: 0, opacity: 1 }
+          }
+          transition={{
+            duration: 0.95,
+            ease: [0.76, 0, 0.24, 1],
+          }}
+          style={{ transformOrigin: 'left center' }}
+          className="absolute left-0 top-0 w-1/2 h-full bg-white overflow-hidden shadow-[10px_0_30px_rgba(0,0,0,0.15)] border-r border-black/10"
         >
-          <div className="w-12 h-[1px] bg-white/15" />
-          <p className="font-serif italic text-xs sm:text-sm md:text-base text-white/80 tracking-widest max-w-md">
-            "For those who'd rather be remembered than seen."
-          </p>
-        </motion.div>
-      </div>
+          {/* Spine crease shadow effect */}
+          <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-black/[0.08] via-black/[0.02] to-transparent pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-[1px] bg-[#FF6800]/30 pointer-events-none" />
 
-      {/* Bottom Exhibition Footer with Low-Opacity White Line */}
-      <div className="w-full flex flex-col gap-4">
-        <div className="w-full h-[1px] bg-white/10" />
-        <div className="flex justify-between items-center text-[9px] sm:text-[10px] font-sans text-[#FF6800]/80 uppercase tracking-[0.25em]">
-          <span>JOHANNESBURG • SA</span>
-          <span className="text-white/30 hidden sm:inline">//</span>
-          <span className="text-white/60">CONTEMPORARY FASHION GALLERY</span>
-        </div>
-      </div>
-    </motion.div>
+          {/* Full-width container to align left half of the centered logo */}
+          <div className="absolute top-0 left-0 w-[100vw] h-full flex items-center justify-center p-8 sm:p-16">
+            <img
+              src={logoPreloader}
+              alt="AM"
+              className="w-auto h-auto max-h-[28vh] sm:max-h-[36vh] md:max-h-[42vh] max-w-[70vw] sm:max-w-[50vw] md:max-w-[38vw] object-contain"
+              referrerPolicy="no-referrer"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = '/logo-preloader-1.png';
+              }}
+            />
+          </div>
+
+          {/* Shading overlay during 3D fold */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isOpening ? { opacity: 0.4 } : { opacity: 0 }}
+            transition={{ duration: 0.95 }}
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-black/20 to-black/40 pointer-events-none"
+          />
+        </motion.div>
+
+        {/* RIGHT MAGAZINE PANEL / PAGE */}
+        <motion.div
+          initial={{ rotateY: 0, x: 0 }}
+          animate={
+            isOpening
+              ? { rotateY: 102, opacity: 0 }
+              : { rotateY: 0, opacity: 1 }
+          }
+          transition={{
+            duration: 0.95,
+            ease: [0.76, 0, 0.24, 1],
+          }}
+          style={{ transformOrigin: 'right center' }}
+          className="absolute right-0 top-0 w-1/2 h-full bg-white overflow-hidden shadow-[-10px_0_30px_rgba(0,0,0,0.15)] border-l border-black/10"
+        >
+          {/* Spine crease shadow effect */}
+          <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-black/[0.08] via-black/[0.02] to-transparent pointer-events-none" />
+
+          {/* Full-width container offset to align right half of the centered logo */}
+          <div className="absolute top-0 -left-[50vw] w-[100vw] h-full flex items-center justify-center p-8 sm:p-16">
+            <img
+              src={logoPreloader}
+              alt="AM"
+              className="w-auto h-auto max-h-[28vh] sm:max-h-[36vh] md:max-h-[42vh] max-w-[70vw] sm:max-w-[50vw] md:max-w-[38vw] object-contain"
+              referrerPolicy="no-referrer"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src = '/logo-preloader-1.png';
+              }}
+            />
+          </div>
+
+          {/* Shading overlay during 3D fold */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={isOpening ? { opacity: 0.4 } : { opacity: 0 }}
+            transition={{ duration: 0.95 }}
+            className="absolute inset-0 bg-gradient-to-l from-transparent via-black/20 to-black/40 pointer-events-none"
+          />
+        </motion.div>
+      </motion.div>
+    </AnimatePresence>
   );
 }
+

@@ -1,5 +1,5 @@
 import { Instagram, Mail } from "lucide-react";
-import Logo from "./Logo";
+import logoMain from "../assets/images/logo-main.png";
 
 function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
   return (
@@ -19,17 +19,36 @@ export default function Footer() {
         {/* Editorial Official Logo Centerpiece Header */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 w-full pb-12 md:pb-16 pt-2 border-b border-[#FF6800]/20 select-none">
           {/* Left copyright with serif elegant font */}
-          <div className="font-serif italic text-base md:text-lg text-[#FF6800]/70 leading-none whitespace-nowrap shrink-0 self-center md:self-end md:mb-4">
+          <div className="font-serif italic text-base md:text-lg text-[#FF6800] leading-none whitespace-nowrap shrink-0 self-center md:self-end md:mb-4">
             © {currentYear}
           </div>
 
-          {/* Center Official Logo Presentation */}
-          <div className="flex-1 flex justify-center py-4">
-            <Logo variant="white" size="xl" className="max-w-[280px] sm:max-w-[360px] md:max-w-[440px] hover:text-[#FF6800] transition-colors duration-500 cursor-pointer" />
+          {/* Center Dimensional Ring Logo & Brand Typography */}
+          <div className="flex-1 flex flex-col items-center justify-center py-4 text-center group cursor-pointer">
+            <div className="relative w-28 h-28 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-full border-2 border-[#FF6800] border-t-[#FF8D33] border-b-[#C44E00] bg-[#050505] p-3 sm:p-4 flex items-center justify-center shadow-[0_6px_22px_rgba(255,104,0,0.35),inset_0_1.5px_3px_rgba(255,255,255,0.35),inset_0_-3px_6px_rgba(0,0,0,0.85)] group-hover:scale-105 group-hover:shadow-[0_8px_30px_rgba(255,104,0,0.5),inset_0_1.5px_3px_rgba(255,255,255,0.4),inset_0_-3px_6px_rgba(0,0,0,0.85)] transition-all duration-500">
+              <img
+                src={logoMain}
+                alt="Angelique-Mari AM Logo"
+                className="w-full h-full object-contain filter drop-shadow-md"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  (e.currentTarget as HTMLImageElement).src = '/assets/logo-main.png';
+                }}
+              />
+            </div>
+
+            <div className="mt-4 sm:mt-5 text-center select-none">
+              <span className="block font-serif text-lg sm:text-xl md:text-2xl font-bold uppercase tracking-[0.15em] text-white group-hover:text-[#FF6800] transition-colors duration-300">
+                Angelique-Mari
+              </span>
+              <span className="block font-sans text-[10px] sm:text-xs font-semibold lowercase tracking-[0.45em] text-[#FF6800] mt-1">
+                photography
+              </span>
+            </div>
           </div>
 
           {/* Right graphic copyright */}
-          <div className="font-serif text-2xl md:text-3xl font-light text-[#FF6800]/50 leading-none select-none shrink-0 self-center md:self-end md:mb-4 pr-1">
+          <div className="font-serif text-2xl md:text-3xl font-light text-[#FF6800] leading-none select-none shrink-0 self-center md:self-end md:mb-4 pr-1">
             ©
           </div>
         </div>
