@@ -1,5 +1,5 @@
 import { Instagram, Mail } from "lucide-react";
-import logoMain from "../assets/images/logo-main.png";
+import logoMain from "../assets/images/logo-main-nobg.png";
 
 function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
   return (
@@ -32,7 +32,7 @@ export default function Footer() {
                 className="w-full h-full object-contain filter drop-shadow-md"
                 referrerPolicy="no-referrer"
                 onError={(e) => {
-                  (e.currentTarget as HTMLImageElement).src = '/assets/logo-main.png';
+                  (e.currentTarget as HTMLImageElement).src = '/assets/images/logo-main-nobg.png';
                 }}
               />
             </div>

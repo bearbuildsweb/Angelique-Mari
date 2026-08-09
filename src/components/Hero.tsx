@@ -80,24 +80,24 @@ export default function Hero({ onBookClick }: HeroProps) {
       <BackgroundParticles />
 
       {/* 2. Merged Overlay Header Navigation */}
-      <header className="relative w-full z-40 px-6 py-5 md:px-12 flex justify-between items-center border-b border-[#FF6800]/20 bg-black/60 backdrop-blur-md">
+      <header className="relative w-full z-40 px-4 sm:px-6 py-3 sm:py-5 md:px-12 flex justify-between items-center border-b border-[#FF6800]/20 bg-black/60 backdrop-blur-md">
         {/* Navigation Logo: Full Brand Lockup (ANGELIQUE-MARI + AM Monogram + PHOTOGRAPHY) */}
         <div 
-          className="flex items-center gap-4 cursor-pointer group py-1" 
+          className="flex items-center gap-2 sm:gap-4 cursor-pointer group py-1" 
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           title="Angelique-Mari Photography"
         >
           <Logo 
             mode="full" 
             variant="orange" 
-            size="lg" 
-            className="h-20 sm:h-28 md:h-36 lg:h-44 group-hover:scale-[1.03] transition-transform duration-300 ease-out" 
+            size="md" 
+            className="h-12 sm:h-16 md:h-20 lg:h-24 group-hover:scale-[1.03] transition-transform duration-300 ease-out" 
           />
           
           {/* Studio ticket badge */}
-          <span className="hidden sm:inline-flex flex-col font-sans border border-[#FF6800]/70 bg-black/80 text-[#FF6800] px-3 py-1.5 rounded-none uppercase tracking-widest backdrop-blur-md shadow-md">
-            <span className="font-bold text-[10px] lg:text-[11px] text-[#FF7711] tracking-widest leading-none">FROM THE STUDIO OF</span>
-            <span className="font-extrabold text-[12px] lg:text-[13px] text-white tracking-wider leading-tight mt-1">ANGELIQUE-MARI</span>
+          <span className="inline-flex flex-col font-sans border border-[#FF6800]/70 bg-black/80 text-[#FF6800] px-2 py-1 sm:px-3 sm:py-1.5 rounded-none uppercase tracking-widest backdrop-blur-md shadow-md">
+            <span className="font-bold text-[8px] xs:text-[9px] sm:text-[10px] lg:text-[11px] text-[#FF7711] tracking-widest leading-none">FROM THE STUDIO OF</span>
+            <span className="font-extrabold text-[10px] xs:text-[11px] sm:text-[12px] lg:text-[13px] text-white tracking-wider leading-tight mt-0.5 sm:mt-1">ANGELIQUE-MARI</span>
           </span>
         </div>
 
@@ -134,7 +134,7 @@ export default function Hero({ onBookClick }: HeroProps) {
             className="fixed inset-y-0 right-0 w-full sm:w-[400px] bg-black/95 border-l border-[#FF6800]/30 z-50 p-8 flex flex-col justify-between backdrop-blur-2xl text-[#FF6800]"
           >
             <div className="flex justify-between items-center border-b border-[#FF6800]/20 pb-6">
-              <Logo mode="full" variant="orange" size="lg" className="h-24 sm:h-32 md:h-36" />
+              <Logo mode="full" variant="orange" size="md" className="h-16 sm:h-20 md:h-24" />
               <button
                 onClick={() => setMenuOpen(false)}
                 className="font-sans text-xs uppercase text-[#FF6800] hover:text-white transition-colors tracking-widest cursor-pointer font-bold"
@@ -173,7 +173,7 @@ export default function Hero({ onBookClick }: HeroProps) {
             </nav>
 
             <div className="border-t border-[#FF6800]/20 pt-6 flex flex-col gap-4">
-              <p className="font-sans text-[10px] lg:text-[11px] text-[#FF6800]/80 uppercase leading-relaxed text-right">
+              <p className="font-sans text-[10px] lg:text-[11px] text-neutral-400 uppercase leading-relaxed text-right">
                 FOR THOSE WHO'D RATHER BE REMEMBERED THAN SEEN.
               </p>
               <div className="flex justify-between items-center font-sans text-[10px] lg:text-[11px] text-[#FF6800]">
