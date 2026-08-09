@@ -9,7 +9,6 @@ import CustomCursor from './components/CustomCursor';
 import Preloader from './components/Preloader';
 import Hero from './components/Hero';
 import Portfolio from './components/Portfolio';
-import Services from './components/Services';
 import Testimonials from './components/Testimonials';
 import Booking from './components/Booking';
 import Footer from './components/Footer';
@@ -51,9 +50,6 @@ export default function App() {
 
         {/* Selected Portfolio Exhibition */} 
         <Portfolio /> 
-
-        {/* Services Spread 
-        <Services /> */}
 
         {/* Luxury Booking Inquiry Questionnaire */}
         <Booking /> 
