@@ -14,20 +14,20 @@ export default function Preloader({ onComplete }: PreloaderProps) {
   const [phase, setPhase] = useState<0 | 1 | 2>(0);
 
   useEffect(() => {
-    // Stage 1: Chemical development snap at 0.4s
+    // Stage 1: Chemical development snap at 0.6s
     const t1 = setTimeout(() => {
       setPhase(1);
-    }, 400);
+    }, 600);
 
-    // Stage 2: Photo lifts & reveals website at 1.2s
+    // Stage 2: Photo lifts & reveals website at 5.2s (+4s duration)
     const t2 = setTimeout(() => {
       setPhase(2);
-    }, 1200);
+    }, 5200);
 
-    // Stage 3: Complete preloader and unmount at 1.8s
+    // Stage 3: Complete preloader and unmount at 5.8s (+4s total)
     const t3 = setTimeout(() => {
       onComplete();
-    }, 1800);
+    }, 5800);
 
     return () => {
       clearTimeout(t1);

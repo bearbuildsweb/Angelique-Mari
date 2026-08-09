@@ -1,14 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowUpRight, Check, Calendar as CalendarIcon, ChevronLeft, ChevronRight, User, Tag, Sparkles } from 'lucide-react';
 import Logo from './Logo';
+import { CATEGORIES } from '../data';
 
 import imageJoburgWedding from '../assets/images/joburg_wedding_editorial_1785698386628.jpg';
-import imageJoburgMaternity from '../assets/images/joburg_maternity_editorial_1785698401776.jpg';
-import imageJoburgCakeSmash from '../assets/images/joburg_cakesmash_studio_1785698420504.jpg';
-import imageJoburgBirthday from '../assets/images/joburg_birthday_nightlife_1785698434145.jpg';
 import imageJoburgLifestyle from '../assets/images/joburg_lifestyle_maboneng_1785698449438.jpg';
 import imageJoburgFamily from '../assets/images/joburg_family_contemporary_1785698464551.jpg';
+import imageBrandActivation from '../assets/images/smartphone_activation_campaign_1784717905366.jpg';
 
 export interface SessionCategory {
   id: string;
@@ -21,52 +20,36 @@ export interface SessionCategory {
 
 export const SESSION_CATEGORIES: SessionCategory[] = [
   {
-    id: 'wedding',
-    title: 'Wedding',
-    subtitle: 'LOVE, UNFILTERED',
-    code: 'SESSION N° 01',
-    description: 'Documentary-style wedding photography in Rosebank & Sandton luxury venues.',
-    image: imageJoburgWedding,
-  },
-  {
-    id: 'baby-shower',
-    title: 'Baby Shower',
-    subtitle: 'GROWING MOMENTS',
-    code: 'SESSION N° 02',
-    description: 'Refined lifestyle imagery in sunlit studio lofts.',
-    image: imageJoburgMaternity,
-  },
-  {
-    id: 'cake-smash',
-    title: 'Cake Smash',
-    subtitle: 'SMALL CHAOS',
-    code: 'SESSION N° 03',
-    description: 'Modern studio photography with organic compositions and clean lighting.',
-    image: imageJoburgCakeSmash,
-  },
-  {
-    id: 'birthday',
-    title: 'Birthday',
-    subtitle: 'BORN TO SHINE',
-    code: 'SESSION N° 04',
-    description: 'High-octane portraiture set in contemporary rooftops and underground spaces.',
-    image: imageJoburgBirthday,
-  },
-  {
     id: 'lifestyle',
     title: 'Lifestyle',
-    subtitle: 'IN MOTION',
-    code: 'SESSION N° 05',
-    description: 'Editorial portraits amidst Johannesburg streets and industrial textures.',
+    subtitle: 'STREET CULTURE & INDIVIDUALITY',
+    code: 'SESSION N° 01',
+    description: 'Johannesburg street culture, fashion, movement, individuality and candid editorial moments.',
     image: imageJoburgLifestyle,
   },
   {
-    id: 'family-session',
-    title: 'Family Session',
-    subtitle: 'REAL CONNECTION',
-    code: 'SESSION N° 06',
-    description: 'Modern family portraiture captured in natural light and architectural surroundings.',
+    id: 'weddings-and-celebrations',
+    title: 'Weddings & Celebrations',
+    subtitle: 'MODERN CELEBRATION & EDITORIAL',
+    code: 'SESSION N° 02',
+    description: 'Modern South African weddings with fashion-forward styling, architectural environments, dramatic portraits and genuine celebration.',
+    image: imageJoburgWedding,
+  },
+  {
+    id: 'family-and-little-ones',
+    title: 'Family & Little Ones',
+    subtitle: 'CONTEMPORARY CONNECTION',
+    code: 'SESSION N° 03',
+    description: 'Warm, contemporary family moments with natural interaction and stylish environments.',
     image: imageJoburgFamily,
+  },
+  {
+    id: 'brand-and-corporate-activation',
+    title: 'Brand & Corporate Activation',
+    subtitle: 'CAMPAIGNS, EVENTS & BRANDS',
+    code: 'SESSION N° 04',
+    description: 'South African brands, creative professionals, launches, events and campaign environments.',
+    image: imageBrandActivation,
   },
 ];
 
@@ -87,7 +70,11 @@ interface DayItem {
   isPast: boolean;
 }
 
-export default function Booking() {
+interface BookingProps {
+  externalCategory?: SessionCategory | null;
+}
+
+export default function Booking({ externalCategory }: BookingProps) {
   // Calendar Month State (Defaults to current date or August 2026)
   const today = new Date();
   const initialYear = today.getFullYear() < 2026 ? 2026 : today.getFullYear();
@@ -99,6 +86,12 @@ export default function Booking() {
   // Progressive Form State
   const [selectedDate, setSelectedDate] = useState<DayItem | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<SessionCategory | null>(null);
+
+  useEffect(() => {
+    if (externalCategory) {
+      setSelectedCategory(externalCategory);
+    }
+  }, [externalCategory]);
   
   const [visitorName, setVisitorName] = useState('');
   const [visitorEmail, setVisitorEmail] = useState('');
