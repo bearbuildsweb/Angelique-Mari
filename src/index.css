@@ -119,9 +119,3 @@
   animation: ambient-leak-two 15s infinite ease-in-out;
 }
 
-/* Hide default cursor on desktops if custom cursor is active */
-.custom-cursor-active,
-.custom-cursor-active * {
-  cursor: none !important;
-}
-
