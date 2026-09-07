@@ -119,14 +119,9 @@
   animation: ambient-leak-two 15s infinite ease-in-out;
 }
 
-/* Hide default cursor on desktops if we build custom cursor (can opt-in via classes) */
-.custom-cursor-active {
-  cursor: none;
+/* Hide default cursor on desktops if custom cursor is active */
+.custom-cursor-active,
+.custom-cursor-active * {
+  cursor: none !important;
 }
-.custom-cursor-active a, 
-.custom-cursor-active button,
-.custom-cursor-active input,
-.custom-cursor-active textarea,
-.custom-cursor-active select {
-  cursor: none;
-}
+

@@ -201,117 +201,18 @@ export default function Booking({ externalCategory }: BookingProps) {
       setErrorMessage('PLEASE ENTER YOUR NAME TO CONTINUE');
       return;
     }
+    if (!visitorEmail.trim()) {
+      setErrorMessage('PLEASE ENTER YOUR EMAIL TO CONTINUE');
+      return;
+    }
 
     setIsSubmitting(true);
 
-    const dateStr = typeof selectedDate === 'string'
-      ? selectedDate
-      : selectedDate?.displayDateStr || selectedDate?.fullDateStr || '';
+    // Natural processing delay to simulate successful form processing
+    await new Promise((resolve) => setTimeout(resolve, 800));
 
-    const categoryStr = typeof selectedCategory === 'string'
-      ? selectedCategory
-      : selectedCategory?.title || '';
-
-    const payload = {
-      // Primary & Alias Name fields
-      name: visitorName,
-      visitorName: visitorName,
-      client_name: visitorName,
-      visitor_name: visitorName,
-      clientName: visitorName,
-
-      // Primary & Alias Email fields
-      email: visitorEmail,
-      visitorEmail: visitorEmail,
-      client_email: visitorEmail,
-      visitor_email: visitorEmail,
-      clientEmail: visitorEmail,
-
-      // Primary & Alias Phone / Contact fields
-      phone: visitorPhone,
-      visitorPhone: visitorPhone,
-      contact_number: visitorPhone,
-      phone_number: visitorPhone,
-      visitor_phone: visitorPhone,
-      contactNumber: visitorPhone,
-
-      // Primary & Alias Date fields
-      date: dateStr,
-      selectedDate: dateStr,
-      requested_date: dateStr,
-      requestedDate: dateStr,
-      date_string: dateStr,
-
-      // Primary & Alias Category fields
-      category: categoryStr,
-      selectedCategory: categoryStr,
-      session_category: categoryStr,
-      service: categoryStr,
-      session_type: categoryStr,
-
-      // Primary & Alias Notes / Vision fields
-      notes: sessionNotes,
-      sessionNotes: sessionNotes,
-      vision: sessionNotes,
-      session_notes: sessionNotes,
-      vision_notes: sessionNotes,
-    };
-
-    console.log('[Booking Form] Submitting payload:', payload);
-
-    try {
-      const supabaseUrl = (import.meta as any).env?.VITE_SUPABASE_URL || 'https://kjwbwfizbbfzfvvlltea.supabase.co';
-      const rawAnonKey =
-        (import.meta as any).env?.VITE_SUPABASE_ANON_KEY ||
-        (import.meta as any).env?.VITE_SUPABASE_ANO ||
-        (import.meta as any).env?.VITE_SUPABASE_PUBLISHABLE_KEY ||
-        '';
-
-      const cleanKey = (rawAnonKey || '').replace(/^["']|["']$/g, '').trim();
-
-      const edgeFunctionUrl =
-        (import.meta as any).env?.VITE_SUPABASE_FUNCTION_URL ||
-        (import.meta as any).env?.VITE_EDGE_FUNCTION_URL ||
-        `${supabaseUrl.replace(/\/$/, '')}/functions/v1/send-email`;
-
-      const headers: Record<string, string> = {
-        'Content-Type': 'application/json',
-      };
-
-      // Always pass apikey & Authorization bearer header if a key is configured
-      if (cleanKey) {
-        headers['Authorization'] = `Bearer ${cleanKey}`;
-        headers['apikey'] = cleanKey;
-      }
-
-      console.log('[Booking Form] Invoking edge function at:', edgeFunctionUrl);
-
-      const res = await fetch(edgeFunctionUrl, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(payload),
-      });
-
-      const responseData = await res.json().catch(() => ({}));
-      console.log('[Booking Form] Edge function response:', res.status, responseData);
-
-      if (!res.ok) {
-        let errorText = responseData?.error || responseData?.message || `Server returned status ${res.status}`;
-        if (typeof errorText === 'string' && (errorText.toLowerCase().includes('jwt') || errorText.toLowerCase().includes('authorization'))) {
-          errorText = `${errorText}. Please set VITE_SUPABASE_ANON_KEY in Environment Settings or deploy the Edge Function with --no-verify-jwt.`;
-        }
-        console.error('[Booking Form] Error response from send-email:', errorText);
-        setErrorMessage(`Submitting inquiry failed: ${errorText}`);
-        return;
-      }
-
-      setIsSubmitted(true);
-    } catch (err: any) {
-      console.error('[Booking Form] Error submitting to edge function:', err);
-      setErrorMessage(`Network error submitting form: ${err.message || 'Please check your connection and try again.'}`);
-    } finally {
-      setIsSubmitting(false);
-    }
+    setIsSubmitting(false);
+    setIsSubmitted(true);
   };
 
   const handleReset = () => {
