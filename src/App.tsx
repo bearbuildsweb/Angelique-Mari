@@ -5,7 +5,6 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import CustomCursor from './components/CustomCursor';
 import Preloader from './components/Preloader';
 import Hero from './components/Hero';
 import Portfolio from './components/Portfolio';
@@ -29,10 +28,7 @@ export default function App() {
       {/* 1. Cinematic Film Grain Overlay */}
       <div className="editorial-grain pointer-events-none" />
 
-      {/* 2. Custom trailing interactive cursor */}
-      <CustomCursor />
-
-      {/* 3. Contemporary Fashion Exhibition Preloader */}
+      {/* 2. Contemporary Fashion Exhibition Preloader */}
       <AnimatePresence mode="wait">
         {loading && (
           <Preloader onComplete={() => setLoading(false)} />
