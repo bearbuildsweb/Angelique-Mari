@@ -117,6 +117,20 @@ export const PROJECTS: Project[] = [
     credits: 'Art Direction & Spatial Design: Angelique-Mari',
     medium: 'High Dynamic Range Architectural • Clean Commercial Illumination',
     aspectRatio: '16/9'
+  },
+  {
+    id: 'street-couture-exhibit',
+    title: 'Street Couture & Nightfall',
+    category: 'Editorial & Fashion',
+    year: '2026',
+    image: imageStreetCouture,
+    description: "High-contrast nocturnal fashion editorial captured between Braamfontein and Maboneng with bold directional flash.",
+    layoutType: 'full',
+    museumNumber: 'EXHIBIT N° 05',
+    location: 'Braamfontein • Johannesburg',
+    credits: 'Creative Direction: Angelique-Mari',
+    medium: 'Medium Format Night Simulation • 35mm High Grain',
+    aspectRatio: '21/9'
   }
 ];
 

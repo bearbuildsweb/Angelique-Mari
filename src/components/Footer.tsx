@@ -19,7 +19,7 @@ export default function Footer() {
         {/* Editorial Official Logo Centerpiece Header */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 w-full pb-12 md:pb-16 pt-2 border-b border-[#FF6800]/20 select-none">
           {/* Left copyright with serif elegant font */}
-          <div className="font-serif italic text-base md:text-lg text-[#FF6800] leading-none whitespace-nowrap shrink-0 self-center md:self-end md:mb-4">
+          <div className="font-['Playfair_Display',Georgia,serif] italic text-base md:text-lg text-[#FF6800] leading-none whitespace-nowrap shrink-0 self-center md:self-end md:mb-4">
             © {currentYear}
           </div>
 
@@ -60,7 +60,7 @@ export default function Footer() {
             <Mail className="w-4 h-4 stroke-[1.5] text-[#FF6800]" />
             <a 
               href="mailto:ambrandcreatives@gmail.com" 
-              className="font-serif italic lowercase text-sm md:text-base lg:text-lg text-[#FF6800] hover:text-white transition-colors underline decoration-[#FF6800]/40 hover:decoration-white underline-offset-4 tracking-wide"
+              className="font-['Playfair_Display',Georgia,serif] italic lowercase text-base sm:text-lg md:text-xl text-[#FF6800] hover:text-white transition-colors underline decoration-[#FF6800]/40 hover:decoration-white underline-offset-4 tracking-wide font-normal"
             >
               ambrandcreatives@gmail.com
             </a>
@@ -72,7 +72,7 @@ export default function Footer() {
           {/* Social Icons: Instagram and WhatsApp */}
           <div className="flex justify-center md:justify-end items-center gap-5 flex-1 text-[#FF6800]">
             <a 
-              href="https://www.instagram.com/iambrandthecreative?igsh=OGcwa3Z1M2lndno1" 
+              href="https://www.instagram.com/iambrandthecreative" 
               target="_blank" 
               rel="noopener noreferrer" 
               className="hover:text-white transition-colors p-1" 

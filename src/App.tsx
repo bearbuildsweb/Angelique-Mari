@@ -3,19 +3,13 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import CustomCursor from './components/CustomCursor';
-import Preloader from './components/Preloader';
 import Hero from './components/Hero';
 import Portfolio from './components/Portfolio';
-import Testimonials from './components/Testimonials';
-import Booking from './components/Booking';
+import ConversationCTA from './components/ConversationCTA';
 import Footer from './components/Footer';
+import WhatsAppWidget from './components/WhatsAppWidget';
 
 export default function App() {
-  const [loading, setLoading] = useState(true);
-
   const handleBookClick = () => {
     const bookingSection = document.getElementById('booking');
     if (bookingSection) {
@@ -24,43 +18,23 @@ export default function App() {
   };
 
   return (
-    <div className="relative min-h-screen bg-black text-[#FF6800] overflow-x-hidden selection:bg-[#FF6800] selection:text-black">
-      
-      {/* 1. Cinematic Film Grain Overlay */}
-      <div className="editorial-grain pointer-events-none" />
-
-      {/* 2. Custom trailing interactive cursor */}
-      <CustomCursor />
-
-      {/* 3. Contemporary Fashion Exhibition Preloader */}
-      <AnimatePresence mode="wait">
-        {loading && (
-          <Preloader onComplete={() => setLoading(false)} />
-        )}
-      </AnimatePresence>
-
-      {/* Main site layout (Fades in gently after preload completes) */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: loading ? 0 : 1 }}
-        transition={{ duration: 0.8, delay: 0.2 }}
-      >
-        {/* Hero Banner Section */}
+    <>
+      <div className="relative min-h-screen bg-black text-[#FF6800] overflow-x-hidden selection:bg-[#FF6800] selection:text-black">
+        {/* Stage 1: Arrive (Cinematic, focused Hero) */}
         <Hero onBookClick={handleBookClick} />
 
-        {/* Selected Portfolio Exhibition */} 
+        {/* Stage 2 & 3: Experience & Explore (Selected Archival Works) */} 
         <Portfolio /> 
 
-        {/* Luxury Booking Inquiry Questionnaire */}
-        <Booking /> 
-
-        {/* Client Testimonials Carousel */}
-        <Testimonials /> 
+        {/* Stage 4: Convert (Direct WhatsApp Conversation Initiation) */}
+        <ConversationCTA /> 
         
-        {/* Gigantic Branding Footer */}
+        {/* Editorial Brand Footer */}
         <Footer /> 
-      </motion.div>
+      </div>
 
-    </div>
+      {/* Native Brand Floating WhatsApp Widget */}
+      <WhatsAppWidget />
+    </>
   );
 }

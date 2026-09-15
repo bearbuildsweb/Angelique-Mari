@@ -1,19 +1,11 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { Project } from '../types';
 import { PROJECTS } from '../data';
 import { X, Maximize2 } from 'lucide-react';
 
 export default function Portfolio() {
   const [activeProject, setActiveProject] = useState<Project | null>(null);
-  const [isDesktop, setIsDesktop] = useState(false);
-
-  useEffect(() => {
-    const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
-    checkDesktop();
-    window.addEventListener('resize', checkDesktop);
-    return () => window.removeEventListener('resize', checkDesktop);
-  }, []);
 
   // Lock body scroll and listen for Escape key when gallery view is open
   useEffect(() => {
@@ -34,12 +26,6 @@ export default function Portfolio() {
     };
   }, [activeProject]);
 
-  // Parallax scroll controls for natural editorial depth
-  const { scrollYProgress } = useScroll();
-  const parallaxY1 = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const parallaxY2 = useTransform(scrollYProgress, [0, 1], [0, 45]);
-  const parallaxY3 = useTransform(scrollYProgress, [0, 1], [0, -35]);
-
   const p1 = PROJECTS[0];
   const p2 = PROJECTS[1];
   const p3 = PROJECTS[2];
@@ -50,7 +36,7 @@ export default function Portfolio() {
     <section id="portfolio" className="relative w-full bg-black text-[#FF6800] py-24 md:py-36 px-6 md:px-12 z-10 border-t border-[#FF6800]/20">
       
       {/* 1. Contemporary Exhibition Header */}
-      <div className="max-w-7xl mx-auto flex flex-col mb-24 md:mb-32">
+      <div className="max-w-7xl mx-auto flex flex-col mb-12 md:mb-20">
         
         {/* Top Eyebrow Bar */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 w-full font-sans text-[10px] sm:text-xs uppercase tracking-[0.25em] text-[#FF6800] pb-4 border-b border-[#FF6800]/20">
@@ -64,27 +50,6 @@ export default function Portfolio() {
             <span className="text-white/40">•</span>
             <span>SOUTH AFRICA</span>
           </div>
-        </div>
-
-        {/* Oversized Gallery Split Title Layout */}
-        <div className="pt-8 pb-6 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8 border-b border-[#FF6800]/20">
-          <h2 className="text-6xl sm:text-8xl lg:text-9xl font-black font-serif tracking-tighter uppercase text-white leading-none select-none">
-            FEAT
-          </h2>
-
-          {/* Center Informational Badge Box */}
-          <div className="border border-[#FF6800]/40 bg-neutral-950 p-4 sm:p-5 max-w-md text-center flex flex-col items-center justify-center rounded-none shadow-xl">
-            <p className="font-sans text-xs text-[#FF6800] leading-relaxed font-semibold uppercase tracking-wider mt-1">
-              CULTURE, IDENTITY & FASHION.
-            </p>
-            <span className="font-sans text-[9px] sm:text-[10px] uppercase tracking-[0.2em] text-white font-extrabold mt-1">
-              From the Lens of Angelique-Mari
-            </span>
-          </div>
-
-          <h2 className="text-6xl sm:text-8xl lg:text-9xl font-black font-serif tracking-tighter uppercase text-white leading-none select-none">
-            URED
-          </h2>
         </div>
 
       </div>
@@ -131,15 +96,14 @@ export default function Portfolio() {
             </motion.div>
           )}
 
-          {/* Work 2: Floating Vertical Portrait (3/4) with Scroll Parallax */}
+          {/* Work 2: Floating Vertical Portrait (3/4) */}
           {p2 && (
             <motion.div 
-              style={isDesktop ? { y: parallaxY1 } : undefined}
               className="lg:col-span-4 lg:mt-20 group cursor-pointer"
-              initial={{ opacity: 0, y: 40, scale: 0.96 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 1.1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-20px' }}
+              transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
               onClick={() => setActiveProject(p2)}
             >
               {/* Museum Print Frame with Clean White Border */}
@@ -205,15 +169,14 @@ export default function Portfolio() {
             </motion.div>
           )}
 
-          {/* Work 4: Offset Wide Directive with Parallax */}
+          {/* Work 4: Offset Wide Directive */}
           {p4 && (
             <motion.div 
-              style={isDesktop ? { y: parallaxY2 } : undefined}
               className="lg:col-span-7 lg:-mt-12 group cursor-pointer"
-              initial={{ opacity: 0, y: 40, scale: 0.97 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 1.1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-20px' }}
+              transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
               onClick={() => setActiveProject(p4)}
             >
               {/* Museum Print Frame with Clean White Border */}
@@ -250,12 +213,11 @@ export default function Portfolio() {
           {/* Work 5: Full Runway / Street Couture Spread */}
           {p5 && (
             <motion.div 
-              style={isDesktop ? { y: parallaxY3 } : undefined}
               className="lg:col-span-12 group cursor-pointer"
-              initial={{ opacity: 0, y: 40, scale: 0.97 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, margin: '-40px' }}
-              transition={{ duration: 1.1, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-20px' }}
+              transition={{ duration: 0.7, delay: 0.1, ease: 'easeOut' }}
               onClick={() => setActiveProject(p5)}
             >
               {/* Museum Print Frame with Clean White Border */}
