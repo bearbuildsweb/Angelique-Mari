@@ -9,6 +9,8 @@ import imageJoburgLifestyle from '../assets/images/joburg_lifestyle_maboneng_178
 import imageJoburgFamily from '../assets/images/joburg_family_contemporary_1785698464551.jpg';
 import imageBrandActivation from '../assets/images/smartphone_activation_campaign_1784717905366.jpg';
 
+import imageStreetCouture from '../assets/images/street_couture_maboneng_1784717507856.jpg';
+
 export interface SessionCategory {
   id: string;
   title: string;
@@ -20,12 +22,12 @@ export interface SessionCategory {
 
 export const SESSION_CATEGORIES: SessionCategory[] = [
   {
-    id: 'lifestyle',
-    title: 'Lifestyle',
-    subtitle: 'STREET CULTURE & INDIVIDUALITY',
+    id: 'street-couture-and-nightfall',
+    title: 'Street Couture & Nightfall',
+    subtitle: 'PORTRAITURE & DIRECT-FLASH NOCTURNE',
     code: 'SESSION N° 01',
-    description: 'Johannesburg street culture, fashion, movement, individuality and candid editorial moments.',
-    image: imageJoburgLifestyle,
+    description: 'Celebrating you — personality, style, and raw detail. From art-directed portraiture to direct-flash nightfall.',
+    image: imageStreetCouture,
   },
   {
     id: 'weddings-and-celebrations',
@@ -36,20 +38,36 @@ export const SESSION_CATEGORIES: SessionCategory[] = [
     image: imageJoburgWedding,
   },
   {
+    id: 'brand-and-product-imagery',
+    title: 'Brand & Product Imagery',
+    subtitle: 'PURPOSEFUL & STRIKING VISUALS',
+    code: 'SESSION N° 03',
+    description: 'Striking, purposeful imagery that articulates your vision, elevates your product, and commands attention.',
+    image: imageBrandActivation,
+  },
+  {
     id: 'family-and-little-ones',
     title: 'Family & Little Ones',
     subtitle: 'CONTEMPORARY CONNECTION',
-    code: 'SESSION N° 03',
+    code: 'SESSION N° 04',
     description: 'Warm, contemporary family moments with natural interaction and stylish environments.',
     image: imageJoburgFamily,
   },
   {
-    id: 'brand-and-corporate-activation',
-    title: 'Brand & Corporate Activation',
-    subtitle: 'CAMPAIGNS, EVENTS & BRANDS',
-    code: 'SESSION N° 04',
-    description: 'South African brands, creative professionals, launches, events and campaign environments.',
-    image: imageBrandActivation,
+    id: 'lifestyle',
+    title: 'Lifestyle',
+    subtitle: 'SPACES, DESTINATIONS & ATMOSPHERE',
+    code: 'SESSION N° 05',
+    description: 'Exceptional spaces, destinations, and the finer textures of life. Architecture, hospitality, and atmosphere brought vividly to light.',
+    image: imageJoburgLifestyle,
+  },
+  {
+    id: 'outside-the-frame',
+    title: 'Outside The Frame',
+    subtitle: 'UNCLASSIFIED COMMISSIONS & BESPOKE VISIONS',
+    code: 'SESSION N° 06',
+    description: 'Have an idea that doesn’t fit neatly into a category? Bring your vision or mood board. We’ll turn the unconventional into something unforgettable.',
+    image: imageStreetCouture,
   },
 ];
 

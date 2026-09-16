@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@100;200;300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Allura&family=Parisienne&family=Great+Vibes&family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@100;200;300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 
 @font-face {
@@ -20,6 +20,7 @@
   --font-heading: "Tan Pearl", serif;
   --font-body: "Glacial Indifference", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+  --font-cursive: "Allura", "Alex Brush", "Parisienne", "Pinyon Script", cursive;
   
   --color-brand-orange: #FF6800;
   --color-orange-primary: #FF6800;
@@ -69,4 +70,9 @@
     color: #000000;
   }
 }
+
+.font-cursive {
+  font-family: 'Pinyon Script', 'Alex Brush', 'Great Vibes', cursive;
+}
+
 

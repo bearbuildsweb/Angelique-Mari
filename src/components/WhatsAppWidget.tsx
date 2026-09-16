@@ -14,7 +14,11 @@ function WhatsAppGlyph({ className = 'w-4 h-4' }: { className?: string }) {
   );
 }
 
-export default function WhatsAppWidget() {
+interface WhatsAppWidgetProps {
+  isHidden?: boolean;
+}
+
+export default function WhatsAppWidget({ isHidden = false }: WhatsAppWidgetProps) {
   const [mounted, setMounted] = useState(false);
   const [inFunnelOrBelow, setInFunnelOrBelow] = useState(false);
 
@@ -49,12 +53,14 @@ export default function WhatsAppWidget() {
     };
   }, []);
 
+  const shouldHide = inFunnelOrBelow || isHidden;
+
   const widgetMarkup = (
     <aside
       id="floating-whatsapp-widget"
       aria-label="Direct studio conversation"
       className={`fixed bottom-5 right-4 sm:bottom-6 sm:right-6 md:bottom-7 md:right-7 lg:bottom-8 lg:right-8 z-[9999] transition-all duration-500 ease-out ${
-        inFunnelOrBelow
+        shouldHide
           ? 'opacity-0 translate-y-8 pointer-events-none'
           : 'opacity-100 translate-y-0 pointer-events-auto'
       }`}

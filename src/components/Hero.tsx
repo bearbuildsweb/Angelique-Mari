@@ -22,11 +22,20 @@ const HERO_IMAGES = [heroImage01, heroImage02, heroImage03, heroImage04];
 
 interface HeroProps {
   onBookClick?: () => void;
+  menuOpen?: boolean;
+  setMenuOpen?: (open: boolean) => void;
 }
 
-export default function Hero({ onBookClick }: HeroProps = {}) {
+export default function Hero({
+  onBookClick,
+  menuOpen: controlledMenuOpen,
+  setMenuOpen: controlledSetMenuOpen,
+}: HeroProps = {}) {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [internalMenuOpen, setInternalMenuOpen] = useState(false);
+
+  const menuOpen = controlledMenuOpen !== undefined ? controlledMenuOpen : internalMenuOpen;
+  const setMenuOpen = controlledSetMenuOpen || setInternalMenuOpen;
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -182,11 +191,19 @@ export default function Hero({ onBookClick }: HeroProps = {}) {
                 <span>COLLECTION</span>
               </a>
               <a
+                href="#about"
+                onClick={() => setMenuOpen(false)}
+                className="group hover:text-white transition-colors pl-3 border-l-2 border-transparent hover:border-[#FF6800] flex items-baseline gap-3"
+              >
+                <span className="font-sans text-xs text-[#FF6800]/50">02 /</span>
+                <span>ABOUT <span className="text-neutral-300 group-hover:text-white transition-colors">Ang-Mari</span></span>
+              </a>
+              <a
                 href="#booking"
                 onClick={() => setMenuOpen(false)}
                 className="hover:text-white transition-colors pl-3 border-l-2 border-transparent hover:border-[#FF6800] flex items-baseline gap-3"
               >
-                <span className="font-sans text-xs text-[#FF6800]/50">02 /</span>
+                <span className="font-sans text-xs text-[#FF6800]/50">03 /</span>
                 <span>ENQUIRE</span>
               </a>
             </nav>
