@@ -121,9 +121,11 @@ export default function ConversationCTA() {
 
           {/* Selected Focus Prompt Preview */}
           {selectedTopic && (
-            <div className="mt-6 text-xs font-mono text-neutral-300 max-w-xl mx-auto bg-neutral-950/90 border border-[#FF6800]/30 px-4 py-2.5 rounded-none shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
-              <span className="text-[#FF6800] font-bold tracking-wider mr-2 uppercase text-[10px]">[ MESSAGE ]</span>
-              <span className="italic text-neutral-200">"{activeMessage}"</span>
+            <div className="mt-6 text-xs sm:text-sm font-sans text-neutral-100 max-w-xl mx-auto bg-neutral-950/95 border border-[#FF6800]/40 px-4 sm:px-5 py-3 rounded-md shadow-[0_6px_20px_rgba(0,0,0,0.85)] leading-relaxed text-left flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-3">
+              <span className="shrink-0 inline-flex items-center text-[#FF6800] font-mono font-bold tracking-wider uppercase text-[10px] bg-[#FF6800]/10 border border-[#FF6800]/30 px-2 py-0.5 rounded">
+                MESSAGE PREVIEW
+              </span>
+              <span className="text-neutral-200 font-normal">"{activeMessage}"</span>
             </div>
           )}
         </div>

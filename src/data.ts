@@ -74,6 +74,8 @@ export const WILDCARD_DATA = {
   tag: 'OUTSIDE THE FRAME',
   title: "Have an idea that doesn’t fit neatly into a category?",
   description: "Bring your vision, your mood board, or simply a spark of inspiration. We’ll turn the unconventional into something unforgettable.",
+  line1: "Bring your vision, your mood board, or simply a spark of inspiration.",
+  line2: "We’ll turn the unconventional into something unforgettable.",
 };
 
 export const PROJECTS: Project[] = [

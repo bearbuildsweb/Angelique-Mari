@@ -82,15 +82,42 @@ export default function Portfolio() {
                 {/* Integrated Cursive Title: Intimate, highly legible deconstructed editorial accent */}
                 <div className="mb-6 sm:mb-8">
                   <h2
-                    className="font-cursive text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] lowercase leading-[0.98] tracking-normal font-normal select-none drop-shadow-[0_2px_12px_rgba(255,158,74,0.2)]"
+                    className="font-cursive text-4xl sm:text-5xl md:text-6xl lg:text-[4.25rem] leading-[1.05] tracking-normal font-normal select-none drop-shadow-[0_2px_12px_rgba(255,158,74,0.2)]"
                     style={{ 
                       fontFamily: "'Allura', 'Alex Brush', 'Parisienne', cursive",
                       WebkitFontSmoothing: 'antialiased'
                     }}
                   >
-                    <span className="block text-white">“what i</span>
-                    <span className="block pl-4 sm:pl-6 text-[#FF9E4A]">love to</span>
-                    <span className="block pl-8 sm:pl-12 text-[#FF9E4A]">photograph”</span>
+                    <span className="flex items-center gap-2.5 sm:gap-3.5 text-white">
+                      <span>“what</span>
+                      
+                      {/* High-Street Punk-Rock Spotlight on 'I' */}
+                      <span className="inline-block relative -rotate-3 hover:rotate-0 transition-transform duration-300 mx-1 align-middle not-italic font-sans group select-none">
+                        {/* Ambient Direct-Flash Spotlight Halo */}
+                        <span 
+                          className="absolute -inset-2.5 rounded-sm opacity-60 pointer-events-none blur-sm" 
+                          style={{
+                            background: 'radial-gradient(circle, rgba(255,158,74,0.35) 0%, transparent 70%)'
+                          }}
+                        />
+                        
+                        {/* Raw Angled Punk Badge with Brutalist Offset Shadow */}
+                        <span className="relative inline-flex items-center justify-center px-3 sm:px-4 py-1 sm:py-1.5 bg-black border-2 border-[#FF9E4A] shadow-[3px_3px_0px_#FF9E4A] sm:shadow-[4px_4px_0px_#FF9E4A]">
+                          {/* Corner Viewfinder / Punk Registration Ticks */}
+                          <span className="absolute -top-1 -left-1 w-1.5 h-1.5 bg-[#FF9E4A]" />
+                          <span className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-[#FF9E4A]" />
+                          <span className="absolute -bottom-1 -left-1 w-1.5 h-1.5 bg-[#FF9E4A]" />
+                          <span className="absolute -bottom-1 -right-1 w-1.5 h-1.5 bg-[#FF9E4A]" />
+
+                          {/* The Capitalized 'I' in Light Orange (#FF9E4A) - No underline */}
+                          <span className="font-serif text-2xl sm:text-3xl md:text-4xl text-[#FF9E4A] font-extrabold leading-none tracking-normal drop-shadow-[0_0_10px_rgba(255,158,74,0.6)]">
+                            I
+                          </span>
+                        </span>
+                      </span>
+                    </span>
+                    <span className="block pl-4 sm:pl-6 text-[#FF9E4A] lowercase">love to</span>
+                    <span className="block pl-8 sm:pl-12 text-[#FF9E4A] lowercase">photograph”</span>
                   </h2>
                 </div>
 
@@ -444,7 +471,8 @@ export default function Portfolio() {
 
                 {/* Supporting Copy */}
                 <p className="text-neutral-300 text-base sm:text-lg md:text-xl leading-relaxed font-light mb-10 sm:mb-12 max-w-xl">
-                  {WILDCARD_DATA.description}
+                  <span className="block">{WILDCARD_DATA.line1}</span>
+                  <span className="block mt-2 sm:mt-2.5 text-neutral-200">{WILDCARD_DATA.line2}</span>
                 </p>
 
                 {/* Recessed Pill Depression / Cavity ("Hole in the wall" depth matching Hero CTA) */}
