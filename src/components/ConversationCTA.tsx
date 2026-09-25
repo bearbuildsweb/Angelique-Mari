@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { ArrowUpRight, Instagram, Sparkles } from 'lucide-react';
+import { ArrowUpRight, ChevronUp, Sparkles } from 'lucide-react';
+import { motion } from 'motion/react';
 
 const WHATSAPP_BASE = 'https://wa.me/27686313538';
 
@@ -159,20 +160,30 @@ export default function ConversationCTA() {
           )}
         </div>
 
-        {/* Micro Credibility & Social Context */}
+        {/* Visual Guide / Upward Indicator pointing to the START CHAT CTA */}
         <div className="mt-8 flex justify-center items-center">
-          {/* Recessed Indent Pill / Tab with Instagram Icon */}
+          {/* Recessed Indent Pill / Tab with Bouncing Upward Chevron */}
           <div className="p-[3px] rounded-full bg-[#050505] shadow-[0_6px_20px_rgba(0,0,0,0.95),inset_0_4px_12px_rgba(0,0,0,1),inset_0_-1px_1px_rgba(255,255,255,0.1)] border-t border-black border-b border-white/15">
-            <a
-              href="https://www.instagram.com/iambrandthecreative"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Follow AM Photography on Instagram"
-              title="Instagram @iambrandthecreative"
+            <button
+              type="button"
+              onClick={() => {
+                const el = document.getElementById('main-whatsapp-conversion-btn');
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+              }}
+              aria-label="Scroll to Start Chat"
+              title="Point to Start Chat"
               className="group relative inline-flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2 rounded-full bg-[#1c1c1e] hover:bg-[#232326] shadow-[inset_0_5px_12px_rgba(0,0,0,0.95),inset_0_1px_3px_rgba(0,0,0,1),inset_0_-1px_2px_rgba(255,255,255,0.12)] border-t border-black/80 border-b border-white/10 transition-all duration-300 active:scale-[0.96] text-[#FF6800] hover:text-white cursor-pointer"
             >
-              <Instagram className="w-4 h-4 stroke-[1.75]" />
-            </a>
+              <motion.div
+                animate={{ y: [0, -5, 0] }}
+                transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
+                className="flex items-center justify-center"
+              >
+                <ChevronUp className="w-4 h-4 stroke-[2.5]" />
+              </motion.div>
+            </button>
           </div>
         </div>
 

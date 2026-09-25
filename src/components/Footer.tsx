@@ -84,7 +84,7 @@ export default function Footer({ onReviewClick }: FooterProps = {}) {
               }}
               className="text-[#FF6800] hover:text-white uppercase tracking-wider font-semibold underline underline-offset-4 transition-colors flex items-center gap-1.5"
             >
-              <span>+ REVIEW FREELANCER</span>
+              <span>+ LEAVE A REVIEW</span>
             </a>
           </div>
 
@@ -117,4 +117,3 @@ export default function Footer({ onReviewClick }: FooterProps = {}) {
     </footer>
   );
 }
-
