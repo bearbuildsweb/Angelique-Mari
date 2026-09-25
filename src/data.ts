@@ -219,7 +219,11 @@ export const TESTIMONIALS: Testimonial[] = [
     company: 'Atelier Miss Archive',
     image: imageClientPortraitOne,
     year: '2026',
-    rating: 5
+    rating: 5,
+    emotionalReaction: 'blown-away',
+    emotionalLabel: 'Blown Away',
+    projectType: 'Brand & Product Imagery',
+    date: 'Sep 2026'
   },
   {
     id: 't2',
@@ -229,7 +233,11 @@ export const TESTIMONIALS: Testimonial[] = [
     company: 'Tokyo Tunnel Gallery',
     image: imageClientPortraitTwo,
     year: '2026',
-    rating: 3.5
+    rating: 4.5,
+    emotionalReaction: 'impressed',
+    emotionalLabel: 'Impressed',
+    projectType: 'Street Couture & Nightfall',
+    date: 'Aug 2026'
   },
   {
     id: 't3',
@@ -239,6 +247,10 @@ export const TESTIMONIALS: Testimonial[] = [
     company: 'Maboneng Atelier',
     image: imageHeroModel,
     year: '2026',
-    rating: 3
+    rating: 5,
+    emotionalReaction: 'blown-away',
+    emotionalLabel: 'Blown Away',
+    projectType: 'Creative Direction & Fashion',
+    date: 'Jul 2026'
   }
 ];

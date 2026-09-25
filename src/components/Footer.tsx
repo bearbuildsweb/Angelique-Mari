@@ -9,7 +9,11 @@ function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
   );
 }
 
-export default function Footer() {
+interface FooterProps {
+  onReviewClick?: () => void;
+}
+
+export default function Footer({ onReviewClick }: FooterProps = {}) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -54,7 +58,7 @@ export default function Footer() {
         </div>
 
         {/* Top bar replicated from the reference image, without navigation links */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-10 md:pt-14 pb-2 w-full">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-10 md:pt-14 pb-4 w-full">
           {/* Left Email - Styled elegantly with serif typography & Mail icon */}
           <div className="flex-1 flex justify-center md:justify-start items-center gap-3">
             <Mail className="w-4 h-4 stroke-[1.5] text-[#FF6800]" />
@@ -66,8 +70,23 @@ export default function Footer() {
             </a>
           </div>
 
-          {/* Plus separator (Hidden on mobile) */}
-          <span className="hidden md:inline font-light text-[#FF6800]/40 text-xl font-sans" aria-hidden="true">+</span>
+          {/* Center Direct Review Hash Link to Modal */}
+          <div className="flex items-center gap-3 text-xs font-mono">
+            <a
+              href="#review"
+              onClick={(e) => {
+                if (onReviewClick) {
+                  e.preventDefault();
+                  onReviewClick();
+                } else {
+                  window.location.hash = '#review';
+                }
+              }}
+              className="text-[#FF6800] hover:text-white uppercase tracking-wider font-semibold underline underline-offset-4 transition-colors flex items-center gap-1.5"
+            >
+              <span>+ REVIEW FREELANCER</span>
+            </a>
+          </div>
 
           {/* Social Icons: Instagram and WhatsApp */}
           <div className="flex justify-center md:justify-end items-center gap-5 flex-1 text-[#FF6800]">

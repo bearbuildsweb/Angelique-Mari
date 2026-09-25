@@ -24,18 +24,28 @@ interface HeroProps {
   onBookClick?: () => void;
   menuOpen?: boolean;
   setMenuOpen?: (open: boolean) => void;
+  onReviewClick?: () => void;
 }
 
 export default function Hero({
   onBookClick,
   menuOpen: controlledMenuOpen,
   setMenuOpen: controlledSetMenuOpen,
+  onReviewClick,
 }: HeroProps = {}) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [internalMenuOpen, setInternalMenuOpen] = useState(false);
+  const [isDeveloping, setIsDeveloping] = useState(true);
 
   const menuOpen = controlledMenuOpen !== undefined ? controlledMenuOpen : internalMenuOpen;
   const setMenuOpen = controlledSetMenuOpen || setInternalMenuOpen;
+
+  useEffect(() => {
+    const devTimer = setTimeout(() => {
+      setIsDeveloping(false);
+    }, 2200);
+    return () => clearTimeout(devTimer);
+  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -206,6 +216,22 @@ export default function Hero({
                 <span className="font-sans text-xs text-[#FF6800]/50">03 /</span>
                 <span>ENQUIRE</span>
               </a>
+              <a
+                href="#review"
+                onClick={(e) => {
+                  setMenuOpen(false);
+                  if (onReviewClick) {
+                    e.preventDefault();
+                    onReviewClick();
+                  } else {
+                    window.location.hash = '#review';
+                  }
+                }}
+                className="group hover:text-white transition-colors pl-3 border-l-2 border-transparent hover:border-[#FF6800] flex items-baseline gap-3"
+              >
+                <span className="font-sans text-xs text-[#FF6800]/50">04 /</span>
+                <span>REVIEW</span>
+              </a>
             </nav>
 
             {/* Nav Drawer Footer: Right-Aligned WhatsApp CTA with same pill depth as hero CTA, no text */}
@@ -243,16 +269,43 @@ export default function Hero({
           <div className="absolute -bottom-3 -left-3 w-5 h-5 border-b-2 border-l-2 border-[#FF6800] z-30 pointer-events-none" />
           <div className="absolute -bottom-3 -right-3 w-5 h-5 border-b-2 border-r-2 border-[#FF6800] z-30 pointer-events-none" />
 
-          {/* Center Target Crosshair */}
-          <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
-            <span className="text-[#FF6800] text-xl font-sans font-light select-none tracking-widest opacity-70 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500">
-              +
-            </span>
-          </div>
+          {/* Center Target Crosshair (revealed once image is developed) */}
+          {!isDeveloping && (
+            <div className="absolute inset-0 flex items-center justify-center z-30 pointer-events-none">
+              <span className="text-[#FF6800] text-xl font-sans font-light select-none tracking-widest opacity-70 group-hover:opacity-100 group-hover:scale-125 transition-all duration-500">
+                +
+              </span>
+            </div>
+          )}
 
           {/* Crisp White Museum Matting Frame */}
           <div className="w-[290px] h-[360px] sm:w-[350px] sm:h-[440px] md:w-[410px] md:h-[510px] lg:w-[450px] lg:h-[560px] max-h-[64vh] bg-white p-2.5 sm:p-3.5 border-4 border-white shadow-[0_30px_90px_rgba(0,0,0,0.98)] relative overflow-hidden transition-transform duration-700 ease-out group-hover:scale-[1.015]">
             <div className="relative w-full h-full overflow-hidden bg-black">
+              {/* Darkroom Preloader (Only for hero framed image) */}
+              <AnimatePresence>
+                {isDeveloping && (
+                  <motion.div
+                    key="hero-preloader"
+                    initial={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.7, ease: 'easeInOut' }}
+                    className="absolute inset-0 z-40 bg-black flex flex-col items-center justify-center p-4 text-center select-none"
+                  >
+                    <div className="font-mono flex flex-col items-center justify-center space-y-2">
+                      <span className="text-xs sm:text-sm uppercase tracking-[0.24em] text-[#FF6800] font-bold">
+                        DEVELOPING IMAGE
+                      </span>
+                      <span className="text-base sm:text-lg tracking-widest text-[#FF6800] leading-none">
+                        ██████░░░░
+                      </span>
+                      <span className="text-xs sm:text-sm tracking-wider text-[#FF6800] font-medium">
+                        72%
+                      </span>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
               <AnimatePresence mode="wait">
                 <motion.img
                   key={currentSlide}

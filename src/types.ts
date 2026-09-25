@@ -23,6 +23,8 @@ export interface Service {
   number: string;
 }
 
+export type EmotionalReactionKey = 'disappointed' | 'underwhelmed' | 'satisfied' | 'okay' | 'impressed' | 'blown-away';
+
 export interface Testimonial {
   id: string;
   quote: string;
@@ -32,4 +34,8 @@ export interface Testimonial {
   image: string;
   year: string;
   rating?: number;
+  emotionalReaction?: EmotionalReactionKey;
+  emotionalLabel?: string;
+  projectType?: string;
+  date?: string;
 }

@@ -46,6 +46,12 @@ export default function Portfolio() {
   const p4 = PROJECTS[3]; // Family & Little ones
   const p5 = PROJECTS[4]; // Lifestyle
 
+  const truncateWithMore = (text?: string) => {
+    if (!text) return '';
+    const firstSentence = text.split('. ')[0].replace(/\.+$/, '');
+    return `${firstSentence}....`;
+  };
+
   const scrollToBooking = (topic?: string) => {
     const el = document.getElementById('booking');
     if (el) {
@@ -122,26 +128,41 @@ export default function Portfolio() {
                 </div>
 
                 {/* Monumental Architectural Project Title */}
-                <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-white font-bold tracking-tight mb-4 uppercase leading-tight">
+                <h3 className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] text-white font-bold tracking-tight mb-5 uppercase leading-[1.08] drop-shadow-[0_2px_18px_rgba(255,104,0,0.15)]">
                   {p1.title}
                 </h3>
 
-                {/* Truncated, Sharp Supporting Statement */}
-                <p className="text-neutral-300 text-sm sm:text-base leading-relaxed font-light mb-8 max-w-md">
-                  {p1.description}
-                </p>
+                {/* Truncated, Sharp Supporting Statement with Curatorial Hairline */}
+                <div className="relative pl-5 sm:pl-6 border-l-2 border-[#FF6800]/40 mb-8 max-w-lg">
+                  <p className="text-neutral-200 text-sm sm:text-base md:text-[17px] leading-[1.7] font-light">
+                    {truncateWithMore(p1.description)}
+                  </p>
+                </div>
 
-                {/* Tactile Editorial Action */}
+                {/* Tactile Architectural Action & Index */}
                 <div className="flex items-center gap-6">
                   <button
                     type="button"
                     onClick={() => setActiveProjectIndex(0)}
-                    className="group inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-[#FF6800] hover:text-white transition-colors font-bold cursor-pointer w-fit"
+                    className="group/btn relative inline-flex items-center gap-3 px-6 py-3.5 bg-black/80 hover:bg-[#FF6800] border border-[#FF6800]/50 hover:border-[#FF6800] text-[#FF6800] hover:text-black transition-colors duration-200 cursor-pointer w-fit shadow-[0_4px_20px_rgba(0,0,0,0.8),0_0_15px_rgba(255,104,0,0.12)] hover:shadow-[0_0_30px_rgba(255,104,0,0.4)]"
                   >
-                    <span>EXPLORE EXHIBIT</span>
-                    <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    <span className="absolute -top-[2px] -left-[2px] w-1.5 h-1.5 border-t border-l border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                    <span className="absolute -top-[2px] -right-[2px] w-1.5 h-1.5 border-t border-r border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                    <span className="absolute -bottom-[2px] -left-[2px] w-1.5 h-1.5 border-b border-l border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                    <span className="absolute -bottom-[2px] -right-[2px] w-1.5 h-1.5 border-b border-r border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+
+                    <span className="font-sans text-xs uppercase tracking-[0.24em] font-extrabold text-[#FF6800] group-hover/btn:text-black transition-colors duration-200 pointer-events-none select-none">
+                      VIEW
+                    </span>
+                    <span className="w-5 h-5 flex items-center justify-center border border-[#FF6800]/40 group-hover/btn:border-black/40 bg-[#FF6800]/10 group-hover/btn:bg-black/10 transition-colors duration-200 pointer-events-none">
+                      <ArrowUpRight className="w-3.5 h-3.5 text-[#FF6800] group-hover/btn:text-black transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 pointer-events-none" />
+                    </span>
                   </button>
-                  <span className="text-neutral-600 text-xs font-mono select-none">01 / 05</span>
+                  <div className="flex items-center gap-1.5 font-mono text-xs tracking-[0.25em] select-none">
+                    <span className="text-[#FF6800] font-bold">01</span>
+                    <span className="text-neutral-600 font-light">/</span>
+                    <span className="text-neutral-500 font-medium">05</span>
+                  </div>
                 </div>
               </motion.div>
 
@@ -188,7 +209,7 @@ export default function Portfolio() {
           {/* Left Diptych Frame: Weddings & celebrations (Vertical 4:5 portrait) */}
           {p2 && (
             <motion.div 
-              className="lg:col-span-5 flex flex-col group cursor-pointer"
+              className="lg:col-span-5 flex flex-col group/card cursor-pointer"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
@@ -200,30 +221,37 @@ export default function Portfolio() {
                 <div className="absolute -top-2 -left-2 w-3.5 h-3.5 border-t-2 border-l-2 border-[#FF6800]/80 z-20 pointer-events-none" />
                 <div className="absolute -bottom-2 -right-2 w-3.5 h-3.5 border-b-2 border-r-2 border-[#FF6800]/80 z-20 pointer-events-none" />
 
-                <div className="relative w-full aspect-[4/5] bg-white p-2.5 sm:p-3 border-4 border-white shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden transition-transform duration-700 ease-out group-hover:scale-[1.01]">
+                <div className="relative w-full aspect-[4/5] bg-white p-2.5 sm:p-3 border-4 border-white shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden transition-transform duration-700 ease-out group-hover/card:scale-[1.01]">
                   <div className="relative w-full h-full overflow-hidden bg-black">
                     <motion.img 
                       src={p2.image} 
                       alt={p2.title} 
                       referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover grayscale brightness-95 group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700 ease-out"
+                      className="w-full h-full object-cover grayscale brightness-95 group-hover/card:grayscale-0 group-hover/card:scale-[1.03] transition-all duration-700 ease-out"
                     />
                   </div>
                 </div>
               </div>
 
               <div className="pt-7">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-neutral-500 text-xs font-mono select-none">02 / 05</span>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="flex items-center gap-1.5 font-mono text-xs tracking-[0.25em] select-none">
+                    <span className="text-[#FF6800] font-bold">02</span>
+                    <span className="text-neutral-600 font-light">/</span>
+                    <span className="text-neutral-500 font-medium">05</span>
+                  </div>
+                  <div className="h-[1px] w-8 bg-gradient-to-r from-[#FF6800]/50 to-transparent" />
                 </div>
 
-                <h3 className="font-serif text-2xl sm:text-3xl text-white font-bold tracking-tight mb-3 uppercase">
+                <h3 className="font-serif text-2xl sm:text-3xl text-white font-bold tracking-tight mb-4 uppercase drop-shadow-[0_2px_14px_rgba(255,104,0,0.12)]">
                   {p2.title}
                 </h3>
 
-                <p className="text-neutral-300 text-sm sm:text-base leading-relaxed font-light mb-5">
-                  {p2.description}
-                </p>
+                <div className="relative pl-4 border-l-2 border-[#FF6800]/30 mb-6">
+                  <p className="text-neutral-200 text-sm sm:text-base leading-relaxed font-light">
+                    {truncateWithMore(p2.description)}
+                  </p>
+                </div>
 
                 <button
                   type="button"
@@ -231,10 +259,19 @@ export default function Portfolio() {
                     e.stopPropagation();
                     setActiveProjectIndex(1);
                   }}
-                  className="group inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.22em] text-[#FF6800] hover:text-white transition-colors font-bold cursor-pointer"
+                  className="group/btn relative inline-flex items-center gap-2.5 px-5 py-3 bg-black/80 hover:bg-[#FF6800] border border-[#FF6800]/50 hover:border-[#FF6800] text-[#FF6800] hover:text-black transition-colors duration-200 cursor-pointer w-fit shadow-[0_4px_20px_rgba(0,0,0,0.8),0_0_15px_rgba(255,104,0,0.12)] hover:shadow-[0_0_25px_rgba(255,104,0,0.4)]"
                 >
-                  <span>VIEW</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <span className="absolute -top-[2px] -left-[2px] w-1.5 h-1.5 border-t border-l border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                  <span className="absolute -top-[2px] -right-[2px] w-1.5 h-1.5 border-t border-r border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                  <span className="absolute -bottom-[2px] -left-[2px] w-1.5 h-1.5 border-b border-l border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                  <span className="absolute -bottom-[2px] -right-[2px] w-1.5 h-1.5 border-b border-r border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+
+                  <span className="font-sans text-xs uppercase tracking-[0.24em] font-extrabold text-[#FF6800] group-hover/btn:text-black transition-colors duration-200 pointer-events-none select-none">
+                    VIEW
+                  </span>
+                  <span className="w-5 h-5 flex items-center justify-center border border-[#FF6800]/40 group-hover/btn:border-black/40 bg-[#FF6800]/10 group-hover/btn:bg-black/10 transition-colors duration-200 pointer-events-none">
+                    <ArrowUpRight className="w-3.5 h-3.5 text-[#FF6800] group-hover/btn:text-black transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 pointer-events-none" />
+                  </span>
                 </button>
               </div>
             </motion.div>
@@ -243,7 +280,7 @@ export default function Portfolio() {
           {/* Right Diptych Frame: BRAND & PRODUCT IMAGERY (Horizontal 16:10 frame offset higher) */}
           {p3 && (
             <motion.div 
-              className="lg:col-span-7 flex flex-col group cursor-pointer lg:pt-14"
+              className="lg:col-span-7 flex flex-col group/card cursor-pointer lg:pt-14"
               initial={{ opacity: 0, y: 36 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
@@ -255,30 +292,37 @@ export default function Portfolio() {
                 <div className="absolute -top-2 -right-2 w-3.5 h-3.5 border-t-2 border-r-2 border-[#FF6800]/80 z-20 pointer-events-none" />
                 <div className="absolute -bottom-2 -left-2 w-3.5 h-3.5 border-b-2 border-l-2 border-[#FF6800]/80 z-20 pointer-events-none" />
 
-                <div className="relative w-full aspect-[16/10] bg-white p-2.5 sm:p-3.5 border-4 border-white shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden transition-transform duration-700 ease-out group-hover:scale-[1.01]">
+                <div className="relative w-full aspect-[16/10] bg-white p-2.5 sm:p-3.5 border-4 border-white shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden transition-transform duration-700 ease-out group-hover/card:scale-[1.01]">
                   <div className="relative w-full h-full overflow-hidden bg-black">
                     <motion.img 
                       src={p3.image} 
                       alt={p3.title} 
                       referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover grayscale brightness-95 group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700 ease-out"
+                      className="w-full h-full object-cover grayscale brightness-95 group-hover/card:grayscale-0 group-hover/card:scale-[1.03] transition-all duration-700 ease-out"
                     />
                   </div>
                 </div>
               </div>
 
               <div className="pt-7">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-neutral-500 text-xs font-mono select-none">03 / 05</span>
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="flex items-center gap-1.5 font-mono text-xs tracking-[0.25em] select-none">
+                    <span className="text-[#FF6800] font-bold">03</span>
+                    <span className="text-neutral-600 font-light">/</span>
+                    <span className="text-neutral-500 font-medium">05</span>
+                  </div>
+                  <div className="h-[1px] w-8 bg-gradient-to-r from-[#FF6800]/50 to-transparent" />
                 </div>
 
-                <h3 className="font-serif text-2xl sm:text-3xl text-white font-bold tracking-tight mb-3 uppercase">
+                <h3 className="font-serif text-2xl sm:text-3xl text-white font-bold tracking-tight mb-4 uppercase drop-shadow-[0_2px_14px_rgba(255,104,0,0.12)]">
                   {p3.title}
                 </h3>
 
-                <p className="text-neutral-300 text-sm sm:text-base leading-relaxed font-light mb-5 max-w-xl">
-                  {p3.description}
-                </p>
+                <div className="relative pl-4 border-l-2 border-[#FF6800]/30 mb-6 max-w-xl">
+                  <p className="text-neutral-200 text-sm sm:text-base leading-relaxed font-light">
+                    {truncateWithMore(p3.description)}
+                  </p>
+                </div>
 
                 <button
                   type="button"
@@ -286,10 +330,19 @@ export default function Portfolio() {
                     e.stopPropagation();
                     setActiveProjectIndex(2);
                   }}
-                  className="group inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.22em] text-[#FF6800] hover:text-white transition-colors font-bold cursor-pointer"
+                  className="group/btn relative inline-flex items-center gap-2.5 px-5 py-3 bg-black/80 hover:bg-[#FF6800] border border-[#FF6800]/50 hover:border-[#FF6800] text-[#FF6800] hover:text-black transition-colors duration-200 cursor-pointer w-fit shadow-[0_4px_20px_rgba(0,0,0,0.8),0_0_15px_rgba(255,104,0,0.12)] hover:shadow-[0_0_25px_rgba(255,104,0,0.4)]"
                 >
-                  <span>VIEW</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <span className="absolute -top-[2px] -left-[2px] w-1.5 h-1.5 border-t border-l border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                  <span className="absolute -top-[2px] -right-[2px] w-1.5 h-1.5 border-t border-r border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                  <span className="absolute -bottom-[2px] -left-[2px] w-1.5 h-1.5 border-b border-l border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                  <span className="absolute -bottom-[2px] -right-[2px] w-1.5 h-1.5 border-b border-r border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+
+                  <span className="font-sans text-xs uppercase tracking-[0.24em] font-extrabold text-[#FF6800] group-hover/btn:text-black transition-colors duration-200 pointer-events-none select-none">
+                    VIEW
+                  </span>
+                  <span className="w-5 h-5 flex items-center justify-center border border-[#FF6800]/40 group-hover/btn:border-black/40 bg-[#FF6800]/10 group-hover/btn:bg-black/10 transition-colors duration-200 pointer-events-none">
+                    <ArrowUpRight className="w-3.5 h-3.5 text-[#FF6800] group-hover/btn:text-black transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 pointer-events-none" />
+                  </span>
                 </button>
               </div>
             </motion.div>
@@ -312,31 +365,48 @@ export default function Portfolio() {
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.7, ease: 'easeOut' }}
             >
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-neutral-500 text-xs font-mono select-none">04 / 05</span>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="flex items-center gap-1.5 font-mono text-xs tracking-[0.25em] select-none">
+                  <span className="text-[#FF6800] font-bold">04</span>
+                  <span className="text-neutral-600 font-light">/</span>
+                  <span className="text-neutral-500 font-medium">05</span>
+                </div>
+                <div className="h-[1px] w-12 bg-gradient-to-r from-[#FF6800]/60 to-transparent" />
               </div>
 
-              <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl text-white font-bold tracking-tight mb-4 uppercase leading-tight">
+              <h3 className="font-serif text-3xl sm:text-4xl lg:text-[2.75rem] text-white font-bold tracking-tight mb-5 uppercase leading-[1.08] drop-shadow-[0_2px_18px_rgba(255,104,0,0.15)]">
                 {p4.title}
               </h3>
 
-              <p className="text-neutral-300 text-sm sm:text-base leading-relaxed font-light mb-8 max-w-md">
-                {p4.description}
-              </p>
+              {/* Truncated, Sharp Supporting Statement with Curatorial Hairline */}
+              <div className="relative pl-5 sm:pl-6 border-l-2 border-[#FF6800]/40 mb-8 max-w-lg">
+                <p className="text-neutral-200 text-sm sm:text-base md:text-[17px] leading-[1.7] font-light">
+                  {truncateWithMore(p4.description)}
+                </p>
+              </div>
 
               <button
                 type="button"
                 onClick={() => setActiveProjectIndex(3)}
-                className="group inline-flex items-center gap-2 text-xs uppercase tracking-[0.22em] text-[#FF6800] hover:text-white transition-colors font-bold cursor-pointer w-fit"
+                className="group/btn relative inline-flex items-center gap-3 px-6 py-3.5 bg-black/80 hover:bg-[#FF6800] border border-[#FF6800]/50 hover:border-[#FF6800] text-[#FF6800] hover:text-black transition-colors duration-200 cursor-pointer w-fit shadow-[0_4px_20px_rgba(0,0,0,0.8),0_0_15px_rgba(255,104,0,0.12)] hover:shadow-[0_0_30px_rgba(255,104,0,0.4)]"
               >
-                <span>EXPLORE EXHIBIT</span>
-                <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <span className="absolute -top-[2px] -left-[2px] w-1.5 h-1.5 border-t border-l border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                <span className="absolute -top-[2px] -right-[2px] w-1.5 h-1.5 border-t border-r border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                <span className="absolute -bottom-[2px] -left-[2px] w-1.5 h-1.5 border-b border-l border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                <span className="absolute -bottom-[2px] -right-[2px] w-1.5 h-1.5 border-b border-r border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+
+                <span className="font-sans text-xs uppercase tracking-[0.24em] font-extrabold text-[#FF6800] group-hover/btn:text-black transition-colors duration-200 pointer-events-none select-none">
+                  VIEW
+                </span>
+                <span className="w-5 h-5 flex items-center justify-center border border-[#FF6800]/40 group-hover/btn:border-black/40 bg-[#FF6800]/10 group-hover/btn:bg-black/10 transition-colors duration-200 pointer-events-none">
+                  <ArrowUpRight className="w-3.5 h-3.5 text-[#FF6800] group-hover/btn:text-black transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 pointer-events-none" />
+                </span>
               </button>
             </motion.div>
 
             {/* Artwork Frame (Warm 4:3 Museum Frame on Right) */}
             <motion.div 
-              className="lg:col-span-7 order-1 lg:order-2 group cursor-pointer"
+              className="lg:col-span-7 order-1 lg:order-2 group/card cursor-pointer"
               initial={{ opacity: 0, y: 28 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-50px' }}
@@ -347,13 +417,13 @@ export default function Portfolio() {
                 <div className="absolute -top-2 -right-2 w-3.5 h-3.5 border-t-2 border-r-2 border-[#FF6800]/80 z-20 pointer-events-none" />
                 <div className="absolute -bottom-2 -left-2 w-3.5 h-3.5 border-b-2 border-l-2 border-[#FF6800]/80 z-20 pointer-events-none" />
 
-                <div className="relative w-full aspect-[4/3] bg-white p-2.5 sm:p-3.5 border-4 border-white shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden transition-transform duration-700 ease-out group-hover:scale-[1.01]">
+                <div className="relative w-full aspect-[4/3] bg-white p-2.5 sm:p-3.5 border-4 border-white shadow-[0_20px_50px_rgba(0,0,0,0.9)] overflow-hidden transition-transform duration-700 ease-out group-hover/card:scale-[1.01]">
                   <div className="relative w-full h-full overflow-hidden bg-black">
                     <motion.img 
                       src={p4.image} 
                       alt={p4.title} 
                       referrerPolicy="no-referrer"
-                      className="w-full h-full object-cover grayscale brightness-95 group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700 ease-out"
+                      className="w-full h-full object-cover grayscale brightness-95 group-hover/card:grayscale-0 group-hover/card:scale-[1.03] transition-all duration-700 ease-out"
                     />
                   </div>
                 </div>
@@ -369,7 +439,7 @@ export default function Portfolio() {
         {/* ==================================================================== */}
         {p5 && (
           <motion.div 
-            className="group cursor-pointer flex flex-col"
+            className="group/card cursor-pointer flex flex-col"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
@@ -383,13 +453,13 @@ export default function Portfolio() {
               <div className="absolute -bottom-2.5 -left-2.5 w-4 h-4 border-b-2 border-l-2 border-[#FF6800] z-20 pointer-events-none" />
               <div className="absolute -bottom-2.5 -right-2.5 w-4 h-4 border-b-2 border-r-2 border-[#FF6800] z-20 pointer-events-none" />
 
-              <div className="relative w-full aspect-[16/9] md:aspect-[21/9] bg-white p-2.5 sm:p-4 border-4 border-white shadow-[0_25px_60px_rgba(0,0,0,0.95)] overflow-hidden transition-transform duration-700 ease-out group-hover:scale-[1.01]">
+              <div className="relative w-full aspect-[16/9] md:aspect-[21/9] bg-white p-2.5 sm:p-4 border-4 border-white shadow-[0_25px_60px_rgba(0,0,0,0.95)] overflow-hidden transition-transform duration-700 ease-out group-hover/card:scale-[1.01]">
                 <div className="relative w-full h-full overflow-hidden bg-black">
                   <motion.img 
                     src={p5.image} 
                     alt={p5.title} 
                     referrerPolicy="no-referrer"
-                    className="w-full h-full object-cover grayscale brightness-90 contrast-110 group-hover:grayscale-0 group-hover:scale-[1.03] transition-all duration-700 ease-out"
+                    className="w-full h-full object-cover grayscale brightness-90 contrast-110 group-hover/card:grayscale-0 group-hover/card:scale-[1.03] transition-all duration-700 ease-out"
                   />
                 </div>
               </div>
@@ -397,15 +467,20 @@ export default function Portfolio() {
 
             {/* Editorial Caption Bar */}
             <div className="mt-8 flex flex-col md:flex-row md:items-center justify-between gap-6 pb-2">
-              <div className="flex items-baseline gap-4">
-                <span className="text-neutral-500 text-xs font-mono select-none">05 / 05</span>
-                <h3 className="font-serif text-2xl sm:text-3xl text-white font-bold uppercase tracking-tight">
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-1.5 font-mono text-xs tracking-[0.25em] select-none">
+                  <span className="text-[#FF6800] font-bold">05</span>
+                  <span className="text-neutral-600 font-light">/</span>
+                  <span className="text-neutral-500 font-medium">05</span>
+                </div>
+                <div className="h-4 w-[1px] bg-[#FF6800]/40" />
+                <h3 className="font-serif text-2xl sm:text-3xl text-white font-bold uppercase tracking-tight drop-shadow-[0_2px_14px_rgba(255,104,0,0.12)]">
                   {p5.title}
                 </h3>
               </div>
 
-              <p className="text-neutral-300 text-sm sm:text-base font-light max-w-xl">
-                {p5.description}
+              <p className="text-neutral-200 text-sm sm:text-base font-light max-w-xl">
+                {truncateWithMore(p5.description)}
               </p>
 
               <button
@@ -414,10 +489,19 @@ export default function Portfolio() {
                   e.stopPropagation();
                   setActiveProjectIndex(4);
                 }}
-                className="group inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.22em] text-[#FF6800] hover:text-white transition-colors font-bold cursor-pointer"
+                className="group/btn relative inline-flex items-center gap-2.5 px-5 py-3 bg-black/80 hover:bg-[#FF6800] border border-[#FF6800]/50 hover:border-[#FF6800] text-[#FF6800] hover:text-black transition-colors duration-200 cursor-pointer w-fit shadow-[0_4px_20px_rgba(0,0,0,0.8),0_0_15px_rgba(255,104,0,0.12)] hover:shadow-[0_0_25px_rgba(255,104,0,0.4)]"
               >
-                <span>VIEW</span>
-                <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <span className="absolute -top-[2px] -left-[2px] w-1.5 h-1.5 border-t border-l border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                <span className="absolute -top-[2px] -right-[2px] w-1.5 h-1.5 border-t border-r border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                <span className="absolute -bottom-[2px] -left-[2px] w-1.5 h-1.5 border-b border-l border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+                <span className="absolute -bottom-[2px] -right-[2px] w-1.5 h-1.5 border-b border-r border-[#FF6800] group-hover/btn:border-black transition-colors duration-200 pointer-events-none" />
+
+                <span className="font-sans text-xs uppercase tracking-[0.24em] font-extrabold text-[#FF6800] group-hover/btn:text-black transition-colors duration-200 pointer-events-none select-none">
+                  VIEW
+                </span>
+                <span className="w-5 h-5 flex items-center justify-center border border-[#FF6800]/40 group-hover/btn:border-black/40 bg-[#FF6800]/10 group-hover/btn:bg-black/10 transition-colors duration-200 pointer-events-none">
+                  <ArrowUpRight className="w-3.5 h-3.5 text-[#FF6800] group-hover/btn:text-black transition-transform duration-200 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 pointer-events-none" />
+                </span>
               </button>
             </div>
           </motion.div>
@@ -433,65 +517,67 @@ export default function Portfolio() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
           transition={{ duration: 0.75, ease: 'easeOut' }}
-          className="relative w-full py-8 sm:py-12"
+          className="relative w-full py-8 sm:py-14"
         >
-          <div className="relative max-w-4xl mx-auto">
+          <div className="relative max-w-4xl mx-auto group">
             
-            {/* Outer Dimensional Plate Rim (Architectural Indent & Bevel) */}
-            <div className="relative p-[3px] sm:p-[4px] rounded-2xl bg-[#060608] shadow-[0_24px_60px_rgba(0,0,0,0.95),inset_0_6px_18px_rgba(0,0,0,1),inset_0_-1px_1.5px_rgba(255,255,255,0.1)] border-t border-black border-b border-white/12">
+            {/* Luminous Ambient Darkroom Aura */}
+            <div className="absolute -top-24 left-1/2 -translate-x-1/2 w-3/4 h-64 bg-[#FF6800]/10 rounded-full blur-[90px] pointer-events-none group-hover:bg-[#FF6800]/15 transition-all duration-700" />
+
+            {/* Architectural Obsidian Exhibition Chamber */}
+            <div className="relative bg-gradient-to-b from-[#101013] via-[#0a0a0c] to-[#050507] p-8 sm:p-14 md:p-20 border border-[#FF6800]/30 hover:border-[#FF6800]/50 transition-colors duration-500 shadow-[0_30px_100px_rgba(0,0,0,0.95),0_0_50px_rgba(255,104,0,0.08)] overflow-hidden flex flex-col items-center text-center">
               
-              {/* Inner Recessed Chamber with Deep Inset Shadow & Dark Bevel */}
-              <div className="relative rounded-[14px] bg-gradient-to-b from-[#0c0c0f] via-[#09090b] to-[#070709] px-6 py-14 sm:px-12 sm:py-20 md:px-16 md:py-24 border border-neutral-800/70 shadow-[inset_0_8px_30px_rgba(0,0,0,0.95),inset_0_2px_4px_rgba(0,0,0,1),inset_0_-1px_2px_rgba(255,255,255,0.06)] overflow-hidden flex flex-col items-center text-center">
-                
-                {/* Archival Corner Registration Geometry (Iconic Orange Corner Accents) */}
-                <div className="absolute top-3 left-3 sm:top-4 sm:left-4 w-4 h-4 sm:w-5 sm:h-5 border-t-2 border-l-2 border-[#FF6800] z-20 pointer-events-none" />
-                <div className="absolute top-3 right-3 sm:top-4 sm:right-4 w-4 h-4 sm:w-5 sm:h-5 border-t-2 border-r-2 border-[#FF6800] z-20 pointer-events-none" />
-                <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 w-4 h-4 sm:w-5 sm:h-5 border-b-2 border-l-2 border-[#FF6800] z-20 pointer-events-none" />
-                <div className="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 w-4 h-4 sm:w-5 sm:h-5 border-b-2 border-r-2 border-[#FF6800] z-20 pointer-events-none" />
+              {/* Archival Corner Registration Geometry (Glowing High-Precision Viewfinder Corners) */}
+              <div className="absolute top-3.5 left-3.5 sm:top-5 sm:left-5 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-l-2 border-[#FF6800] z-20 pointer-events-none drop-shadow-[0_0_10px_rgba(255,104,0,0.6)] group-hover:-translate-x-1 group-hover:-translate-y-1 transition-transform duration-500" />
+              <div className="absolute top-3.5 right-3.5 sm:top-5 sm:right-5 w-6 h-6 sm:w-8 sm:h-8 border-t-2 border-r-2 border-[#FF6800] z-20 pointer-events-none drop-shadow-[0_0_10px_rgba(255,104,0,0.6)] group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-500" />
+              <div className="absolute bottom-3.5 left-3.5 sm:bottom-5 sm:left-5 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-l-2 border-[#FF6800] z-20 pointer-events-none drop-shadow-[0_0_10px_rgba(255,104,0,0.6)] group-hover:-translate-x-1 group-hover:translate-y-1 transition-transform duration-500" />
+              <div className="absolute bottom-3.5 right-3.5 sm:bottom-5 sm:right-5 w-6 h-6 sm:w-8 sm:h-8 border-b-2 border-r-2 border-[#FF6800] z-20 pointer-events-none drop-shadow-[0_0_10px_rgba(255,104,0,0.6)] group-hover:translate-x-1 group-hover:translate-y-1 transition-transform duration-500" />
 
-                {/* Center Cardinal Registration Crosshairs */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-6 h-[1px] bg-[#FF6800]/40 pointer-events-none" />
-                <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-[1px] bg-[#FF6800]/40 pointer-events-none" />
-                <div className="absolute left-0 top-1/2 -translate-y-1/2 h-6 w-[1px] bg-[#FF6800]/40 pointer-events-none" />
-                <div className="absolute right-0 top-1/2 -translate-y-1/2 h-6 w-[1px] bg-[#FF6800]/40 pointer-events-none" />
+              {/* Cardinal Darkroom Registration Ticks */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-10 h-[2px] bg-[#FF6800]/60 pointer-events-none" />
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-10 h-[2px] bg-[#FF6800]/60 pointer-events-none" />
+              <div className="absolute left-0 top-1/2 -translate-y-1/2 h-10 w-[2px] bg-[#FF6800]/60 pointer-events-none" />
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 h-10 w-[2px] bg-[#FF6800]/60 pointer-events-none" />
 
-                {/* Subtle Archival Grid Underlay */}
-                <div 
-                  className="absolute inset-0 opacity-[0.03] pointer-events-none"
-                  style={{
-                    backgroundImage: `radial-gradient(#FF6800 1px, transparent 1px)`,
-                    backgroundSize: '28px 28px'
-                  }}
-                />
+              {/* Subtle Archival Optical Grid */}
+              <div 
+                className="absolute inset-0 opacity-[0.035] pointer-events-none"
+                style={{
+                  backgroundImage: `radial-gradient(#FF6800 1.25px, transparent 1.25px)`,
+                  backgroundSize: '24px 24px'
+                }}
+              />
 
-                {/* Section Headline */}
-                <h3 className="font-serif text-2xl sm:text-4xl md:text-5xl text-white font-bold tracking-tight mb-4 sm:mb-6 leading-snug max-w-2xl">
-                  {WILDCARD_DATA.title}
-                </h3>
+              {/* Section Headline */}
+              <h3 className="relative z-10 font-serif text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] text-white font-extrabold tracking-tight mb-5 sm:mb-7 leading-[1.12] max-w-2xl text-balance drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
+                {WILDCARD_DATA.title}
+              </h3>
 
-                {/* Supporting Copy */}
-                <p className="text-neutral-300 text-base sm:text-lg md:text-xl leading-relaxed font-light mb-10 sm:mb-12 max-w-xl">
-                  <span className="block">{WILDCARD_DATA.line1}</span>
-                  <span className="block mt-2 sm:mt-2.5 text-neutral-200">{WILDCARD_DATA.line2}</span>
-                </p>
-
-                {/* Recessed Pill Depression / Cavity ("Hole in the wall" depth matching Hero CTA) */}
-                <div className="p-[3px] rounded-full bg-[#050505] shadow-[0_6px_20px_rgba(0,0,0,0.95),inset_0_4px_12px_rgba(0,0,0,1),inset_0_-1px_1px_rgba(255,255,255,0.1)] border-t border-black border-b border-white/15">
-                  <button
-                    type="button"
-                    onClick={() => scrollToBooking('Outside The Frame')}
-                    className="group relative inline-flex items-center gap-3 px-8 py-3.5 sm:px-10 sm:py-4 rounded-full bg-[#1c1c1e] hover:bg-[#232326] shadow-[inset_0_5px_12px_rgba(0,0,0,0.95),inset_0_1px_3px_rgba(0,0,0,1),inset_0_-1px_2px_rgba(255,255,255,0.12)] border-t border-black/80 border-b border-white/10 transition-all duration-300 active:scale-[0.98] cursor-pointer"
-                  >
-                    <span className="text-xs sm:text-sm uppercase tracking-[0.22em] font-extrabold text-[#FF6800] group-hover:text-white transition-colors">
-                      OUTSIDE THE FRAME
-                    </span>
-                    <ArrowUpRight className="w-4 h-4 text-[#FF6800] group-hover:text-white transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                  </button>
-                </div>
-
+              {/* Supporting Copy */}
+              <div className="relative z-10 text-neutral-300 text-base sm:text-lg md:text-xl leading-relaxed font-light mb-10 sm:mb-12 max-w-xl mx-auto">
+                <p className="block text-neutral-300">{WILDCARD_DATA.line1}</p>
+                <p className="block mt-2 sm:mt-2.5 text-white font-normal">{WILDCARD_DATA.line2}</p>
               </div>
-            </div>
 
+              {/* Bespoke Architectural CTA (Zero-Pill, Razor-Sharp Luxury Button) */}
+              <button
+                type="button"
+                onClick={() => scrollToBooking('Outside The Frame')}
+                className="group/btn relative inline-flex items-center gap-3.5 px-9 sm:px-11 py-4 sm:py-4.5 bg-black border-2 border-[#FF6800] hover:bg-[#FF6800] text-[#FF6800] hover:text-black transition-all duration-300 shadow-[0_0_25px_rgba(255,104,0,0.25)] hover:shadow-[0_0_40px_rgba(255,104,0,0.6)] active:scale-[0.98] cursor-pointer"
+              >
+                {/* Button Viewfinder Registration Corners */}
+                <span className="absolute -top-1 -left-1 w-2 h-2 border-t-2 border-l-2 border-[#FF6800] group-hover/btn:border-black transition-colors duration-300" />
+                <span className="absolute -top-1 -right-1 w-2 h-2 border-t-2 border-r-2 border-[#FF6800] group-hover/btn:border-black transition-colors duration-300" />
+                <span className="absolute -bottom-1 -left-1 w-2 h-2 border-b-2 border-l-2 border-[#FF6800] group-hover/btn:border-black transition-colors duration-300" />
+                <span className="absolute -bottom-1 -right-1 w-2 h-2 border-b-2 border-r-2 border-[#FF6800] group-hover/btn:border-black transition-colors duration-300" />
+
+                <span className="relative z-10 font-sans text-xs sm:text-sm uppercase tracking-[0.24em] font-extrabold transition-colors duration-300">
+                  {WILDCARD_DATA.tag}
+                </span>
+                <ArrowUpRight className="relative z-10 w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1" />
+              </button>
+
+            </div>
           </div>
         </motion.div>
 
