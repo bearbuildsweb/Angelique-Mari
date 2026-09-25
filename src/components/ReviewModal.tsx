@@ -33,7 +33,7 @@ const EMOTIONAL_OPTIONS: EmotionalOption[] = [
   }
 ];
 
-/* Custom Vector Emotional Reaction Faces */
+/* Refined, Elegant Minimalist Reaction Line Art */
 function EmotionIcon({
   reaction,
   selected,
@@ -43,54 +43,45 @@ function EmotionIcon({
   selected: boolean;
   className?: string;
 }) {
-  const activeColor = selected ? "#FF6800" : "#a3a3a3";
-  const glow = selected ? "drop-shadow(0 0 8px rgba(255,104,0,0.6))" : "none";
+  const activeColor = selected ? "#FF6800" : "#737373";
 
   switch (reaction) {
     case 'okay':
     case 'satisfied':
       return (
-        <svg viewBox="0 0 48 48" className={className} style={{ filter: glow }}>
-          <circle cx="24" cy="24" r="21" fill="#0d0d0d" stroke={activeColor} strokeWidth="2.5" />
-          {/* Gentle relaxed brows */}
-          <path d="M14 18 Q17 15 20 17" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          <path d="M28 17 Q31 15 34 18" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          {/* Relaxed eyes */}
-          <circle cx="17" cy="22" r="2.5" fill={activeColor} />
-          <circle cx="31" cy="22" r="2.5" fill={activeColor} />
-          {/* Gentle pleasant smile line */}
-          <path d="M16 30 Q24 36 32 30" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
+        <svg viewBox="0 0 48 48" className={className}>
+          <circle cx="24" cy="24" r="21" fill="#0a0a0a" stroke={activeColor} strokeWidth="1.5" />
+          {/* Subtle serene eyes */}
+          <circle cx="18" cy="22" r="1.75" fill={activeColor} />
+          <circle cx="30" cy="22" r="1.75" fill={activeColor} />
+          {/* Poised, serene minimal mouth */}
+          <path d="M19 31 C22 31 26 31 29 31" fill="none" stroke={activeColor} strokeWidth="1.5" strokeLinecap="round" />
         </svg>
       );
     case 'impressed':
       return (
-        <svg viewBox="0 0 48 48" className={className} style={{ filter: glow }}>
-          <circle cx="24" cy="24" r="21" fill="#0d0d0d" stroke={activeColor} strokeWidth="2.5" />
-          {/* High arched brows */}
-          <path d="M13 16 Q17 12 21 16" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          <path d="M27 16 Q31 12 35 16" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          {/* Smiling crescent eyes */}
-          <path d="M14 23 Q17 19 20 23" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          <path d="M28 23 Q31 19 34 23" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          {/* Big warm open smile */}
-          <path d="M15 28 Q24 40 33 28 Z" fill={selected ? "#FF6800" : "#525252"} stroke={activeColor} strokeWidth="2" strokeLinejoin="round" />
+        <svg viewBox="0 0 48 48" className={className}>
+          <circle cx="24" cy="24" r="21" fill="#0a0a0a" stroke={activeColor} strokeWidth="1.5" />
+          {/* Graceful smiling crescent eyes */}
+          <path d="M15 22 Q18 18.5 21 22" fill="none" stroke={activeColor} strokeWidth="1.5" strokeLinecap="round" />
+          <path d="M27 22 Q30 18.5 33 22" fill="none" stroke={activeColor} strokeWidth="1.5" strokeLinecap="round" />
+          {/* Elegant warm crescent smile */}
+          <path d="M17 29 Q24 35 31 29" fill="none" stroke={activeColor} strokeWidth="1.5" strokeLinecap="round" />
         </svg>
       );
     case 'blown-away':
     default:
       return (
-        <svg viewBox="0 0 48 48" className={className} style={{ filter: glow }}>
-          <circle cx="24" cy="24" r="21" fill="#0d0d0d" stroke={activeColor} strokeWidth="2.5" />
-          {/* Sparkle star eyes */}
-          <path d="M17 15 L18.5 20 L23 20 L19.5 22.5 L21 27 L17 24 L13 27 L14.5 22.5 L11 20 L15.5 20 Z" fill={activeColor} />
-          <path d="M31 15 L32.5 20 L37 20 L33.5 22.5 L35 27 L31 24 L27 27 L28.5 22.5 L25 20 L29.5 20 Z" fill={activeColor} />
-          {/* Ecstatic wide laughing grin */}
-          <path d="M14 29 Q24 43 34 29 Z" fill={selected ? "#FF6800" : "#525252"} stroke={activeColor} strokeWidth="2" strokeLinejoin="round" />
-          <path d="M19 35 Q24 39 29 35" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" />
-          {/* Direct flash rays */}
-          <line x1="24" y1="1" x2="24" y2="4" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          <line x1="5" y1="7" x2="8" y2="9" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          <line x1="43" y1="7" x2="40" y2="9" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
+        <svg viewBox="0 0 48 48" className={className}>
+          <circle cx="24" cy="24" r="21" fill="#0a0a0a" stroke={activeColor} strokeWidth="1.5" />
+          {/* Luminous eyes */}
+          <circle cx="17.5" cy="21.5" r="2" fill={activeColor} />
+          <circle cx="30.5" cy="21.5" r="2" fill={activeColor} />
+          {/* Delicate haute-couture sparkle stars at temples */}
+          <path d="M11 13 Q11 15 9.5 15 Q11 15 11 17 Q11 15 12.5 15 Q11 15 11 13 Z" fill={activeColor} />
+          <path d="M37 13 Q37 15 35.5 15 Q37 15 37 17 Q37 15 38.5 15 Q37 15 37 13 Z" fill={activeColor} />
+          {/* Radiant, elegant open smile curve */}
+          <path d="M16 27.5 Q24 37 32 27.5" fill="none" stroke={activeColor} strokeWidth="1.5" strokeLinecap="round" />
         </svg>
       );
   }
@@ -466,7 +457,6 @@ export default function ReviewModal({
                         setAuthorName(e.target.value);
                         if (errors.author) setErrors((prev) => ({ ...prev, author: undefined }));
                       }}
-                      placeholder="e.g. Erica"
                       className={`w-full bg-black border ${
                         errors.author ? 'border-red-500' : 'border-neutral-800'
                       } focus:border-[#FF6800] text-white text-sm px-3.5 py-2.5 font-sans rounded-none outline-none transition-colors`}
@@ -487,7 +477,6 @@ export default function ReviewModal({
                         setRoleAndCompany(e.target.value);
                         if (errors.role) setErrors((prev) => ({ ...prev, role: undefined }));
                       }}
-                      placeholder="e.g. TheLOCAL"
                       className={`w-full bg-black border ${
                         errors.role ? 'border-red-500' : 'border-neutral-800'
                       } focus:border-[#FF6800] text-white text-sm px-3.5 py-2.5 font-sans rounded-none outline-none transition-colors`}
@@ -501,7 +490,7 @@ export default function ReviewModal({
                   <div className="flex items-center justify-between mb-1.5">
                     <label htmlFor={reviewTextareaId} className="font-mono text-xs uppercase tracking-wider text-[#FF6800] flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-[#FF6800] inline-block" />
-                      YOUR COLLABORATION EXPERIENCE *
+                      YOUR EXPERIENCE *
                     </label>
                     <span className="text-xs font-mono text-neutral-500">
                       {reviewText.length} / 500 characters
