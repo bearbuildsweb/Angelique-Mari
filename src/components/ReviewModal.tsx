@@ -487,14 +487,11 @@ export default function ReviewModal({
 
                 {/* Review Textarea */}
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
+                  <div className="mb-1.5">
                     <label htmlFor={reviewTextareaId} className="font-mono text-xs uppercase tracking-wider text-[#FF6800] flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-[#FF6800] inline-block" />
                       YOUR EXPERIENCE *
                     </label>
-                    <span className="text-xs font-mono text-neutral-500">
-                      {reviewText.length} / 500 characters
-                    </span>
                   </div>
                   <textarea
                     id={reviewTextareaId}
@@ -510,7 +507,14 @@ export default function ReviewModal({
                       errors.text ? 'border-red-500' : 'border-neutral-800'
                     } focus:border-[#FF6800] text-neutral-100 text-sm p-3.5 font-sans rounded-none outline-none transition-colors leading-relaxed`}
                   />
-                  {errors.text && <p className="text-red-400 text-xs mt-1 font-mono">{errors.text}</p>}
+                  <div className="flex items-center justify-between mt-1.5">
+                    <div>
+                      {errors.text && <p className="text-red-400 text-xs font-mono">{errors.text}</p>}
+                    </div>
+                    <span className="text-xs font-mono text-neutral-500 ml-auto">
+                      {reviewText.length} / 500 characters
+                    </span>
+                  </div>
                 </div>
 
                 {/* Modal Footer Actions */}
