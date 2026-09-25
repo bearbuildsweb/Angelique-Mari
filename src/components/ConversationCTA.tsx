@@ -162,8 +162,8 @@ export default function ConversationCTA() {
 
         {/* Visual Guide / Upward Indicator pointing to the START CHAT CTA */}
         <div className="mt-8 flex justify-center items-center">
-          {/* Recessed Indent Pill / Tab with Bouncing Upward Chevron */}
-          <div className="p-[3px] rounded-full bg-[#050505] shadow-[0_6px_20px_rgba(0,0,0,0.95),inset_0_4px_12px_rgba(0,0,0,1),inset_0_-1px_1px_rgba(255,255,255,0.1)] border-t border-black border-b border-white/15">
+          {/* Precision-Milled 3D Tactile Pill Housing */}
+          <div className="inline-flex items-center justify-center p-[2px] rounded-full bg-gradient-to-b from-[#0a0a0c] via-[#050506] to-[#000000] border border-white/10 shadow-[0_4px_14px_rgba(0,0,0,0.9),inset_0_2px_4px_rgba(0,0,0,0.95)]">
             <button
               type="button"
               onClick={() => {
@@ -174,10 +174,10 @@ export default function ConversationCTA() {
               }}
               aria-label="Scroll to Start Chat"
               title="Point to Start Chat"
-              className="group relative inline-flex items-center justify-center px-4 py-2 sm:px-5 sm:py-2 rounded-full bg-[#1c1c1e] hover:bg-[#232326] shadow-[inset_0_5px_12px_rgba(0,0,0,0.95),inset_0_1px_3px_rgba(0,0,0,1),inset_0_-1px_2px_rgba(255,255,255,0.12)] border-t border-black/80 border-b border-white/10 transition-all duration-300 active:scale-[0.96] text-[#FF6800] hover:text-white cursor-pointer"
+              className="group relative flex items-center justify-center w-12 h-7 sm:w-14 sm:h-8 rounded-full bg-gradient-to-b from-[#252528] via-[#18181a] to-[#101012] hover:from-[#2e2e32] hover:to-[#161619] shadow-[0_2px_4px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.22),inset_0_-1px_2px_rgba(0,0,0,0.85)] border-t border-white/15 border-b border-black/90 transition-all duration-200 active:scale-[0.96] text-[#FF6800] hover:text-white cursor-pointer"
             >
               <motion.div
-                animate={{ y: [0, -5, 0] }}
+                animate={{ y: [0, -4, 0] }}
                 transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
                 className="flex items-center justify-center"
               >
