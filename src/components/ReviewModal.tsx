@@ -96,6 +96,8 @@ function EmotionIcon({
   }
 }
 
+const DEFAULT_REVIEWS_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxpYscWeC2VOYvio6-W3hyJHCi0_ALtx31kvpyZXo1AuOwmtLfRwv2RxlsZOU3GV5lPow/exec';
+
 export default function ReviewModal({
   isOpen: controlledIsOpen,
   onClose: controlledOnClose,
@@ -247,23 +249,33 @@ export default function ReviewModal({
         console.error('Failed to store testimonial locally', err);
       }
 
-      // Sync to Google Sheet if configured
-      const sheetUrl = import.meta.env.VITE_REVIEWS_SHEET_URL;
-      if (sheetUrl && sheetUrl.trim() !== '') {
+      // Sync to Google Sheet
+      const sheetUrl = (import.meta.env.VITE_REVIEWS_SHEET_URL || DEFAULT_REVIEWS_SHEET_URL)?.trim();
+      if (sheetUrl) {
         try {
-          fetch(sheetUrl.trim(), {
+          const payload = {
+            clientName: authorName.trim(),
+            brandOrCompany: roleAndCompany.trim(),
+            rating: `${emotionConfig.rating} / 5 (${emotionConfig.label})`,
+            reviewText: reviewText.trim(),
+            // Common aliases so any script configuration handles the fields properly
+            author: authorName.trim(),
+            roleAndCompany: roleAndCompany.trim(),
+            quote: reviewText.trim(),
+          };
+
+          fetch(sheetUrl, {
             method: 'POST',
             mode: 'no-cors',
             headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'text/plain;charset=utf-8',
             },
-            body: JSON.stringify({
-              clientName: authorName.trim(),
-              brandOrCompany: roleAndCompany.trim(),
-              rating: `${emotionConfig.rating} / 5 (${emotionConfig.label})`,
-              reviewText: reviewText.trim(),
-            }),
-          }).catch((err) => console.error('Sheet sync network error:', err));
+            body: JSON.stringify(payload),
+          })
+            .then(() => {
+              console.log('Review successfully dispatched to Google Sheet webhook.');
+            })
+            .catch((err) => console.error('Sheet sync network error:', err));
         } catch (err) {
           console.error('Failed to post review to Google Sheet', err);
         }
