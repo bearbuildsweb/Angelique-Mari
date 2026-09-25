@@ -502,7 +502,7 @@ export default function ReviewModal({
                       setReviewText(e.target.value);
                       if (errors.text) setErrors((prev) => ({ ...prev, text: undefined }));
                     }}
-                    placeholder="Describe working with Angelique-Mari..."
+                    placeholder="Describe working with Angelique-Mari"
                     className={`w-full bg-black border ${
                       errors.text ? 'border-red-500' : 'border-neutral-800'
                     } focus:border-[#FF6800] text-neutral-100 text-sm p-3.5 font-sans rounded-none outline-none transition-colors leading-relaxed`}
