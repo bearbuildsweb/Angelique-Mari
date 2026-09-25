@@ -111,18 +111,18 @@ export default function Hero({
           </div>
         </div>
 
-        {/* Recessed Pill Depression / Cavity ("Hole in the wall" depth effect) with Hamburger Icon */}
-        <div className="p-[3px] rounded-full bg-[#050505] shadow-[0_6px_20px_rgba(0,0,0,0.95),inset_0_4px_12px_rgba(0,0,0,1),inset_0_-1px_1px_rgba(255,255,255,0.1)] border-t border-black border-b border-white/15">
+        {/* Precision-Milled 3D Tactile Navigation Toggle */}
+        <div className="inline-flex items-center justify-center p-[2px] rounded-full bg-gradient-to-b from-[#0a0a0c] via-[#050506] to-[#000000] border border-white/10 shadow-[0_4px_14px_rgba(0,0,0,0.9),inset_0_2px_4px_rgba(0,0,0,0.95)]">
           <button
             id="header-nav-toggle"
             aria-label="Toggle navigation menu"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="group relative inline-flex items-center justify-center px-4 py-2.5 sm:px-5 sm:py-2.5 rounded-full bg-[#1c1c1e] hover:bg-[#232326] shadow-[inset_0_5px_12px_rgba(0,0,0,0.95),inset_0_1px_3px_rgba(0,0,0,1),inset_0_-1px_2px_rgba(255,255,255,0.12)] border-t border-black/80 border-b border-white/10 transition-all duration-300 active:scale-[0.96] cursor-pointer"
+            className="group relative flex items-center justify-center w-12 h-7 sm:w-14 sm:h-8 rounded-full bg-gradient-to-b from-[#252528] via-[#18181a] to-[#101012] hover:from-[#2e2e32] hover:to-[#161619] shadow-[0_2px_4px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.22),inset_0_-1px_2px_rgba(0,0,0,0.85)] border-t border-white/15 border-b border-black/90 transition-all duration-200 active:scale-[0.96] cursor-pointer"
           >
-            <div className="flex flex-col gap-1 sm:gap-1.5 justify-center items-center w-5 h-3.5 sm:h-4">
-              <span className={`h-[2px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-5 rotate-45 translate-y-[5.5px]' : 'w-5'}`} />
-              <span className={`h-[2px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-0 opacity-0' : 'w-4'}`} />
-              <span className={`h-[2px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-5 -rotate-45 -translate-y-[5.5px]' : 'w-5'}`} />
+            <div className="flex flex-col gap-1 sm:gap-1.5 justify-center items-center w-4 sm:w-4.5">
+              <span className={`h-[1.75px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-4.5 rotate-45 translate-y-[5.5px]' : 'w-4.5'}`} />
+              <span className={`h-[1.75px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-0 opacity-0' : 'w-4.5'}`} />
+              <span className={`h-[1.75px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-4.5 -rotate-45 -translate-y-[5.5px]' : 'w-4.5'}`} />
             </div>
           </button>
         </div>
