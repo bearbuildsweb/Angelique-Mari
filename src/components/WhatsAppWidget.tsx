@@ -18,42 +18,69 @@ interface WhatsAppWidgetProps {
   isHidden?: boolean;
 }
 
+type SectionKey = 'hero' | 'portfolio' | 'about' | 'booking-or-below';
+
 export default function WhatsAppWidget({ isHidden = false }: WhatsAppWidgetProps) {
   const [mounted, setMounted] = useState(false);
-  const [inFunnelOrBelow, setInFunnelOrBelow] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [currentSection, setCurrentSection] = useState<SectionKey>('hero');
 
   useEffect(() => {
     setMounted(true);
 
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    checkMobile();
+
     const handleScroll = () => {
-      const scrollY = window.scrollY || document.documentElement.scrollTop || 0;
+      const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 800;
+      // Section detection trigger point (approx 45% of viewport)
+      const triggerPoint = viewportHeight * 0.45;
 
-      // When near the top (hero), never treat as inside the funnel
-      if (scrollY < 300) {
-        setInFunnelOrBelow(false);
-        return;
-      }
-
-      // Hide starting from the funnels section (#booking) onwards all the way to the end of the footer
+      const portfolioEl = document.getElementById('portfolio');
+      const aboutEl = document.getElementById('about');
       const bookingEl = document.getElementById('booking');
-      if (bookingEl) {
-        const rect = bookingEl.getBoundingClientRect();
-        const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 800;
-        // As soon as the funnels section approaches or enters the viewport window, hide the floating widget
-        setInFunnelOrBelow(rect.top <= viewportHeight - 60);
+
+      if (bookingEl && bookingEl.getBoundingClientRect().top <= triggerPoint) {
+        setCurrentSection('booking-or-below');
+      } else if (aboutEl && aboutEl.getBoundingClientRect().top <= triggerPoint) {
+        setCurrentSection('about');
+      } else if (portfolioEl && portfolioEl.getBoundingClientRect().top <= triggerPoint) {
+        setCurrentSection('portfolio');
+      } else {
+        setCurrentSection('hero');
       }
     };
 
     handleScroll();
     window.addEventListener('scroll', handleScroll, { passive: true });
     window.addEventListener('resize', handleScroll, { passive: true });
+    window.addEventListener('resize', checkMobile, { passive: true });
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleScroll);
+      window.removeEventListener('resize', checkMobile);
     };
   }, []);
 
-  const shouldHide = inFunnelOrBelow || isHidden;
+  // Mobile rules:
+  // - Hero: visible on left-hand side
+  // - Portfolio: hidden
+  // - About: visible on right-hand side
+  // - Enquiry & below: hidden
+  const isHiddenOnMobile = currentSection === 'portfolio' || currentSection === 'booking-or-below';
+  const isHiddenOnDesktop = currentSection === 'booking-or-below';
+  const shouldHide = isHidden || (isMobile ? isHiddenOnMobile : isHiddenOnDesktop);
+
+  const mobileAlignmentClass =
+    isMobile && currentSection === 'about'
+      ? 'right-4 left-auto'
+      : isMobile
+      ? 'left-4 right-auto'
+      : 'right-6 lg:right-8 left-auto';
 
   const widgetMarkup = (
     <aside
@@ -63,7 +90,7 @@ export default function WhatsAppWidget({ isHidden = false }: WhatsAppWidgetProps
         shouldHide
           ? 'opacity-0 translate-y-8 pointer-events-none'
           : 'opacity-100 translate-y-0 pointer-events-auto'
-      } bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))] left-4 sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] sm:left-6 lg:left-auto lg:right-8 lg:bottom-8`}
+      } bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))] sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] lg:bottom-8 ${mobileAlignmentClass}`}
     >
       {/* MOBILE & TABLET VIEW: Floating Circular Action Button (FAB) Styled like a Wax Seal / Stamped Metal Button */}
       <a
