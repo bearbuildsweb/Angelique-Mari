@@ -49,6 +49,61 @@ function RoughPaintUnderline({ className = '' }: { className?: string }) {
   );
 }
 
+/* Rough Screen-Printed Hamburger Icon with Uneven Edges & Subtle Grain */
+function RoughScreenPrintHamburger({ isOpen }: { isOpen: boolean }) {
+  return (
+    <svg
+      viewBox="0 0 22 16"
+      className="w-4.5 h-3.5 sm:w-5 sm:h-4 overflow-visible"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <defs>
+        {/* Screenprint Grain & Ink Bleed Filter */}
+        <filter id="inkRoughness" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" result="noise" />
+          <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.1" xChannelSelector="R" yChannelSelector="G" />
+        </filter>
+      </defs>
+
+      {/* Top Rough Screen-Printed Stroke */}
+      <path
+        d="M 1 2.5 L 5.5 2.2 L 11 2.6 L 16.5 2.3 L 21 2.5"
+        stroke="#FF5500"
+        strokeWidth="2.6"
+        strokeLinecap="square"
+        filter="url(#inkRoughness)"
+        className={`transition-none origin-center transform ${
+          isOpen ? 'translate-y-[5.5px] rotate-45' : 'translate-y-0 rotate-0'
+        }`}
+      />
+
+      {/* Middle Rough Screen-Printed Stroke */}
+      <path
+        d="M 1 8 L 6.5 8.3 L 12 7.8 L 17.5 8.2 L 21 8"
+        stroke="#FF5500"
+        strokeWidth="2.6"
+        strokeLinecap="square"
+        filter="url(#inkRoughness)"
+        className={`transition-none ${isOpen ? 'opacity-0' : 'opacity-100'}`}
+      />
+
+      {/* Bottom Rough Screen-Printed Stroke */}
+      <path
+        d="M 1 13.5 L 5 13.2 L 10.5 13.7 L 16 13.3 L 21 13.5"
+        stroke="#FF5500"
+        strokeWidth="2.6"
+        strokeLinecap="square"
+        filter="url(#inkRoughness)"
+        className={`transition-none origin-center transform ${
+          isOpen ? '-translate-y-[5.5px] -rotate-45' : 'translate-y-0 rotate-0'
+        }`}
+      />
+    </svg>
+  );
+}
+
 /* Frayed-Edge Masking Tape 'CLOSE' Button with Stamped Feel */
 function MaskingTapeCloseButton({
   onClick,
@@ -113,6 +168,28 @@ function MaskingTapeCloseButton({
         CLOSE ✕
       </span>
     </button>
+  );
+}
+
+/* Hand-Stamped Directional Arrow Icon */
+function StampedArrowIcon({ className = 'w-4 h-4' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 20 20"
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path
+        d="M 10 2.5 L 10 15.5 M 4.5 10.5 L 10 16 L 15.5 10.5"
+        stroke="currentColor"
+        strokeWidth="3.2"
+        strokeLinecap="square"
+        strokeLinejoin="miter"
+      />
+      <rect x="8.5" y="17" width="3" height="1" fill="currentColor" />
+    </svg>
   );
 }
 
@@ -219,19 +296,15 @@ export default function Hero({
           </div>
         </div>
 
-        {/* Precision-Milled 3D Tactile Navigation Toggle */}
+        {/* Physical Stamped Navigation Toggle with Deliberate 2px Press */}
         <div className="inline-flex items-center justify-center p-[2px] rounded-full bg-gradient-to-b from-[#0a0a0c] via-[#050506] to-[#000000] border border-white/10 shadow-[0_4px_14px_rgba(0,0,0,0.9),inset_0_2px_4px_rgba(0,0,0,0.95)]">
           <button
             id="header-nav-toggle"
             aria-label="Toggle navigation menu"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="group relative flex items-center justify-center w-12 h-7 sm:w-14 sm:h-8 rounded-full bg-gradient-to-b from-[#252528] via-[#18181a] to-[#101012] hover:from-[#2e2e32] hover:to-[#161619] shadow-[0_2px_4px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.22),inset_0_-1px_2px_rgba(0,0,0,0.85)] border-t border-white/15 border-b border-black/90 transition-all duration-200 active:scale-[0.96] cursor-pointer"
+            className="group relative flex items-center justify-center w-12 h-7 sm:w-14 sm:h-8 rounded-full bg-gradient-to-b from-[#252528] via-[#18181a] to-[#101012] border-t border-white/15 border-b border-black/90 shadow-[2px_2px_0px_#000000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none active:translate-x-[2px] active:translate-y-[2px] active:shadow-none transition-none cursor-pointer select-none"
           >
-            <div className="flex flex-col gap-1 sm:gap-1.5 justify-center items-center w-4 sm:w-4.5">
-              <span className={`h-[1.75px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-4.5 rotate-45 translate-y-[5.5px]' : 'w-4.5'}`} />
-              <span className={`h-[1.75px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-0 opacity-0' : 'w-4.5'}`} />
-              <span className={`h-[1.75px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-4.5 -rotate-45 -translate-y-[5.5px]' : 'w-4.5'}`} />
-            </div>
+            <RoughScreenPrintHamburger isOpen={menuOpen} />
           </button>
         </div>
       </header>
@@ -443,8 +516,8 @@ export default function Hero({
               </div>
             </nav>
 
-            {/* Nav Drawer Footer: Right-Aligned WhatsApp CTA with same pill depth as hero CTA, no text */}
-            <div className="border-t border-[#FF6800]/20 pt-4 sm:pt-5 flex justify-end items-center">
+            {/* Nav Drawer Footer: Centered WhatsApp CTA */}
+            <div className="border-t border-[#FF6800]/20 pt-4 sm:pt-5 flex justify-center items-center w-full">
               <div className="p-[3px] rounded-full bg-[#050505] shadow-[0_6px_20px_rgba(0,0,0,0.95),inset_0_4px_12px_rgba(0,0,0,1),inset_0_-1px_1px_rgba(255,255,255,0.1)] border-t border-black border-b border-white/15">
                 <a
                   href={WHATSAPP_URL}
@@ -463,12 +536,12 @@ export default function Hero({
       )}
     </AnimatePresence>
 
-      {/* 4. Minimal, Cinematic Editorial Hero Stage */}
-      <div className="flex-1 flex flex-col items-center justify-center relative z-20 px-6 py-8 sm:py-12 md:py-16">
+      {/* 4. Minimal, Cinematic Editorial Hero Stage (Centered on All Viewports) */}
+      <div className="flex-1 flex flex-col items-center justify-center relative z-20 px-6 sm:px-10 md:px-14 lg:px-16 py-8 sm:py-12 md:py-16 w-full max-w-7xl mx-auto text-center">
         
         {/* Crisp Museum Print Centerpiece — The Hero Statement */}
         <div 
-          className="relative group cursor-pointer"
+          className="relative group cursor-pointer self-center"
           onClick={handleScrollToPortfolio}
           title="View Portfolio"
         >
@@ -532,34 +605,16 @@ export default function Hero({
           </div>
         </div>
 
-        {/* Recessed Pill Depression / Cavity ("Hole in the wall" depth effect) */}
-        <div className="mt-10 sm:mt-12 p-[3px] rounded-full bg-[#050505] shadow-[0_6px_20px_rgba(0,0,0,0.95),inset_0_4px_12px_rgba(0,0,0,1),inset_0_-1px_1px_rgba(255,255,255,0.1)] border-t border-black border-b border-white/15">
+        {/* Stark Ticket Stub / Printed Label CTA with Instant Physical Snap */}
+        <div className="mt-8 sm:mt-11 self-center select-none">
           <a
             href="#portfolio"
             id="hero-view-portfolio-cta"
             aria-label="View portfolio of works"
-            className="group relative inline-flex items-center gap-2.5 px-7 py-3 sm:px-8 sm:py-3.5 rounded-full bg-[#1c1c1e] hover:bg-[#232326] shadow-[inset_0_5px_12px_rgba(0,0,0,0.95),inset_0_1px_3px_rgba(0,0,0,1),inset_0_-1px_2px_rgba(255,255,255,0.12)] border-t border-black/80 border-b border-white/10 transition-all duration-300 active:scale-[0.98]"
+            className="hero-ticket-stub group relative inline-flex items-center gap-3 px-6 py-3.5 sm:px-7 sm:py-4 bg-[#FF5500] text-black font-mono font-black text-xs sm:text-sm uppercase tracking-[0.2em] border-2 border-black cursor-pointer select-none"
           >
-            <div className="relative flex flex-col">
-              <span className="font-sans text-[11px] sm:text-xs uppercase tracking-[0.24em] font-bold text-[#FF6800] group-hover:text-white transition-colors pb-0.5">
-                VIEW PORTFOLIO
-              </span>
-              <span className="relative w-full h-[1.5px] bg-[#FF6800]/25 overflow-hidden block">
-                <motion.span
-                  className="absolute top-0 bottom-0 w-full bg-[#FF6800] group-hover:bg-white block shadow-[0_0_6px_rgba(255,104,0,0.8)]"
-                  initial={{ x: '-100%' }}
-                  animate={{ x: '100%' }}
-                  transition={{
-                    repeat: Infinity,
-                    duration: 1.8,
-                    ease: 'easeInOut',
-                  }}
-                />
-              </span>
-            </div>
-            <span className="text-[#FF6800] group-hover:text-white text-xs sm:text-sm font-bold transition-transform duration-300 group-hover:translate-y-1">
-              ↓
-            </span>
+            <span>VIEW PORTFOLIO</span>
+            <StampedArrowIcon className="w-4 h-4 text-black shrink-0" />
           </a>
         </div>
 

@@ -59,19 +59,39 @@ export default function WhatsAppWidget({ isHidden = false }: WhatsAppWidgetProps
     <aside
       id="floating-whatsapp-widget"
       aria-label="Direct studio conversation"
-      className={`fixed bottom-5 right-4 sm:bottom-6 sm:right-6 md:bottom-7 md:right-7 lg:bottom-8 lg:right-8 z-[9999] transition-all duration-500 ease-out ${
+      className={`fixed z-[9999] transition-all duration-500 ease-out ${
         shouldHide
           ? 'opacity-0 translate-y-8 pointer-events-none'
           : 'opacity-100 translate-y-0 pointer-events-auto'
-      }`}
+      } bottom-[calc(1.25rem+env(safe-area-inset-bottom,0px))] left-4 sm:bottom-[calc(1.5rem+env(safe-area-inset-bottom,0px))] sm:left-6 lg:left-auto lg:right-8 lg:bottom-8`}
     >
+      {/* MOBILE & TABLET VIEW: Floating Circular Action Button (FAB) Styled like a Wax Seal / Stamped Metal Button */}
+      <a
+        href={WHATSAPP_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Direct on WhatsApp with Angelique-Mari"
+        title="WhatsApp: +27 68 631 3538"
+        className="flex lg:hidden group relative w-13 h-13 sm:w-14 sm:h-14 rounded-full bg-black border-[3px] border-[#FF5500] items-center justify-center cursor-pointer select-none active:translate-x-[2px] active:translate-y-[2px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5500] hover:scale-105 transition-transform duration-200"
+        style={{
+          boxShadow: '4px 4px 0px #000000',
+        }}
+      >
+        {/* Subtle stamped wax-seal / metal coin concentric contour */}
+        <span className="absolute inset-[2.5px] rounded-full border border-[#FF5500]/35 pointer-events-none" />
+
+        {/* WhatsApp Icon Only */}
+        <WhatsAppGlyph className="w-6 h-6 sm:w-6.5 sm:h-6.5 fill-current text-[#FF5500] group-hover:text-white transition-colors" />
+      </a>
+
+      {/* DESKTOP VIEW: Classic Editorial Pill Widget */}
       <a
         href={WHATSAPP_URL}
         target="_blank"
         rel="noopener noreferrer"
         id="floating-whatsapp-trigger"
         aria-label="Let's talk on WhatsApp with Angelique-Mari"
-        className="group relative flex items-center gap-2.5 lg:gap-3 bg-[#0a0a0a]/95 text-[#FF6800] hover:text-white border border-[#FF6800]/50 hover:border-[#FF6800] px-3.5 py-2.5 lg:px-4 lg:py-3 shadow-[0_12px_36px_rgba(0,0,0,0.85),0_0_20px_rgba(255,104,0,0.15)] hover:shadow-[0_16px_44px_rgba(0,0,0,0.95),0_0_28px_rgba(255,104,0,0.35)] backdrop-blur-xl transition-all duration-300 active:scale-[0.97]"
+        className="hidden lg:flex group relative items-center gap-3 bg-[#0a0a0a]/95 text-[#FF6800] hover:text-white border border-[#FF6800]/50 hover:border-[#FF6800] px-4 py-3 shadow-[0_12px_36px_rgba(0,0,0,0.85),0_0_20px_rgba(255,104,0,0.15)] hover:shadow-[0_16px_44px_rgba(0,0,0,0.95),0_0_28px_rgba(255,104,0,0.35)] backdrop-blur-xl transition-all duration-300 active:scale-[0.97]"
       >
         {/* Subtle Live Status Indicator */}
         <span className="relative flex h-2 w-2">
@@ -84,11 +104,11 @@ export default function WhatsAppWidget({ isHidden = false }: WhatsAppWidgetProps
 
         {/* Confident, Understated Editorial Text */}
         <div className="flex flex-col text-left">
-          <span className="font-sans text-[11px] lg:text-xs font-bold uppercase tracking-[0.18em] leading-tight flex items-center gap-1">
+          <span className="font-sans text-xs font-bold uppercase tracking-[0.18em] leading-tight flex items-center gap-1">
             <span>Let's talk</span>
             <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </span>
-          <span className="hidden lg:inline font-sans text-[9px] uppercase tracking-[0.2em] text-[#FF6800]/70 group-hover:text-white/80 transition-colors">
+          <span className="font-sans text-[9px] uppercase tracking-[0.2em] text-[#FF6800]/70 group-hover:text-white/80 transition-colors">
             START CHAT
           </span>
         </div>
