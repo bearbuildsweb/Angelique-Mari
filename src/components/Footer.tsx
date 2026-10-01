@@ -22,8 +22,8 @@ export default function Footer({ onReviewClick }: FooterProps = {}) {
         
         {/* Editorial Official Logo Centerpiece Header */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 w-full pb-12 md:pb-16 pt-2 border-b border-[#FF6800]/20 select-none">
-          {/* Left copyright with serif elegant font */}
-          <div className="font-['Playfair_Display',Georgia,serif] italic text-base md:text-lg text-[#FF6800] leading-none whitespace-nowrap shrink-0 self-center md:self-end md:mb-4">
+          {/* Left copyright with serif elegant font - slightly more faded */}
+          <div className="font-['Playfair_Display',Georgia,serif] italic text-base md:text-lg text-[#FF6800]/40 leading-none whitespace-nowrap shrink-0 self-center md:self-end md:mb-4">
             © {currentYear}
           </div>
 
@@ -51,22 +51,28 @@ export default function Footer({ onReviewClick }: FooterProps = {}) {
             </div>
           </div>
 
-          {/* Right graphic copyright */}
-          <div className="font-serif text-2xl md:text-3xl font-light text-[#FF6800] leading-none select-none shrink-0 self-center md:self-end md:mb-4 pr-1">
+          {/* Right graphic copyright - slightly more faded */}
+          <div className="font-serif text-2xl md:text-3xl font-light text-[#FF6800]/40 leading-none select-none shrink-0 self-center md:self-end md:mb-4 pr-1">
             ©
           </div>
         </div>
 
         {/* Top bar replicated from the reference image, without navigation links */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-10 md:pt-14 pb-4 w-full">
-          {/* Left Email - Styled elegantly with serif typography & Mail icon */}
+          {/* Left Email - Vector-crisp, high-legibility italic typography & Mail icon */}
           <div className="flex-1 flex justify-center md:justify-start items-center gap-3">
-            <Mail className="w-4 h-4 stroke-[1.5] text-[#FF6800]" />
+            <Mail className="w-4 h-4 stroke-[1.75] text-[#FF6800] shrink-0" />
             <a 
-              href="mailto:ambrandcreatives@gmail.com" 
-              className="font-['Playfair_Display',Georgia,serif] italic lowercase text-base sm:text-lg md:text-xl text-[#FF6800] hover:text-white transition-colors underline decoration-[#FF6800]/40 hover:decoration-white underline-offset-4 tracking-wide font-normal"
+              href="mailto:ang@amstudio.photography" 
+              style={{
+                fontFamily: "'Cormorant Garamond', 'Playfair Display', Georgia, serif",
+                WebkitFontSmoothing: 'antialiased',
+                MozOsxFontSmoothing: 'grayscale',
+                textRendering: 'optimizeLegibility',
+              }}
+              className="italic lowercase text-lg sm:text-xl md:text-2xl text-white hover:text-[#FF6800] transition-colors underline decoration-[#FF6800]/50 hover:decoration-[#FF6800] underline-offset-4 tracking-wide font-normal inline-block select-all"
             >
-              ambrandcreatives@gmail.com
+              ang@amstudio.photography
             </a>
           </div>
 
@@ -117,3 +123,4 @@ export default function Footer({ onReviewClick }: FooterProps = {}) {
     </footer>
   );
 }
+

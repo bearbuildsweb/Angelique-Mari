@@ -89,7 +89,7 @@ export default function WhatsAppWidget({ isHidden = false }: WhatsAppWidgetProps
             <ArrowUpRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </span>
           <span className="hidden lg:inline font-sans text-[9px] uppercase tracking-[0.2em] text-[#FF6800]/70 group-hover:text-white/80 transition-colors">
-            GO DIRECT
+            START CHAT
           </span>
         </div>
       </a>

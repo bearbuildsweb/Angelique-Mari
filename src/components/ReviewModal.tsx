@@ -1,6 +1,6 @@
 import { useState, useEffect, useId, FormEvent } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { X, Star, Copy, CheckCheck, MessageSquare } from 'lucide-react';
+import { X, Copy, CheckCheck, MessageSquare } from 'lucide-react';
 import { EmotionalReactionKey, Testimonial } from '../types';
 
 interface ReviewModalProps {
@@ -30,80 +30,96 @@ const EMOTIONAL_OPTIONS: EmotionalOption[] = [
     key: 'blown-away',
     label: 'BLOWN AWAY',
     rating: 5,
-  }
+  },
 ];
 
-/* Custom Vector Emotional Reaction Faces */
+interface StencilStarProps {
+  key?: string | number;
+  filled: boolean;
+  selected: boolean;
+  className?: string;
+}
+
+/* Rough, Stenciled Screen-Printed Star Shape */
+function StencilStar({
+  filled,
+  selected,
+  className = 'w-3.5 h-3.5',
+}: StencilStarProps) {
+  const activeColor = selected ? '#FF5500' : '#d4d4d8';
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      {/* Stenciled, raw geometric star shape */}
+      <path
+        d="M 12 2 L 14.8 8.5 L 22 9.2 L 16.8 14.2 L 18.2 21.2 L 12 17.5 L 5.8 21.2 L 7.2 14.2 L 2 9.2 L 9.2 8.5 Z"
+        fill={filled ? activeColor : 'none'}
+        stroke={filled ? activeColor : '#3f3f46'}
+        strokeWidth="1.6"
+        strokeLinejoin="miter"
+      />
+      {/* Stencil bridge incision cutout */}
+      <line x1="12" y1="9.5" x2="12" y2="15" stroke="#09090c" strokeWidth="1.3" strokeLinecap="square" />
+    </svg>
+  );
+}
+
+/* Raw Screen-Printed Line-Art Reaction Graphic */
 function EmotionIcon({
   reaction,
   selected,
-  className = "w-10 h-10"
+  className = 'w-10 h-10',
 }: {
   reaction: EmotionalReactionKey;
   selected: boolean;
   className?: string;
 }) {
-  const activeColor = selected ? "#FF6800" : "#a3a3a3";
-  const glow = selected ? "drop-shadow(0 0 8px rgba(255,104,0,0.6))" : "none";
+  const activeColor = selected ? '#FF5500' : '#71717a';
 
   switch (reaction) {
     case 'okay':
     case 'satisfied':
       return (
-        <svg viewBox="0 0 48 48" className={className} style={{ filter: glow }}>
-          <circle cx="24" cy="24" r="21" fill="#0d0d0d" stroke={activeColor} strokeWidth="2.5" />
-          {/* Gentle relaxed brows */}
-          <path d="M14 18 Q17 15 20 17" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          <path d="M28 17 Q31 15 34 18" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          {/* Relaxed eyes */}
-          <circle cx="17" cy="22" r="2.5" fill={activeColor} />
-          <circle cx="31" cy="22" r="2.5" fill={activeColor} />
-          {/* Gentle pleasant smile line */}
-          <path d="M16 30 Q24 36 32 30" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
+        <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
+          <circle cx="24" cy="24" r="20" fill="#09090c" stroke={activeColor} strokeWidth="2.2" />
+          <rect x="16" y="20" width="3.5" height="3.5" fill={activeColor} />
+          <rect x="28.5" y="20" width="3.5" height="3.5" fill={activeColor} />
+          <path d="M 17 31 L 31 31" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="square" />
         </svg>
       );
     case 'impressed':
       return (
-        <svg viewBox="0 0 48 48" className={className} style={{ filter: glow }}>
-          <circle cx="24" cy="24" r="21" fill="#0d0d0d" stroke={activeColor} strokeWidth="2.5" />
-          {/* High arched brows */}
-          <path d="M13 16 Q17 12 21 16" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          <path d="M27 16 Q31 12 35 16" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          {/* Smiling crescent eyes */}
-          <path d="M14 23 Q17 19 20 23" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          <path d="M28 23 Q31 19 34 23" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          {/* Big warm open smile */}
-          <path d="M15 28 Q24 40 33 28 Z" fill={selected ? "#FF6800" : "#525252"} stroke={activeColor} strokeWidth="2" strokeLinejoin="round" />
+        <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
+          <circle cx="24" cy="24" r="20" fill="#09090c" stroke={activeColor} strokeWidth="2.2" />
+          <path d="M 15 22 Q 18.5 16.5 22 22" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="square" />
+          <path d="M 26 22 Q 29.5 16.5 33 22" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="square" />
+          <path d="M 17 29 Q 24 36.5 31 29" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="square" />
         </svg>
       );
     case 'blown-away':
     default:
       return (
-        <svg viewBox="0 0 48 48" className={className} style={{ filter: glow }}>
-          <circle cx="24" cy="24" r="21" fill="#0d0d0d" stroke={activeColor} strokeWidth="2.5" />
-          {/* Sparkle star eyes */}
-          <path d="M17 15 L18.5 20 L23 20 L19.5 22.5 L21 27 L17 24 L13 27 L14.5 22.5 L11 20 L15.5 20 Z" fill={activeColor} />
-          <path d="M31 15 L32.5 20 L37 20 L33.5 22.5 L35 27 L31 24 L27 27 L28.5 22.5 L25 20 L29.5 20 Z" fill={activeColor} />
-          {/* Ecstatic wide laughing grin */}
-          <path d="M14 29 Q24 43 34 29 Z" fill={selected ? "#FF6800" : "#525252"} stroke={activeColor} strokeWidth="2" strokeLinejoin="round" />
-          <path d="M19 35 Q24 39 29 35" fill="none" stroke="#000" strokeWidth="2" strokeLinecap="round" />
-          {/* Direct flash rays */}
-          <line x1="24" y1="1" x2="24" y2="4" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          <line x1="5" y1="7" x2="8" y2="9" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
-          <line x1="43" y1="7" x2="40" y2="9" stroke={activeColor} strokeWidth="2.5" strokeLinecap="round" />
+        <svg viewBox="0 0 48 48" className={className} aria-hidden="true">
+          <circle cx="24" cy="24" r="20" fill="#09090c" stroke={activeColor} strokeWidth="2.2" />
+          <circle cx="17.5" cy="21.5" r="2.5" fill={activeColor} />
+          <circle cx="30.5" cy="21.5" r="2.5" fill={activeColor} />
+          {/* Stenciled stars at temples */}
+          <path d="M 10 13 L 11 11 L 13 10 L 11 9 L 10 7 L 9 9 L 7 10 L 9 11 Z" fill={activeColor} />
+          <path d="M 38 13 L 39 11 L 41 10 L 39 9 L 38 7 L 37 9 L 35 10 L 37 11 Z" fill={activeColor} />
+          <path d="M 16 27.5 Q 24 38 32 27.5" fill="none" stroke={activeColor} strokeWidth="2.5" strokeLinecap="square" />
         </svg>
       );
   }
 }
 
-const DEFAULT_REVIEWS_SHEET_URL = 'https://script.google.com/macros/s/AKfycbxpYscWeC2VOYvio6-W3hyJHCi0_ALtx31kvpyZXo1AuOwmtLfRwv2RxlsZOU3GV5lPow/exec';
+const DEFAULT_REVIEWS_SHEET_URL =
+  'https://script.google.com/macros/s/AKfycbxpYscWeC2VOYvio6-W3hyJHCi0_ALtx31kvpyZXo1AuOwmtLfRwv2RxlsZOU3GV5lPow/exec';
 
 export default function ReviewModal({
   isOpen: controlledIsOpen,
   onClose: controlledOnClose,
-  onReviewSubmitted
+  onReviewSubmitted,
 }: ReviewModalProps) {
-  // Support hash routing: checks #review (with fallback to #review-freelancer)
+  // Support hash routing: checks #review
   const [internalIsOpen, setInternalIsOpen] = useState(false);
   const isOpen = controlledIsOpen !== undefined ? controlledIsOpen : internalIsOpen;
 
@@ -112,7 +128,7 @@ export default function ReviewModal({
   const [authorName, setAuthorName] = useState('');
   const [roleAndCompany, setRoleAndCompany] = useState('');
   const [reviewText, setReviewText] = useState('');
-  
+
   // UI states
   const [errors, setErrors] = useState<{ author?: string; role?: string; text?: string }>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -123,11 +139,16 @@ export default function ReviewModal({
   const roleInputId = useId();
   const reviewTextareaId = useId();
 
-  // Hash route listener: #review (with fallback to #review-freelancer)
+  // Hash route listener: #review
   useEffect(() => {
     const handleHashChange = () => {
       const hash = window.location.hash.toLowerCase();
-      if (hash === '#review' || hash === '#review-freelancer' || hash === '#write-review' || hash === '#leave-review') {
+      if (
+        hash === '#review' ||
+        hash === '#review-freelancer' ||
+        hash === '#write-review' ||
+        hash === '#leave-review'
+      ) {
         setInternalIsOpen(true);
       } else if (hash === '' || hash === '#portfolio' || hash === '#about' || hash === '#booking') {
         if (controlledIsOpen === undefined) {
@@ -170,7 +191,12 @@ export default function ReviewModal({
     }
 
     const currentHash = window.location.hash.toLowerCase();
-    if (currentHash === '#review' || currentHash === '#review-freelancer' || currentHash === '#write-review' || currentHash === '#leave-review') {
+    if (
+      currentHash === '#review' ||
+      currentHash === '#review-freelancer' ||
+      currentHash === '#write-review' ||
+      currentHash === '#leave-review'
+    ) {
       history.pushState(null, '', window.location.pathname + window.location.search);
     }
 
@@ -193,17 +219,19 @@ export default function ReviewModal({
 
   const validate = () => {
     const newErrors: { author?: string; role?: string; text?: string } = {};
+
     if (!authorName.trim()) {
-      newErrors.author = 'Client name is required';
+      newErrors.author = 'Name is required';
     }
     if (!roleAndCompany.trim()) {
-      newErrors.role = 'Company or brand is required';
+      newErrors.role = 'Role / Company is required';
     }
     if (!reviewText.trim()) {
-      newErrors.text = 'Please provide details on your experience';
-    } else if (reviewText.trim().length < 15) {
-      newErrors.text = 'Review should be at least 15 characters';
+      newErrors.text = 'Please enter your review';
+    } else if (reviewText.trim().length < 10) {
+      newErrors.text = 'Review should be at least 10 characters';
     }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -236,7 +264,7 @@ export default function ReviewModal({
       rating: emotionConfig.rating,
       emotionalReaction: selectedEmotion,
       emotionalLabel: emotionConfig.label,
-      date: 'Just now'
+      date: 'Just now',
     };
 
     setTimeout(() => {
@@ -258,7 +286,6 @@ export default function ReviewModal({
             brandOrCompany: roleAndCompany.trim(),
             rating: `${emotionConfig.rating} / 5 (${emotionConfig.label})`,
             reviewText: reviewText.trim(),
-            // Common aliases so any script configuration handles the fields properly
             author: authorName.trim(),
             roleAndCompany: roleAndCompany.trim(),
             quote: reviewText.trim(),
@@ -293,79 +320,89 @@ export default function ReviewModal({
     <AnimatePresence>
       {isOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 md:p-6 overflow-y-auto">
-          {/* Backdrop with brutalist grain/blur */}
+          {/* Backdrop with brutalist dark grain */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.2 }}
             onClick={handleClose}
-            className="fixed inset-0 bg-black/90 backdrop-blur-md cursor-pointer"
+            className="fixed inset-0 bg-black/92 backdrop-blur-md cursor-pointer"
             aria-hidden="true"
           />
 
-          {/* Modal Container */}
+          {/* Modal Container: Physical poster look with hard un-blurred black drop shadow */}
           <motion.div
             role="dialog"
             aria-modal="true"
             aria-labelledby="review-freelancer-modal"
-            initial={{ opacity: 0, scale: 0.95, y: 15 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 10 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="relative w-full max-w-xl bg-[#0a0a0a] border-2 border-[#FF6800]/50 shadow-[0_25px_80px_rgba(0,0,0,0.95),0_0_30px_rgba(255,104,0,0.15)] text-[#FF6800] my-auto overflow-hidden z-10"
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 12 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="relative w-full max-w-xl bg-[#09090c] border-2 border-[#FF5500] shadow-[10px_10px_0px_#000000,12px_12px_0px_#1c1c20] text-[#FF5500] my-auto overflow-hidden z-10 rounded-none"
           >
-            {/* Museum matting top accent strip */}
-            <div className="h-1.5 w-full bg-gradient-to-r from-transparent via-[#FF6800] to-transparent" />
+            {/* Subtle Noise / Grain Overlay over Entire Modal */}
+            <div
+              className="absolute inset-0 pointer-events-none opacity-[0.16] mix-blend-screen z-0"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='modalNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23modalNoise)'/%3E%3C/svg%3E")`,
+                backgroundRepeat: 'repeat',
+              }}
+            />
+
+            {/* Toxic Fluorescent Neon Orange Accent Strip */}
+            <div className="relative z-10 h-2.5 w-full bg-gradient-to-r from-[#FF0040] via-[#FF5500] via-[#FF7700] to-[#FF0055] shadow-[0_0_16px_rgba(255,85,0,0.85)]" />
 
             {/* Clean Modal Top Bar */}
-            <div className="px-6 sm:px-8 py-3.5 border-b border-[#FF6800]/20 flex items-center justify-end gap-2 bg-black/60">
-              <button
-                type="button"
-                onClick={handleCopyLink}
-                title="Copy direct link to this review modal"
-                className="p-2 sm:px-3 sm:py-1.5 rounded-none border border-neutral-800 hover:border-[#FF6800] bg-neutral-900/80 text-neutral-300 hover:text-[#FF6800] transition-colors flex items-center gap-1.5 text-xs font-mono cursor-pointer"
-              >
-                {copiedLink ? (
-                  <>
-                    <CheckCheck className="w-3.5 h-3.5 text-emerald-400" />
-                    <span className="hidden sm:inline text-emerald-400">Copied!</span>
-                  </>
-                ) : (
-                  <>
-                    <Copy className="w-3.5 h-3.5" />
-                    <span className="hidden sm:inline">Share Link</span>
-                  </>
-                )}
-              </button>
-              <button
-                type="button"
-                onClick={handleClose}
-                aria-label="Close modal"
-                className="w-9 h-9 border border-neutral-800 hover:border-[#FF6800] bg-neutral-900/80 text-neutral-400 hover:text-white flex items-center justify-center transition-all cursor-pointer group"
-              >
-                <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
-              </button>
+            <div className="relative z-10 px-6 sm:px-8 py-3.5 border-b border-neutral-800 flex items-center justify-between bg-black/80">
+              <span className="font-mono text-[10px] sm:text-xs font-black uppercase tracking-[0.24em] text-white">
+                AM COMMUNITY
+              </span>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleCopyLink}
+                  title="Copy direct link to this review modal"
+                  className="px-2.5 py-1.5 rounded-none border border-neutral-800 hover:border-[#FF5500] bg-neutral-900 text-neutral-300 hover:text-white transition-none flex items-center gap-1.5 text-xs font-mono cursor-pointer shadow-[2px_2px_0px_#000000]"
+                >
+                  {copiedLink ? (
+                    <>
+                      <CheckCheck className="w-3.5 h-3.5 text-emerald-400" />
+                      <span className="hidden sm:inline text-emerald-400">Copied!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-[#FF5500]" />
+                      <span className="hidden sm:inline">Share Link</span>
+                    </>
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  aria-label="Close modal"
+                  className="w-8 h-8 rounded-none border border-neutral-800 hover:border-[#FF5500] bg-neutral-900 text-neutral-400 hover:text-white flex items-center justify-center transition-none cursor-pointer shadow-[2px_2px_0px_#000000]"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
             {/* Success Celebration View */}
             {isSuccess ? (
-              <div className="p-10 sm:p-14 flex flex-col items-center justify-center text-center">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-                  className="w-20 h-20 rounded-full border-2 border-[#FF6800] bg-[#FF6800]/15 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(255,104,0,0.4)] text-3xl select-none"
-                >
+              <div className="relative z-10 p-10 sm:p-14 flex flex-col items-center justify-center text-center">
+                <div className="w-20 h-20 rounded-none border-2 border-[#FF5500] bg-black shadow-[4px_4px_0px_#000000] flex items-center justify-center mb-6 text-3xl select-none">
                   🥂
-                </motion.div>
-                <h3 className="font-serif text-3xl font-bold uppercase text-white mb-2">
+                </div>
+                <h3 className="font-sans text-3xl font-black uppercase tracking-tight text-white mb-2">
                   THE WORD IS OUT.
                 </h3>
                 <p className="text-sm font-sans text-neutral-300 max-w-md leading-relaxed mb-6">
-                  Thank you, <span className="text-[#FF6800] font-medium">{authorName}</span>. Your review has been captured.
+                  Thank you, <span className="text-[#FF5500] font-bold">{authorName}</span>. Your review has been captured.
                 </p>
-                <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 bg-black/80 border border-emerald-500/30 px-4 py-2 mb-8">
+                <div className="flex items-center gap-2 font-mono text-xs text-emerald-400 bg-black border-2 border-emerald-500/40 px-4 py-2 mb-8 shadow-[3px_3px_0px_#000000]">
                   <CheckCheck className="w-3.5 h-3.5 text-emerald-400" />
                   <span>ARCHIVED WITH CARE</span>
                 </div>
@@ -373,25 +410,25 @@ export default function ReviewModal({
                   type="button"
                   onClick={handleClose}
                   aria-label="Close"
-                  className="w-11 h-11 rounded-full border border-neutral-600 hover:border-[#FF6800] bg-transparent text-neutral-400 hover:text-white flex items-center justify-center transition-all duration-200 cursor-pointer group hover:scale-105"
+                  className="w-10 h-10 rounded-none border-2 border-neutral-700 hover:border-[#FF5500] bg-neutral-900 text-neutral-300 hover:text-white flex items-center justify-center transition-none cursor-pointer shadow-[3px_3px_0px_#000000]"
                 >
-                  <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
+                  <X className="w-4 h-4" />
                 </button>
               </div>
             ) : (
               /* Main Form View */
-              <form onSubmit={handleSubmit} className="px-6 sm:px-8 py-6 space-y-6 max-h-[75vh] overflow-y-auto">
-                {/* Rating (Limited to 3 emoji cards: OKAY, IMPRESSED, BLOWN AWAY) */}
+              <form onSubmit={handleSubmit} className="relative z-10 px-6 sm:px-8 py-6 space-y-6 max-h-[75vh] overflow-y-auto">
+                {/* Rating Cards: Raw Screen-Printed Panels with zero transition, solid offset border, hard drop-shadow */}
                 <div>
                   <div className="mb-3">
-                    <label className="font-mono text-xs uppercase tracking-wider text-[#FF6800] flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-[#FF6800] inline-block" />
+                    <label className="font-mono text-xs uppercase tracking-wider text-white font-bold flex items-center gap-2">
+                      <span className="w-2 h-2 bg-[#FF5500] inline-block" />
                       RATING *
                     </label>
                   </div>
 
-                  {/* 3 Emoji Cards: OKAY, IMPRESSED, BLOWN AWAY */}
-                  <div className="grid grid-cols-3 gap-3">
+                  {/* 3 Screen-Printed Emoji Cards: OKAY, IMPRESSED, BLOWN AWAY */}
+                  <div className="grid grid-cols-3 gap-3 sm:gap-4">
                     {EMOTIONAL_OPTIONS.map((item) => {
                       const isSelected = selectedEmotion === item.key;
                       return (
@@ -399,30 +436,30 @@ export default function ReviewModal({
                           key={item.key}
                           type="button"
                           onClick={() => setSelectedEmotion(item.key)}
-                          className={`group relative flex flex-col items-center justify-between p-4 border transition-all duration-200 cursor-pointer text-center select-none ${
+                          className={`relative flex flex-col items-center justify-between p-4 border-2 rounded-none transition-none cursor-pointer text-center select-none overflow-hidden ${
                             isSelected
-                              ? 'bg-neutral-950 border-[#FF6800] shadow-[0_0_20px_rgba(255,104,0,0.35)] scale-[1.02]'
-                              : 'bg-black/60 border-neutral-800 hover:border-neutral-600 hover:bg-neutral-900/60'
+                              ? 'bg-[#141417] border-[#FF5500] shadow-[4px_4px_0px_#000000] -translate-x-[2px] -translate-y-[2px]'
+                              : 'bg-[#0b0b0e] border-neutral-800 hover:border-neutral-500 hover:bg-[#111114] shadow-[2px_2px_0px_#000000]'
                           }`}
                         >
-                          {isSelected && (
-                            <>
-                              <span className="absolute top-1 left-1 w-1.5 h-1.5 border-t border-l border-[#FF6800]" />
-                              <span className="absolute top-1 right-1 w-1.5 h-1.5 border-t border-r border-[#FF6800]" />
-                              <span className="absolute bottom-1 left-1 w-1.5 h-1.5 border-b border-l border-[#FF6800]" />
-                              <span className="absolute bottom-1 right-1 w-1.5 h-1.5 border-b border-r border-[#FF6800]" />
-                            </>
-                          )}
+                          {/* Subtle Screenprint Grain Overlay on each Card Background */}
+                          <div
+                            className="absolute inset-0 pointer-events-none opacity-[0.14] mix-blend-screen z-0"
+                            style={{
+                              backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='cardNoise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23cardNoise)'/%3E%3C/svg%3E")`,
+                              backgroundRepeat: 'repeat',
+                            }}
+                          />
 
-                          {/* Face Icon */}
-                          <div className="my-1 group-hover:scale-110 transition-transform duration-200">
+                          {/* Raw Face Icon */}
+                          <div className="relative z-10 my-1">
                             <EmotionIcon reaction={item.key} selected={isSelected} />
                           </div>
 
-                          {/* Label Only (Subtext removed) */}
-                          <div className="mt-2.5 w-full">
+                          {/* High-Contrast Stark White Text */}
+                          <div className="relative z-10 mt-2.5 w-full">
                             <span
-                              className={`block font-serif text-xs sm:text-sm font-bold tracking-tight uppercase leading-tight ${
+                              className={`block font-sans text-xs sm:text-sm font-black tracking-tight uppercase leading-tight ${
                                 isSelected ? 'text-white' : 'text-neutral-300'
                               }`}
                             >
@@ -430,18 +467,14 @@ export default function ReviewModal({
                             </span>
                           </div>
 
-                          {/* Star Score Indicator Kept at Bottom */}
-                          <div className="mt-3 flex items-center justify-center gap-0.5">
+                          {/* Rough Stenciled Star Score at Bottom */}
+                          <div className="relative z-10 mt-3 flex items-center justify-center gap-1">
                             {[...Array(5)].map((_, idx) => (
-                              <Star
+                              <StencilStar
                                 key={idx}
-                                className={`w-3 h-3 ${
-                                  idx < item.rating
-                                    ? isSelected
-                                      ? 'fill-[#FF6800] text-[#FF6800]'
-                                      : 'fill-neutral-500 text-neutral-500'
-                                    : 'text-neutral-800'
-                                }`}
+                                filled={idx < item.rating}
+                                selected={isSelected}
+                                className="w-3.5 h-3.5"
                               />
                             ))}
                           </div>
@@ -454,8 +487,11 @@ export default function ReviewModal({
                 {/* Client Details (Name & Company / Brand) */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label htmlFor={authorInputId} className="font-mono text-xs uppercase tracking-wider text-[#FF6800] flex items-center gap-2 mb-1.5">
-                      <span className="w-1.5 h-1.5 bg-[#FF6800] inline-block" />
+                    <label
+                      htmlFor={authorInputId}
+                      className="font-mono text-xs uppercase tracking-wider text-white font-bold flex items-center gap-2 mb-1.5"
+                    >
+                      <span className="w-2 h-2 bg-[#FF5500] inline-block" />
                       YOUR NAME *
                     </label>
                     <input
@@ -466,17 +502,19 @@ export default function ReviewModal({
                         setAuthorName(e.target.value);
                         if (errors.author) setErrors((prev) => ({ ...prev, author: undefined }));
                       }}
-                      placeholder="e.g. Erica"
-                      className={`w-full bg-black border ${
-                        errors.author ? 'border-red-500' : 'border-neutral-800'
-                      } focus:border-[#FF6800] text-white text-sm px-3.5 py-2.5 font-sans rounded-none outline-none transition-colors`}
+                      className={`w-full bg-black border-2 ${
+                        errors.author ? 'border-red-500' : 'border-neutral-800 focus:border-[#FF5500]'
+                      } text-white text-sm px-3.5 py-2.5 font-sans rounded-none outline-none transition-none shadow-[2px_2px_0px_#000000]`}
                     />
                     {errors.author && <p className="text-red-400 text-xs mt-1 font-mono">{errors.author}</p>}
                   </div>
 
                   <div>
-                    <label htmlFor={roleInputId} className="font-mono text-xs uppercase tracking-wider text-[#FF6800] flex items-center gap-2 mb-1.5">
-                      <span className="w-1.5 h-1.5 bg-[#FF6800] inline-block" />
+                    <label
+                      htmlFor={roleInputId}
+                      className="font-mono text-xs uppercase tracking-wider text-white font-bold flex items-center gap-2 mb-1.5"
+                    >
+                      <span className="w-2 h-2 bg-[#FF5500] inline-block" />
                       COMPANY / BRAND *
                     </label>
                     <input
@@ -487,10 +525,9 @@ export default function ReviewModal({
                         setRoleAndCompany(e.target.value);
                         if (errors.role) setErrors((prev) => ({ ...prev, role: undefined }));
                       }}
-                      placeholder="e.g. TheLOCAL"
-                      className={`w-full bg-black border ${
-                        errors.role ? 'border-red-500' : 'border-neutral-800'
-                      } focus:border-[#FF6800] text-white text-sm px-3.5 py-2.5 font-sans rounded-none outline-none transition-colors`}
+                      className={`w-full bg-black border-2 ${
+                        errors.role ? 'border-red-500' : 'border-neutral-800 focus:border-[#FF5500]'
+                      } text-white text-sm px-3.5 py-2.5 font-sans rounded-none outline-none transition-none shadow-[2px_2px_0px_#000000]`}
                     />
                     {errors.role && <p className="text-red-400 text-xs mt-1 font-mono">{errors.role}</p>}
                   </div>
@@ -498,14 +535,14 @@ export default function ReviewModal({
 
                 {/* Review Textarea */}
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label htmlFor={reviewTextareaId} className="font-mono text-xs uppercase tracking-wider text-[#FF6800] flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 bg-[#FF6800] inline-block" />
-                      YOUR COLLABORATION EXPERIENCE *
+                  <div className="mb-1.5">
+                    <label
+                      htmlFor={reviewTextareaId}
+                      className="font-mono text-xs uppercase tracking-wider text-white font-bold flex items-center gap-2"
+                    >
+                      <span className="w-2 h-2 bg-[#FF5500] inline-block" />
+                      YOUR EXPERIENCE *
                     </label>
-                    <span className="text-xs font-mono text-neutral-500">
-                      {reviewText.length} / 500 characters
-                    </span>
                   </div>
                   <textarea
                     id={reviewTextareaId}
@@ -516,20 +553,25 @@ export default function ReviewModal({
                       setReviewText(e.target.value);
                       if (errors.text) setErrors((prev) => ({ ...prev, text: undefined }));
                     }}
-                    placeholder="Describe working with Angelique-Mari -"
-                    className={`w-full bg-black border ${
-                      errors.text ? 'border-red-500' : 'border-neutral-800'
-                    } focus:border-[#FF6800] text-neutral-100 text-sm p-3.5 font-sans rounded-none outline-none transition-colors leading-relaxed`}
+                    placeholder="Describe working with Angelique-Mari"
+                    className={`w-full bg-black border-2 ${
+                      errors.text ? 'border-red-500' : 'border-neutral-800 focus:border-[#FF5500]'
+                    } text-neutral-100 text-sm p-3.5 font-sans rounded-none outline-none transition-none leading-relaxed shadow-[2px_2px_0px_#000000]`}
                   />
-                  {errors.text && <p className="text-red-400 text-xs mt-1 font-mono">{errors.text}</p>}
+                  <div className="flex items-center justify-between mt-1.5">
+                    <div>{errors.text && <p className="text-red-400 text-xs font-mono">{errors.text}</p>}</div>
+                    <span className="text-xs font-mono text-neutral-500 ml-auto">
+                      {reviewText.length} / 500 characters
+                    </span>
+                  </div>
                 </div>
 
-                {/* Modal Footer Actions */}
+                {/* Modal Footer Action */}
                 <div className="pt-4 border-t border-neutral-800 flex items-center justify-start">
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#FF6800] hover:bg-white text-black font-sans text-xs uppercase tracking-[0.2em] font-extrabold px-8 py-3.5 border border-[#FF6800] hover:border-white transition-all shadow-[0_4px_20px_rgba(255,104,0,0.3)] active:scale-[0.98] cursor-pointer disabled:opacity-50"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#FF5500] hover:bg-white text-black font-sans text-xs uppercase tracking-[0.2em] font-black px-8 py-3.5 border-2 border-[#FF5500] hover:border-white transition-none shadow-[4px_4px_0px_#000000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#000000] cursor-pointer disabled:opacity-50 rounded-none"
                   >
                     {isSubmitting ? (
                       <span>SUBMITTING...</span>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Instagram } from 'lucide-react';
+import { Instagram, ChevronDown } from 'lucide-react';
 import Logo from './Logo';
 
 import heroImage01 from '../assets/images/hero_image_01.jpg';
@@ -18,6 +18,45 @@ function WhatsAppIcon({ className = 'w-5 h-5' }: { className?: string }) {
   );
 }
 
+/* Rough Hand-Drawn Jagged Stitch Underline with Chromatic Aberration Shadow */
+function RoughPaintUnderline({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 160 12"
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      {/* Cyan/magenta chromatic aberration fringe shadow under the stitch */}
+      <path
+        d="M 2 7 L 12 3 L 24 9 L 36 2 L 48 9 L 60 3 L 72 9 L 84 2 L 96 9 L 108 3 L 120 9 L 132 2 L 144 8 L 158 5"
+        stroke="#00ffff"
+        strokeWidth="2.5"
+        strokeLinecap="square"
+        transform="translate(-1.5, 0)"
+        opacity="0.85"
+      />
+      <path
+        d="M 2 7 L 12 3 L 24 9 L 36 2 L 48 9 L 60 3 L 72 9 L 84 2 L 96 9 L 108 3 L 120 9 L 132 2 L 144 8 L 158 5"
+        stroke="#ff0055"
+        strokeWidth="2.5"
+        strokeLinecap="square"
+        transform="translate(1.5, 0)"
+        opacity="0.85"
+      />
+      {/* Primary toxic fluorescent orange jagged stitch stroke */}
+      <path
+        d="M 2 7 L 12 3 L 24 9 L 36 2 L 48 9 L 60 3 L 72 9 L 84 2 L 96 9 L 108 3 L 120 9 L 132 2 L 144 8 L 158 5"
+        stroke="#FF5500"
+        strokeWidth="2.5"
+        strokeLinecap="square"
+      />
+    </svg>
+  );
+}
+
 const HERO_IMAGES = [heroImage01, heroImage02, heroImage03, heroImage04];
 
 interface HeroProps {
@@ -25,6 +64,7 @@ interface HeroProps {
   menuOpen?: boolean;
   setMenuOpen?: (open: boolean) => void;
   onReviewClick?: () => void;
+  onClientGalleryClick?: () => void;
 }
 
 export default function Hero({
@@ -32,13 +72,22 @@ export default function Hero({
   menuOpen: controlledMenuOpen,
   setMenuOpen: controlledSetMenuOpen,
   onReviewClick,
+  onClientGalleryClick,
 }: HeroProps = {}) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [internalMenuOpen, setInternalMenuOpen] = useState(false);
   const [isDeveloping, setIsDeveloping] = useState(true);
+  const [clientAccessDropdownOpen, setClientAccessDropdownOpen] = useState(false);
 
   const menuOpen = controlledMenuOpen !== undefined ? controlledMenuOpen : internalMenuOpen;
   const setMenuOpen = controlledSetMenuOpen || setInternalMenuOpen;
+
+  // Keep dropdown hidden by default whenever the menu closes
+  useEffect(() => {
+    if (!menuOpen) {
+      setClientAccessDropdownOpen(false);
+    }
+  }, [menuOpen]);
 
   useEffect(() => {
     const devTimer = setTimeout(() => {
@@ -111,18 +160,18 @@ export default function Hero({
           </div>
         </div>
 
-        {/* Recessed Pill Depression / Cavity ("Hole in the wall" depth effect) with Hamburger Icon */}
-        <div className="p-[3px] rounded-full bg-[#050505] shadow-[0_6px_20px_rgba(0,0,0,0.95),inset_0_4px_12px_rgba(0,0,0,1),inset_0_-1px_1px_rgba(255,255,255,0.1)] border-t border-black border-b border-white/15">
+        {/* Precision-Milled 3D Tactile Navigation Toggle */}
+        <div className="inline-flex items-center justify-center p-[2px] rounded-full bg-gradient-to-b from-[#0a0a0c] via-[#050506] to-[#000000] border border-white/10 shadow-[0_4px_14px_rgba(0,0,0,0.9),inset_0_2px_4px_rgba(0,0,0,0.95)]">
           <button
             id="header-nav-toggle"
             aria-label="Toggle navigation menu"
             onClick={() => setMenuOpen(!menuOpen)}
-            className="group relative inline-flex items-center justify-center px-4 py-2.5 sm:px-5 sm:py-2.5 rounded-full bg-[#1c1c1e] hover:bg-[#232326] shadow-[inset_0_5px_12px_rgba(0,0,0,0.95),inset_0_1px_3px_rgba(0,0,0,1),inset_0_-1px_2px_rgba(255,255,255,0.12)] border-t border-black/80 border-b border-white/10 transition-all duration-300 active:scale-[0.96] cursor-pointer"
+            className="group relative flex items-center justify-center w-12 h-7 sm:w-14 sm:h-8 rounded-full bg-gradient-to-b from-[#252528] via-[#18181a] to-[#101012] hover:from-[#2e2e32] hover:to-[#161619] shadow-[0_2px_4px_rgba(0,0,0,0.8),inset_0_1px_1px_rgba(255,255,255,0.22),inset_0_-1px_2px_rgba(0,0,0,0.85)] border-t border-white/15 border-b border-black/90 transition-all duration-200 active:scale-[0.96] cursor-pointer"
           >
-            <div className="flex flex-col gap-1 sm:gap-1.5 justify-center items-center w-5 h-3.5 sm:h-4">
-              <span className={`h-[2px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-5 rotate-45 translate-y-[5.5px]' : 'w-5'}`} />
-              <span className={`h-[2px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-0 opacity-0' : 'w-4'}`} />
-              <span className={`h-[2px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-5 -rotate-45 -translate-y-[5.5px]' : 'w-5'}`} />
+            <div className="flex flex-col gap-1 sm:gap-1.5 justify-center items-center w-4 sm:w-4.5">
+              <span className={`h-[1.75px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-4.5 rotate-45 translate-y-[5.5px]' : 'w-4.5'}`} />
+              <span className={`h-[1.75px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-0 opacity-0' : 'w-4.5'}`} />
+              <span className={`h-[1.75px] bg-[#FF6800] group-hover:bg-white transition-all duration-300 rounded-full ${menuOpen ? 'w-4.5 -rotate-45 -translate-y-[5.5px]' : 'w-4.5'}`} />
             </div>
           </button>
         </div>
@@ -147,12 +196,12 @@ export default function Hero({
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: '100%' }}
               transition={{ type: 'spring', damping: 28, stiffness: 240 }}
-              className="fixed inset-y-0 right-0 w-full sm:w-[380px] bg-black/98 border-l border-[#FF6800]/30 z-50 p-8 flex flex-col justify-between backdrop-blur-2xl text-[#FF6800]"
+              className="fixed inset-y-0 right-0 w-full sm:w-[380px] md:w-[390px] bg-black/98 border-l border-[#FF6800]/30 z-50 p-6 sm:p-7 flex flex-col justify-between backdrop-blur-2xl text-[#FF6800] overflow-y-auto sm:overflow-y-visible"
             >
-            <div className="flex flex-col gap-4 border-b border-[#FF6800]/20 pb-6">
+            <div className="flex flex-col gap-3.5 border-b border-[#FF6800]/20 pb-4 sm:pb-5">
               {/* Row 1: Logo & [ CLOSE ] */}
               <div className="flex justify-between items-center w-full">
-                <Logo mode="full" variant="orange" size="md" className="h-10 sm:h-12" />
+                <Logo mode="full" variant="orange" size="md" className="h-9 sm:h-11" />
                 <div className="w-20 flex justify-center">
                   <button
                     onClick={() => setMenuOpen(false)}
@@ -166,11 +215,11 @@ export default function Hero({
               {/* Row 2: Studio Badge & Instagram Icon */}
               <div className="flex justify-between items-center w-full">
                 {/* Studio Badge for Drawer */}
-                <div className="border border-[#FF6800] px-3 py-1.5 self-start bg-black/60">
-                  <span className="font-sans text-[9px] uppercase tracking-[0.22em] font-semibold text-[#FF6800] block leading-tight">
+                <div className="border border-[#FF6800] px-2.5 py-1 sm:px-3 sm:py-1.5 self-start bg-black/60">
+                  <span className="font-sans text-[8.5px] sm:text-[9px] uppercase tracking-[0.22em] font-semibold text-[#FF6800] block leading-tight">
                     FROM THE STUDIO OF
                   </span>
-                  <span className="font-sans text-xs uppercase tracking-[0.16em] font-extrabold text-white block leading-tight mt-0.5">
+                  <span className="font-sans text-[11px] sm:text-xs uppercase tracking-[0.16em] font-extrabold text-white block leading-tight mt-0.5">
                     ANGELIQUE-MARI
                   </span>
                 </div>
@@ -191,51 +240,155 @@ export default function Hero({
               </div>
             </div>
 
-            <nav className="flex flex-col gap-8 text-2xl sm:text-3xl font-serif uppercase tracking-tight my-auto text-[#FF6800]">
+            <nav className="flex flex-col gap-4 sm:gap-5 my-auto py-2">
+              {/* 01 / COLLECTION */}
               <a
                 href="#portfolio"
                 onClick={() => setMenuOpen(false)}
-                className="hover:text-white transition-colors pl-3 border-l-2 border-transparent hover:border-[#FF6800] flex items-baseline gap-3"
+                className="group relative flex flex-col items-start transition-none select-none pl-3 border-l-2 border-transparent hover:border-[#FF5500] active:translate-x-[2px] active:translate-y-[2px]"
               >
-                <span className="font-sans text-xs text-[#FF6800]/50">01 /</span>
-                <span>COLLECTION</span>
+                <div className="flex items-baseline gap-2.5 sm:gap-3">
+                  <span className="font-mono text-xs text-neutral-500 group-hover:text-[#FF5500] transition-none">
+                    01 /
+                  </span>
+                  <span className="nav-stencil-link text-xl sm:text-2xl md:text-[26px] font-black uppercase tracking-tight">
+                    COLLECTION
+                  </span>
+                </div>
+                {/* Rough Hand-Drawn Jagged Stitch Mark on Hover */}
+                <div className="w-full max-w-[190px] h-2 mt-0.5 overflow-hidden opacity-0 group-hover:opacity-100 transition-none pointer-events-none">
+                  <RoughPaintUnderline className="w-full h-full" />
+                </div>
               </a>
+
+              {/* 02 / ABOUT */}
               <a
                 href="#about"
                 onClick={() => setMenuOpen(false)}
-                className="group hover:text-white transition-colors pl-3 border-l-2 border-transparent hover:border-[#FF6800] flex items-baseline gap-3"
+                className="group relative flex flex-col items-start transition-none select-none pl-3 border-l-2 border-transparent hover:border-[#FF5500] active:translate-x-[2px] active:translate-y-[2px]"
               >
-                <span className="font-sans text-xs text-[#FF6800]/50">02 /</span>
-                <span>ABOUT <span className="text-neutral-300 group-hover:text-white transition-colors">Ang-Mari</span></span>
+                <div className="flex items-baseline gap-2.5 sm:gap-3">
+                  <span className="font-mono text-xs text-neutral-500 group-hover:text-[#FF5500] transition-none">
+                    02 /
+                  </span>
+                  <span className="nav-stencil-link text-xl sm:text-2xl md:text-[26px] font-black uppercase tracking-tight">
+                    ABOUT <span className="font-light text-neutral-400 group-hover:text-[#FF5500] transition-none">Ang-Mari</span>
+                  </span>
+                </div>
+                <div className="w-full max-w-[220px] h-2 mt-0.5 overflow-hidden opacity-0 group-hover:opacity-100 transition-none pointer-events-none">
+                  <RoughPaintUnderline className="w-full h-full" />
+                </div>
               </a>
+
+              {/* 03 / ENQUIRE */}
               <a
                 href="#booking"
                 onClick={() => setMenuOpen(false)}
-                className="hover:text-white transition-colors pl-3 border-l-2 border-transparent hover:border-[#FF6800] flex items-baseline gap-3"
+                className="group relative flex flex-col items-start transition-none select-none pl-3 border-l-2 border-transparent hover:border-[#FF5500] active:translate-x-[2px] active:translate-y-[2px]"
               >
-                <span className="font-sans text-xs text-[#FF6800]/50">03 /</span>
-                <span>ENQUIRE</span>
+                <div className="flex items-baseline gap-2.5 sm:gap-3">
+                  <span className="font-mono text-xs text-neutral-500 group-hover:text-[#FF5500] transition-none">
+                    03 /
+                  </span>
+                  <span className="nav-stencil-link text-xl sm:text-2xl md:text-[26px] font-black uppercase tracking-tight">
+                    ENQUIRE
+                  </span>
+                </div>
+                <div className="w-full max-w-[150px] h-2 mt-0.5 overflow-hidden opacity-0 group-hover:opacity-100 transition-none pointer-events-none">
+                  <RoughPaintUnderline className="w-full h-full" />
+                </div>
               </a>
-              <a
-                href="#review"
-                onClick={(e) => {
-                  setMenuOpen(false);
-                  if (onReviewClick) {
-                    e.preventDefault();
-                    onReviewClick();
-                  } else {
-                    window.location.hash = '#review';
-                  }
-                }}
-                className="group hover:text-white transition-colors pl-3 border-l-2 border-transparent hover:border-[#FF6800] flex items-baseline gap-3"
-              >
-                <span className="font-sans text-xs text-[#FF6800]/50">04 /</span>
-                <span>REVIEW</span>
-              </a>
+
+              {/* 04 / CLIENT ACCESS Drop-down (sub-links hidden by default) */}
+              <div className="flex flex-col">
+                <button
+                  type="button"
+                  onClick={() => setClientAccessDropdownOpen((prev) => !prev)}
+                  className="group relative flex flex-col items-start w-full text-left cursor-pointer transition-none select-none pl-3 border-l-2 border-transparent hover:border-[#FF5500] active:translate-x-[2px] active:translate-y-[2px]"
+                  aria-expanded={clientAccessDropdownOpen}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <div className="flex items-baseline gap-2.5 sm:gap-3">
+                      <span className="font-mono text-xs text-neutral-500 group-hover:text-[#FF5500] transition-none">
+                        04 /
+                      </span>
+                      <span className="nav-stencil-link text-xl sm:text-2xl md:text-[26px] font-black uppercase tracking-tight">
+                        CLIENT ACCESS
+                      </span>
+                    </div>
+                    <ChevronDown
+                      className={`w-5 h-5 text-neutral-400 group-hover:text-[#FF5500] transition-none ${
+                        clientAccessDropdownOpen ? 'rotate-180 text-[#FF5500]' : 'rotate-0'
+                      }`}
+                    />
+                  </div>
+                  <div className="w-full max-w-[220px] h-2 mt-0.5 overflow-hidden opacity-0 group-hover:opacity-100 transition-none pointer-events-none">
+                    <RoughPaintUnderline className="w-full h-full" />
+                  </div>
+                </button>
+
+                <AnimatePresence>
+                  {clientAccessDropdownOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2, ease: 'easeOut' }}
+                      className="overflow-hidden"
+                    >
+                      <div className="flex flex-col gap-2.5 pl-8 pt-2 pb-0.5">
+                        <a
+                          href="#review"
+                          onClick={(e) => {
+                            setMenuOpen(false);
+                            if (onReviewClick) {
+                              e.preventDefault();
+                              onReviewClick();
+                            } else {
+                              window.location.hash = '#review';
+                            }
+                          }}
+                          className="group/sub relative flex flex-col items-start transition-none select-none active:translate-x-[2px] active:translate-y-[2px]"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#FF5500] text-xs font-mono transition-none">↳</span>
+                            <span className="nav-stencil-link text-sm sm:text-base font-black uppercase tracking-wider">
+                              REVIEWS
+                            </span>
+                          </div>
+                          <div className="w-full max-w-[100px] h-1.5 mt-0.5 overflow-hidden opacity-0 group-hover/sub:opacity-100 transition-none pointer-events-none">
+                            <RoughPaintUnderline className="w-full h-full" />
+                          </div>
+                        </a>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setMenuOpen(false);
+                            if (onClientGalleryClick) {
+                              onClientGalleryClick();
+                            }
+                          }}
+                          className="group/sub relative flex flex-col items-start text-left cursor-pointer transition-none select-none active:translate-x-[2px] active:translate-y-[2px]"
+                        >
+                          <div className="flex items-center gap-2">
+                            <span className="text-[#FF5500] text-xs font-mono transition-none">↳</span>
+                            <span className="nav-stencil-link text-sm sm:text-base font-black uppercase tracking-wider">
+                              CLIENT GALLERY
+                            </span>
+                          </div>
+                          <div className="w-full max-w-[140px] h-1.5 mt-0.5 overflow-hidden opacity-0 group-hover/sub:opacity-100 transition-none pointer-events-none">
+                            <RoughPaintUnderline className="w-full h-full" />
+                          </div>
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </nav>
 
             {/* Nav Drawer Footer: Right-Aligned WhatsApp CTA with same pill depth as hero CTA, no text */}
-            <div className="border-t border-[#FF6800]/20 pt-6 flex justify-end items-center">
+            <div className="border-t border-[#FF6800]/20 pt-4 sm:pt-5 flex justify-end items-center">
               <div className="p-[3px] rounded-full bg-[#050505] shadow-[0_6px_20px_rgba(0,0,0,0.95),inset_0_4px_12px_rgba(0,0,0,1),inset_0_-1px_1px_rgba(255,255,255,0.1)] border-t border-black border-b border-white/15">
                 <a
                   href={WHATSAPP_URL}

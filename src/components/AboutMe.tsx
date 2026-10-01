@@ -125,7 +125,7 @@ export default function AboutMe({ onBioModalToggle }: AboutMeProps) {
                 >
                   <div className="relative flex flex-col">
                     <span className="font-sans text-[11px] sm:text-xs uppercase tracking-[0.24em] font-bold text-[#FF6800] group-hover:text-white transition-colors pb-0.5">
-                      GET CLOSER
+                      ZOOM IN
                     </span>
                     <span className="relative w-full h-[1.5px] bg-[#FF6800]/25 overflow-hidden block">
                       <motion.span

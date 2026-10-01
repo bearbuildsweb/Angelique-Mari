@@ -10,7 +10,7 @@ export default defineConfig(() => {
   const functionUrl = getEnv('VITE_SUPABASE_FUNCTION_URL') || getEnv('VITE_SUPABASE_FUN') || getEnv('VITE_EDGE_FUNCTION_URL');
 
   return {
-    base: './',
+    base: process.env.BASE_PATH || './',
     plugins: [react(), tailwindcss()],
     define: {
       'import.meta.env.VITE_SUPABASE_ANON_KEY': JSON.stringify(anonKey),
