@@ -81,13 +81,13 @@
   font-family: 'Pinyon Script', 'Alex Brush', 'Great Vibes', cursive;
 }
 
-/* Stencil paint nav link with chromatic aberration & snappy stamp feedback */
+/* Risograph screen-print nav link with subtle ink misregistration & smooth sophisticated transition */
 .nav-stencil-link {
   font-family: var(--font-sans);
   font-weight: 900;
   text-transform: uppercase;
   color: #f4f4f5;
-  transition: none !important;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
   cursor: pointer;
   display: inline-block;
   letter-spacing: -0.02em;
@@ -95,14 +95,16 @@
 
 .group:hover .nav-stencil-link,
 .nav-stencil-link:hover {
-  color: #FF5500 !important;
-  text-shadow: -2px 0px 0px rgba(0, 255, 255, 0.9), 2px 0px 0px rgba(255, 0, 85, 0.9) !important;
+  color: #FF6800 !important;
+  text-shadow: 1.2px 0.8px 0px rgba(255, 104, 0, 0.45), -0.8px -0.4px 0px rgba(235, 45, 15, 0.3) !important;
 }
 
 .group:active .nav-stencil-link,
 .nav-stencil-link:active {
-  transform: translate(2px, 2px);
+  color: #FF5500 !important;
+  text-shadow: 1px 0.5px 0px rgba(255, 104, 0, 0.5) !important;
 }
+
 
 
 

@@ -18,7 +18,7 @@ function WhatsAppIcon({ className = 'w-5 h-5' }: { className?: string }) {
   );
 }
 
-/* Rough Hand-Drawn Jagged Stitch Underline with Chromatic Aberration Shadow */
+/* Sophisticated Screen-Printed Stitch Underline with Subtle Risograph Misregistration */
 function RoughPaintUnderline({ className = '' }: { className?: string }) {
   return (
     <svg
@@ -29,31 +29,90 @@ function RoughPaintUnderline({ className = '' }: { className?: string }) {
       preserveAspectRatio="none"
       aria-hidden="true"
     >
-      {/* Cyan/magenta chromatic aberration fringe shadow under the stitch */}
+      {/* Subtle Risograph ghost ink plate offset */}
       <path
         d="M 2 7 L 12 3 L 24 9 L 36 2 L 48 9 L 60 3 L 72 9 L 84 2 L 96 9 L 108 3 L 120 9 L 132 2 L 144 8 L 158 5"
-        stroke="#00ffff"
-        strokeWidth="2.5"
+        stroke="#FF3700"
+        strokeWidth="2.2"
         strokeLinecap="square"
-        transform="translate(-1.5, 0)"
-        opacity="0.85"
+        transform="translate(1, 0.75)"
+        opacity="0.35"
       />
+      {/* Primary sharp screen-printed warm orange stroke */}
       <path
         d="M 2 7 L 12 3 L 24 9 L 36 2 L 48 9 L 60 3 L 72 9 L 84 2 L 96 9 L 108 3 L 120 9 L 132 2 L 144 8 L 158 5"
-        stroke="#ff0055"
-        strokeWidth="2.5"
-        strokeLinecap="square"
-        transform="translate(1.5, 0)"
-        opacity="0.85"
-      />
-      {/* Primary toxic fluorescent orange jagged stitch stroke */}
-      <path
-        d="M 2 7 L 12 3 L 24 9 L 36 2 L 48 9 L 60 3 L 72 9 L 84 2 L 96 9 L 108 3 L 120 9 L 132 2 L 144 8 L 158 5"
-        stroke="#FF5500"
-        strokeWidth="2.5"
+        stroke="#FF6800"
+        strokeWidth="2.2"
         strokeLinecap="square"
       />
     </svg>
+  );
+}
+
+/* Frayed-Edge Masking Tape 'CLOSE' Button with Stamped Feel */
+function MaskingTapeCloseButton({
+  onClick,
+  className = '',
+}: {
+  onClick: () => void;
+  className?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label="Close navigation menu"
+      className={`group relative inline-flex items-center justify-center cursor-pointer select-none transition-none transform -rotate-[2deg] hover:-rotate-[1deg] active:translate-x-[2px] active:translate-y-[2px] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5500] ${className}`}
+      style={{
+        filter: 'drop-shadow(3px 3px 0px #000000)',
+      }}
+    >
+      <svg
+        viewBox="0 0 105 34"
+        className="w-[96px] h-[30px] sm:w-[104px] sm:h-[32px]"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <defs>
+          {/* Default Masking Tape Texture */}
+          <linearGradient id="tapeNormal" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#edece6" />
+            <stop offset="35%" stopColor="#deddd5" />
+            <stop offset="70%" stopColor="#ecebe3" />
+            <stop offset="100%" stopColor="#d8d7cf" />
+          </linearGradient>
+          {/* Hover High-Contrast Fluorescent Orange Tape */}
+          <linearGradient id="tapeHover" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#FF6800" />
+            <stop offset="50%" stopColor="#FF5500" />
+            <stop offset="100%" stopColor="#FF3700" />
+          </linearGradient>
+        </defs>
+
+        {/* Frayed Torn Tape Path with jagged ripped edges on left and right */}
+        <path
+          d="M 5 2 
+             L 2 5 L 4 9 L 1 13 L 5 17 L 1 21 L 4 26 L 2 30 L 6 32
+             L 99 32 
+             L 103 29 L 100 25 L 104 20 L 101 15 L 104 10 L 101 6 L 103 2
+             Z"
+          className="fill-[url(#tapeNormal)] group-hover:fill-[url(#tapeHover)] transition-none"
+          stroke="#27272a"
+          strokeWidth="0.8"
+        />
+
+        {/* Subtle fibrous tape grain texture */}
+        <line x1="8" y1="9" x2="96" y2="10" stroke="rgba(255,255,255,0.6)" strokeWidth="0.8" strokeDasharray="8 5" />
+        <line x1="10" y1="23" x2="94" y2="24" stroke="rgba(0,0,0,0.15)" strokeWidth="0.8" strokeDasharray="6 7" />
+      </svg>
+
+      {/* Stamped Ink Text on Tape */}
+      <span className="absolute inset-0 flex items-center justify-center font-mono text-[11px] sm:text-xs font-black tracking-[0.2em] text-black transition-none uppercase">
+        CLOSE ✕
+      </span>
+    </button>
   );
 }
 
@@ -199,23 +258,18 @@ export default function Hero({
               className="fixed inset-y-0 right-0 w-full sm:w-[380px] md:w-[390px] bg-black/98 border-l border-[#FF6800]/30 z-50 p-6 sm:p-7 flex flex-col justify-between backdrop-blur-2xl text-[#FF6800] overflow-y-auto sm:overflow-y-visible"
             >
             <div className="flex flex-col gap-3.5 border-b border-[#FF6800]/20 pb-4 sm:pb-5">
-              {/* Row 1: Logo & [ CLOSE ] */}
+              {/* Row 1: Logo & Masking Tape [ CLOSE ] Button */}
               <div className="flex justify-between items-center w-full">
                 <Logo mode="full" variant="orange" size="md" className="h-9 sm:h-11" />
-                <div className="w-20 flex justify-center">
-                  <button
-                    onClick={() => setMenuOpen(false)}
-                    className="font-sans text-xs uppercase text-[#FF6800] hover:text-white transition-colors tracking-widest cursor-pointer font-bold"
-                  >
-                    [ CLOSE ]
-                  </button>
+                <div className="flex justify-end items-center pr-0.5">
+                  <MaskingTapeCloseButton onClick={() => setMenuOpen(false)} />
                 </div>
               </div>
 
-              {/* Row 2: Studio Badge & Instagram Icon */}
+              {/* Row 2: Studio Badge & Stamped Instagram Icon */}
               <div className="flex justify-between items-center w-full">
-                {/* Studio Badge for Drawer */}
-                <div className="border border-[#FF6800] px-2.5 py-1 sm:px-3 sm:py-1.5 self-start bg-black/60">
+                {/* Studio Badge for Drawer with subtle tilt */}
+                <div className="border border-[#FF6800] px-2.5 py-1 sm:px-3 sm:py-1.5 self-start bg-black/60 shadow-[2px_2px_0px_#000000] transform -rotate-[0.8deg]">
                   <span className="font-sans text-[8.5px] sm:text-[9px] uppercase tracking-[0.22em] font-semibold text-[#FF6800] block leading-tight">
                     FROM THE STUDIO OF
                   </span>
@@ -224,17 +278,19 @@ export default function Hero({
                   </span>
                 </div>
 
-                {/* Instagram Icon (Vertically aligned with [CLOSE], Horizontally aligned with Studio Badge) */}
-                <div className="w-20 flex justify-center">
+                {/* Stamped Instagram Badge with uneven rotation & harsh drop shadow */}
+                <div className="flex justify-end items-center pr-1.5">
                   <a
                     href="https://www.instagram.com/iambrandthecreative"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#FF6800] hover:text-white transition-all duration-300 p-1.5 hover:scale-110 flex items-center justify-center"
+                    className="group relative flex items-center justify-center w-8 h-8 sm:w-9 sm:h-9 bg-[#111113] border-2 border-[#FF5500] text-[#FF5500] hover:bg-[#FF5500] hover:text-black transition-none cursor-pointer transform rotate-[2.5deg] hover:rotate-[1deg] shadow-[3px_3px_0px_#000000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[1px_1px_0px_#000000] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF5500]"
                     aria-label="Follow AM Studio on Instagram"
                     title="Instagram @iambrandthecreative"
                   >
-                    <Instagram className="w-5 h-5 stroke-[1.75]" />
+                    <Instagram className="w-4 h-4 sm:w-4.5 sm:h-4.5 stroke-[2.2] fill-none transition-none" />
+                    {/* Stamped registration tick in corner */}
+                    <span className="absolute -top-1 -right-1 w-1.5 h-1.5 bg-[#FF5500] group-hover:bg-black transition-none" />
                   </a>
                 </div>
               </div>
@@ -245,18 +301,18 @@ export default function Hero({
               <a
                 href="#portfolio"
                 onClick={() => setMenuOpen(false)}
-                className="group relative flex flex-col items-start transition-none select-none pl-3 border-l-2 border-transparent hover:border-[#FF5500] active:translate-x-[2px] active:translate-y-[2px]"
+                className="group relative flex flex-col items-start transition-all duration-300 ease select-none pl-3 border-l-2 border-transparent hover:border-[#FF6800]"
               >
                 <div className="flex items-baseline gap-2.5 sm:gap-3">
-                  <span className="font-mono text-xs text-neutral-500 group-hover:text-[#FF5500] transition-none">
+                  <span className="font-mono text-xs text-neutral-500 group-hover:text-[#FF6800] transition-colors duration-300 ease">
                     01 /
                   </span>
                   <span className="nav-stencil-link text-xl sm:text-2xl md:text-[26px] font-black uppercase tracking-tight">
                     COLLECTION
                   </span>
                 </div>
-                {/* Rough Hand-Drawn Jagged Stitch Mark on Hover */}
-                <div className="w-full max-w-[190px] h-2 mt-0.5 overflow-hidden opacity-0 group-hover:opacity-100 transition-none pointer-events-none">
+                {/* Screen-Printed Stitch Mark with Subtle Risograph Misregistration */}
+                <div className="w-full max-w-[190px] h-2 mt-0.5 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease pointer-events-none">
                   <RoughPaintUnderline className="w-full h-full" />
                 </div>
               </a>
@@ -265,17 +321,17 @@ export default function Hero({
               <a
                 href="#about"
                 onClick={() => setMenuOpen(false)}
-                className="group relative flex flex-col items-start transition-none select-none pl-3 border-l-2 border-transparent hover:border-[#FF5500] active:translate-x-[2px] active:translate-y-[2px]"
+                className="group relative flex flex-col items-start transition-all duration-300 ease select-none pl-3 border-l-2 border-transparent hover:border-[#FF6800]"
               >
                 <div className="flex items-baseline gap-2.5 sm:gap-3">
-                  <span className="font-mono text-xs text-neutral-500 group-hover:text-[#FF5500] transition-none">
+                  <span className="font-mono text-xs text-neutral-500 group-hover:text-[#FF6800] transition-colors duration-300 ease">
                     02 /
                   </span>
                   <span className="nav-stencil-link text-xl sm:text-2xl md:text-[26px] font-black uppercase tracking-tight">
-                    ABOUT <span className="font-light text-neutral-400 group-hover:text-[#FF5500] transition-none">Ang-Mari</span>
+                    ABOUT <span className="font-light text-neutral-400 group-hover:text-[#FF6800] transition-colors duration-300 ease">Ang-Mari</span>
                   </span>
                 </div>
-                <div className="w-full max-w-[220px] h-2 mt-0.5 overflow-hidden opacity-0 group-hover:opacity-100 transition-none pointer-events-none">
+                <div className="w-full max-w-[220px] h-2 mt-0.5 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease pointer-events-none">
                   <RoughPaintUnderline className="w-full h-full" />
                 </div>
               </a>
@@ -284,17 +340,17 @@ export default function Hero({
               <a
                 href="#booking"
                 onClick={() => setMenuOpen(false)}
-                className="group relative flex flex-col items-start transition-none select-none pl-3 border-l-2 border-transparent hover:border-[#FF5500] active:translate-x-[2px] active:translate-y-[2px]"
+                className="group relative flex flex-col items-start transition-all duration-300 ease select-none pl-3 border-l-2 border-transparent hover:border-[#FF6800]"
               >
                 <div className="flex items-baseline gap-2.5 sm:gap-3">
-                  <span className="font-mono text-xs text-neutral-500 group-hover:text-[#FF5500] transition-none">
+                  <span className="font-mono text-xs text-neutral-500 group-hover:text-[#FF6800] transition-colors duration-300 ease">
                     03 /
                   </span>
                   <span className="nav-stencil-link text-xl sm:text-2xl md:text-[26px] font-black uppercase tracking-tight">
                     ENQUIRE
                   </span>
                 </div>
-                <div className="w-full max-w-[150px] h-2 mt-0.5 overflow-hidden opacity-0 group-hover:opacity-100 transition-none pointer-events-none">
+                <div className="w-full max-w-[150px] h-2 mt-0.5 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease pointer-events-none">
                   <RoughPaintUnderline className="w-full h-full" />
                 </div>
               </a>
@@ -304,12 +360,12 @@ export default function Hero({
                 <button
                   type="button"
                   onClick={() => setClientAccessDropdownOpen((prev) => !prev)}
-                  className="group relative flex flex-col items-start w-full text-left cursor-pointer transition-none select-none pl-3 border-l-2 border-transparent hover:border-[#FF5500] active:translate-x-[2px] active:translate-y-[2px]"
+                  className="group relative flex flex-col items-start w-full text-left cursor-pointer transition-all duration-300 ease select-none pl-3 border-l-2 border-transparent hover:border-[#FF6800]"
                   aria-expanded={clientAccessDropdownOpen}
                 >
                   <div className="flex items-center justify-between w-full">
                     <div className="flex items-baseline gap-2.5 sm:gap-3">
-                      <span className="font-mono text-xs text-neutral-500 group-hover:text-[#FF5500] transition-none">
+                      <span className="font-mono text-xs text-neutral-500 group-hover:text-[#FF6800] transition-colors duration-300 ease">
                         04 /
                       </span>
                       <span className="nav-stencil-link text-xl sm:text-2xl md:text-[26px] font-black uppercase tracking-tight">
@@ -317,12 +373,12 @@ export default function Hero({
                       </span>
                     </div>
                     <ChevronDown
-                      className={`w-5 h-5 text-neutral-400 group-hover:text-[#FF5500] transition-none ${
-                        clientAccessDropdownOpen ? 'rotate-180 text-[#FF5500]' : 'rotate-0'
+                      className={`w-5 h-5 text-neutral-400 group-hover:text-[#FF6800] transition-all duration-300 ease ${
+                        clientAccessDropdownOpen ? 'rotate-180 text-[#FF6800]' : 'rotate-0'
                       }`}
                     />
                   </div>
-                  <div className="w-full max-w-[220px] h-2 mt-0.5 overflow-hidden opacity-0 group-hover:opacity-100 transition-none pointer-events-none">
+                  <div className="w-full max-w-[220px] h-2 mt-0.5 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease pointer-events-none">
                     <RoughPaintUnderline className="w-full h-full" />
                   </div>
                 </button>
@@ -333,7 +389,7 @@ export default function Hero({
                       initial={{ height: 0, opacity: 0 }}
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.2, ease: 'easeOut' }}
+                      transition={{ duration: 0.25, ease: 'easeOut' }}
                       className="overflow-hidden"
                     >
                       <div className="flex flex-col gap-2.5 pl-8 pt-2 pb-0.5">
@@ -348,15 +404,15 @@ export default function Hero({
                               window.location.hash = '#review';
                             }
                           }}
-                          className="group/sub relative flex flex-col items-start transition-none select-none active:translate-x-[2px] active:translate-y-[2px]"
+                          className="group/sub relative flex flex-col items-start transition-all duration-300 ease select-none"
                         >
                           <div className="flex items-center gap-2">
-                            <span className="text-[#FF5500] text-xs font-mono transition-none">↳</span>
+                            <span className="text-[#FF6800] text-xs font-mono transition-colors duration-300 ease">↳</span>
                             <span className="nav-stencil-link text-sm sm:text-base font-black uppercase tracking-wider">
                               REVIEWS
                             </span>
                           </div>
-                          <div className="w-full max-w-[100px] h-1.5 mt-0.5 overflow-hidden opacity-0 group-hover/sub:opacity-100 transition-none pointer-events-none">
+                          <div className="w-full max-w-[100px] h-1.5 mt-0.5 overflow-hidden opacity-0 group-hover/sub:opacity-100 transition-opacity duration-300 ease pointer-events-none">
                             <RoughPaintUnderline className="w-full h-full" />
                           </div>
                         </a>
@@ -368,15 +424,15 @@ export default function Hero({
                               onClientGalleryClick();
                             }
                           }}
-                          className="group/sub relative flex flex-col items-start text-left cursor-pointer transition-none select-none active:translate-x-[2px] active:translate-y-[2px]"
+                          className="group/sub relative flex flex-col items-start text-left cursor-pointer transition-all duration-300 ease select-none"
                         >
                           <div className="flex items-center gap-2">
-                            <span className="text-[#FF5500] text-xs font-mono transition-none">↳</span>
+                            <span className="text-[#FF6800] text-xs font-mono transition-colors duration-300 ease">↳</span>
                             <span className="nav-stencil-link text-sm sm:text-base font-black uppercase tracking-wider">
                               CLIENT GALLERY
                             </span>
                           </div>
-                          <div className="w-full max-w-[140px] h-1.5 mt-0.5 overflow-hidden opacity-0 group-hover/sub:opacity-100 transition-none pointer-events-none">
+                          <div className="w-full max-w-[140px] h-1.5 mt-0.5 overflow-hidden opacity-0 group-hover/sub:opacity-100 transition-opacity duration-300 ease pointer-events-none">
                             <RoughPaintUnderline className="w-full h-full" />
                           </div>
                         </button>
